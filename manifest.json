@@ -1,0 +1,122 @@
+{
+  "projeto": "CompiLab",
+  "versao": "prototipo-v1",
+  "paginas": [
+    {
+      "html": "aprendizado/index.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/lexica/conclusao.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/lexica/passo-1.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/lexica/passo-2.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/lexica/passo-3.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/lexica/resultado-passo-3.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/conclusao.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/passo-1.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/passo-2.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/passo-3.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/passo-4.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "glossario/index.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "index.html",
+      "tipo": "redirecionamento"
+    },
+    {
+      "html": "inicio/index.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "laboratorio/index.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "laboratorio/lexica/automato.html",
+      "tipo": "redirecionamento"
+    },
+    {
+      "html": "laboratorio/lexica/scanner.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "laboratorio/lexica/transicoes.html",
+      "tipo": "redirecionamento"
+    },
+    {
+      "html": "laboratorio/sintatica/arvore.html",
+      "tipo": "redirecionamento"
+    },
+    {
+      "html": "laboratorio/sintatica/gramaticas.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "laboratorio/sintatica/tabela-preditiva.html",
+      "tipo": "redirecionamento"
+    },
+    {
+      "html": "laboratorio/sintatica/tokens.html",
+      "tipo": "redirecionamento"
+    },
+    {
+      "html": "aprendizado/sintatica/first-follow.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/tabela-ll1.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/pilha-entrada-acao.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/ambiguidade.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/fatoracao-esquerda.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/leitura-top-down.html",
+      "tipo": "pagina"
+    },
+    {
+      "html": "aprendizado/sintatica/recursividade-esquerda.html",
+      "tipo": "pagina"
+    }
+  ]
+}

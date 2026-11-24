@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Revisão da Análise Sintática — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE SINTÁTICA</p>
+            <h1>Revisão da Análise Sintática</h1>
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="passo-1.html">Gramáticas
+                    (GLC)</a><a href="passo-2.html">Derivação à esquerda</a><a href="passo-3.html">Árvore de
+                    derivação</a><a aria-current="step" href="conclusao.html">Revisão</a></nav>
+            <p class="cl-flow-description">Relembre as produções, a derivação à esquerda e a árvore de derivação do
+                exemplo.</p>
+        </header>
+        <section class="cl-syn-card cl-syn-review-card"><span class="cl-syn-label">SÍNTESE DA TRILHA</span>
+            <h2>Três ideias que trabalhamos</h2>
+            <div class="cl-syn-review-grid">
+                <article>
+                    <h3>1. Gramática livre de contexto</h3>
+                    <p>As produções definem quais combinações de tokens formam declarações e expressões válidas.</p>
+                </article>
+                <article>
+                    <h3>2. Derivação à esquerda</h3>
+                    <p>Partindo de um não terminal, aplicamos regras até chegar aos símbolos da entrada, sempre
+                        desenvolvendo o não terminal mais à esquerda.</p>
+                </article>
+                <article>
+                    <h3>3. Árvore de derivação</h3>
+                    <p>Mostra as produções aplicadas como relações entre nós e deixa visível a estrutura gramatical dos
+                        tokens reconhecidos.</p>
+                </article>
+            </div>
+        </section>
+        <section class="cl-syn-card cl-syn-review-card">
+            <h2>O que aconteceu com o código?</h2>
+            <p>Na análise sintática, verificamos se os tokens do código podem ser gerados pela gramática.
+                <span><strong>Em resumo:</strong>
+                    <code>S</code> inicia a derivação, <code>D</code> organiza palavra reservada, variável, atribuição,
+                    expressão e pontuação; <code>E</code> reconhece a expressão <code>preco * 2</code>. A árvore de
+                    derivação mostra essa estrutura por nós e ramos.</span></p>
+            <div class="cl-syn-panel"><span class="cl-syn-panel__title">Código de entrada</span>
+                <pre class="cl-syn-review-code">let total = preco * 2;</pre><span class="cl-syn-panel__title">Sequência
+                    de tokens entregue pelo analisador léxico</span>
+                <pre class="cl-syn-editor">let id = id * num ;</pre>
+            </div>
+            <div class="cl-syn-panel cl-syn-summary-derivation"><span class="cl-syn-panel__title">Derivação à esquerda —
+                    versão resumida</span>
+                <pre class="cl-syn-editor">S
+⇒ D L
+⇒ 'let' id '=' E ';' L
+⇒* 'let' id '=' id '*' num ';' L
+⇒ 'let' id '=' id '*' num ';'</pre>
+                <p class="cl-syn-caption"><code>⇒</code> indica uma aplicação de produção. <code>⇒*</code> resume as
+                    expansões de <code>E</code>, <code>T</code>, <code>F</code>, <code>E'</code> e <code>T'</code>. A
+                    última etapa usa <code>L → ε</code> para indicar que não há novas declarações.</p>
+            </div>
+
+        </section>
+        <section class="cl-syn-card cl-syn-review-card">
+            <h2>Quer aprofundar em análise preditiva?</h2>
+            <p>O percurso principal termina aqui. No aprofundamento, você pode aprender como preparar uma
+                gramática para um parser <strong>LL(1)</strong>, calcular FIRST e FOLLOW, montar a tabela e acompanhar
+                sua execução com pilha.</p><a class="cl-syn-link primary" href="leitura-top-down.html">Conhecer GLC,
+                ambiguidade e LL(1) →</a>
+        </section>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-3.html">← Rever árvore de derivação</a><a
+                class="cl-syn-link primary" href="../../laboratorio/sintatica/gramaticas.html">Experimentar no
+                laboratório →</a></footer>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>Laboratório | CompiLab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../aprendizado/index.css" rel="stylesheet" />
+    <link href="../assets/refinement.css" rel="stylesheet" />
+    <link href="../assets/hub-header.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../inicio/index.html">Início</a><a
+                    href="../aprendizado/index.html">Aprendizado</a><a aria-current="page"
+                    href="../laboratorio/index.html">Laboratório</a><a href="../glossario/index.html">Glossário &amp;
+                    Teoria</a></nav>
+        </div>
+    </header>
+    <main>
+        <p class="eyebrow">LABORATÓRIO</p>
+        <h1>Escolha um ambiente para experimentar</h1>
+        <p class="intro">Teste exemplos e observe como os analisadores reconhecem os elementos e a estrutura do código.
+            Os dois ambientes são independentes e você pode acessá-los diretamente.</p>
+        <div class="trilhas">
+            <article class="trilha">
+                <div class="icon">{ }</div>
+                <p class="tag">Análise Léxica</p>
+                <h2>Como os caracteres se tornam tokens?</h2>
+                <p>Escreva definições léxicas, teste um código no scanner e consulte os tokens reconhecidos.</p>
+                <div class="topics"><span>Scanner</span><span>Autômato</span><span>Transições</span></div>
+                <a class="action" href="lexica/scanner.html">Abrir laboratório léxico <span
+                        aria-hidden="true">→</span></a>
+            </article>
+            <article class="trilha">
+                <div class="icon secondary">&lt;/&gt;</div>
+                <p class="tag">Análise Sintática</p>
+                <h2>Como verificar a estrutura de um código?</h2>
+                <p>Experimente declarações let e avance ação por ação: acompanhe a pilha, os tokens, a árvore de
+                    derivação e a tabela preditiva LL(1).</p>
+                <div class="topics"><span>Gramática</span><span>Derivação</span><span>Tabela LL(1)</span></div>
+                <a class="action secondary-action" href="sintatica/gramaticas.html">Abrir laboratório sintático <span
+                        aria-hidden="true">→</span></a>
+            </article>
+        </div>
+        <p class="footnote">Quer conhecer os conceitos antes de experimentar? Acesse o <a
+                href="../aprendizado/index.html">Aprendizado</a> ou consulte o <a
+                href="../glossario/index.html">Glossário &amp; Teoria</a>.</p>
+    </main>
+    <script defer="True" src="index.js"></script>
+</body>
+
+</html>

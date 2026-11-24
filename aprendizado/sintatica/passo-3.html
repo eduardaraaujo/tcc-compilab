@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Árvore de derivação — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE SINTÁTICA</p>
+            <h1>Árvore de derivação</h1>
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="passo-1.html">Gramáticas
+                    (GLC)</a><a href="passo-2.html">Derivação à esquerda</a><a aria-current="step"
+                    href="passo-3.html">Árvore de derivação</a></nav>
+            <p class="cl-flow-description">Veja a estrutura da expressão gerada pelas produções de uma GLC, no sentido
+                top-down.</p>
+        </header>
+        <div class="cl-syn-grid">
+            <section class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label"><svg aria-hidden="true"
+                        viewbox="0 0 24 24">
+                        <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
+                        <path d="M7 11v5c3 3 7 3 10 0v-5M21 9v6"></path>
+                    </svg> ATIVIDADE GUIADA</span>
+                <h2>Quando a derivação termina?</h2>
+                <p>A árvore de derivação mostra os não terminais que foram expandidos para reconhecer
+                    <code>preco * 2</code>. Antes de vê-la completa, escolha como o parser encerra um termo.
+                </p>
+                <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">1</span><span
+                        class="cl-syn-question-text">Após reconhecer o token <code>2</code>, o próximo símbolo da
+                        entrada é <code>;</code>, mas ainda temos <code>T'</code> para expandir. Qual produção
+                        usar?</span></div>
+                <div aria-label="Alternativas do exercício" class="cl-syn-choices" id="cl-syn-choices" role="group">
+                    <button aria-pressed="false" class="cl-syn-option" data-answer="A" data-correct="false"
+                        data-feedback="Essa produção exige outro *, mas o próximo token já é o fim da expressão: ;. Não há nova multiplicação a reconhecer."
+                        type="button"><span class="cl-syn-option-letter">A</span><span
+                            class="cl-syn-option-copy"><code>T' → '*' F T'</code><span
+                                class="cl-syn-option-desc">Iniciaria outra multiplicação.</span></span></button><button
+                        aria-pressed="false" class="cl-syn-option" data-answer="B" data-correct="false"
+                        data-feedback="Não há um sinal + depois de 2; além disso, o símbolo que precisa ser expandido agora é T', não E'."
+                        type="button"><span class="cl-syn-option-letter">B</span><span
+                            class="cl-syn-option-copy"><code>E' → '+' T E'</code><span
+                                class="cl-syn-option-desc">Acrescentaria uma soma.</span></span></button><button
+                        aria-pressed="false" class="cl-syn-option" data-answer="C" data-correct="true"
+                        data-feedback="Correto! Como não há outra multiplicação após 2, T' gera ε. Em seguida, E' também poderá gerar ε, concluindo a expressão antes do ponto e vírgula."
+                        type="button"><span class="cl-syn-option-letter">C</span><span
+                            class="cl-syn-option-copy"><code>T' → ε</code><span class="cl-syn-option-desc">Encerra a
+                                continuação do termo sem consumir outro token.</span></span></button><button
+                        aria-pressed="false" class="cl-syn-option" data-answer="D" data-correct="false"
+                        data-feedback="O número 2 já foi reconhecido; o símbolo pendente é T'. Uma regra de F não se aplica nesse ponto."
+                        type="button"><span class="cl-syn-option-letter">D</span><span
+                            class="cl-syn-option-copy"><code>F → id</code><span class="cl-syn-option-desc">Reconheceria
+                                um identificador.</span></span></button>
+                </div>
+                <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
+                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            </section>
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
+                <h2>O ponto em que estamos</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Código de entrada</span>
+                    <pre class="cl-syn-editor">let total = preco * 2;</pre>
+                </div>
+                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
+                        exemplo</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <p>O parser já reconheceu <code>id * num</code>, correspondente a <code>preco * 2</code>. O próximo
+                    token é <code>;</code>; depois de encerrar a expressão, a declaração termina e <code>L</code> poderá
+                    produzir <code>ε</code>, se não houver outra declaração.</p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Agora é preciso decidir como terminar a
+                        expansão de <code>T'</code> sem incluir o ponto e vírgula na expressão.</span></div>
+            </aside>
+        </div>
+        <section class="cl-syn-reveal cl-syn-worked-example" data-progressive="tree" data-show-on-correct="" hidden="">
+            <div class="cl-syn-card"><span class="cl-syn-label">ÁRVORE DE DERIVAÇÃO — RESULTADO</span>
+                <h2>A mesma derivação, agora como árvore</h2>
+                <p>Cada ramo corresponde a uma produção aplicada. A construção começa em <code>E</code> e expande os não
+                    terminais de cima para baixo.</p>
+                <div aria-label="Resolução passo a passo" class="cl-syn-progressive">
+                    <div class="cl-syn-prog-top"><strong>Resolução guiada</strong><span aria-live="polite"
+                            data-prog-count="">Etapa 0</span></div>
+                    <p aria-live="polite" data-prog-description=""></p>
+                    <div class="cl-syn-prog-actions"><button data-prog-restart="" type="button">↺
+                            Reiniciar</button><button data-prog-prev="" type="button">← Anterior</button><button
+                            data-prog-next="" type="button">Próximo →</button></div>
+                </div>
+                <div class="cl-syn-chart cl-syn-topdown-tree"><svg
+                        aria-label="Árvore de derivação: E gera T e E linha; T gera F e T linha; o primeiro F deriva id; T linha gera asterisco, F e T linha; o segundo F deriva num; as continuações terminam em epsilon."
+                        role="img" viewbox="0 0 765 396" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M82 203 L82 238" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M382 276 L382 311" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M532 276 L532 311" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M382 203 L232 238" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M382 203 L382 238" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M382 203 L532 238" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M232 130 L82 165" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M232 130 L382 165" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M682 130 L682 165" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M457 57 L232 92" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <path d="M457 57 L682 92" fill="none" stroke="#90a3d5" stroke-width="2"></path>
+                        <rect fill="#eaf5fc" height="38" rx="9" stroke="#7cbfd8" stroke-width="1.5" width="53" x="56"
+                            y="238"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="82" y="263">id</text>
+                        <rect fill="#edf1ff" height="38" rx="9" stroke="#8ea2e2" stroke-width="1.5" width="53" x="56"
+                            y="165"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="82" y="190">F</text>
+                        <rect fill="#eaf5fc" height="38" rx="9" stroke="#7cbfd8" stroke-width="1.5" width="53" x="206"
+                            y="238"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="232" y="263">*</text>
+                        <rect fill="#eaf5fc" height="38" rx="9" stroke="#7cbfd8" stroke-width="1.5" width="53" x="356"
+                            y="311"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="382" y="336">num</text>
+                        <rect fill="#edf1ff" height="38" rx="9" stroke="#8ea2e2" stroke-width="1.5" width="53" x="356"
+                            y="238"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="382" y="263">F</text>
+                        <rect fill="#eaf5fc" height="38" rx="9" stroke="#7cbfd8" stroke-width="1.5" width="53" x="506"
+                            y="311"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="532" y="336">ε</text>
+                        <rect fill="#edf1ff" height="38" rx="9" stroke="#8ea2e2" stroke-width="1.5" width="53" x="506"
+                            y="238"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="532" y="263">T'</text>
+                        <rect fill="#edf1ff" height="38" rx="9" stroke="#8ea2e2" stroke-width="1.5" width="53" x="356"
+                            y="165"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="382" y="190">T'</text>
+                        <rect fill="#edf1ff" height="38" rx="9" stroke="#8ea2e2" stroke-width="1.5" width="53" x="206"
+                            y="92"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="232" y="117">T</text>
+                        <rect fill="#eaf5fc" height="38" rx="9" stroke="#7cbfd8" stroke-width="1.5" width="53" x="656"
+                            y="165"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="682" y="190">ε</text>
+                        <rect fill="#edf1ff" height="38" rx="9" stroke="#8ea2e2" stroke-width="1.5" width="53" x="656"
+                            y="92"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="682" y="117">E'</text>
+                        <rect fill="#edf1ff" height="38" rx="9" stroke="#8ea2e2" stroke-width="1.5" width="53" x="430"
+                            y="19"></rect><text fill="#253757" font-family="JetBrains Mono,monospace" font-size="14"
+                            font-weight="700" text-anchor="middle" x="457" y="44">E</text>
+                    </svg></div>
+                <p class="cl-syn-caption">As folhas <code>id * num</code> são categorias de tokens: <code>id</code>
+                    corresponde a <code>preco</code> e <code>num</code> corresponde a <code>2</code>. Os dois
+                    <code>ε</code> indicam cadeias vazias e não aparecem na entrada.
+                </p>
+            </div>
+            <div class="cl-syn-wide-explanation"><strong>Por que essa é uma árvore de derivação?</strong> Ela mantém os
+                símbolos da gramática, inclusive <code>E</code>, <code>T</code>, <code>F</code> e <code>ε</code>,
+                mostrando quais produções permitem chegar aos tokens. Não representa atributos nem ações semânticas.
+            </div>
+        </section>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-2.html">← Voltar para derivação</a><a
+                class="cl-syn-link primary" data-next-lesson="" href="conclusao.html">Revisar conceitos →</a></footer>
+    </main>
+    <script defer="" src="lesson.js"></script>
+    <script defer="True" src="lesson-progressive.js"></script>
+</body>
+
+</html>

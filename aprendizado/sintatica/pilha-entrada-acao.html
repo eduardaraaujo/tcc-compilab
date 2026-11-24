@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Pilha, entrada e ação — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+    <link href="../../assets/ll1-optional.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav">
+                <a href="../../inicio/index.html">Início</a><a aria-current="page"
+                    href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a>
+            </nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main cl-ll1-page">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">APROFUNDAMENTO — ANÁLISE SINTÁTICA</p>
+            <h1>Pilha, entrada e ação</h1>
+
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="leitura-top-down.html">GLC e
+                    LL(1)</a><a href="ambiguidade.html">Ambiguidade</a><a href="recursividade-esquerda.html">Recursão à
+                    esquerda</a><a href="fatoracao-esquerda.html">Fatoração</a><a href="passo-4.html">Tabela
+                    preditiva</a><a href="first-follow.html">FIRST/FOLLOW</a><a href="tabela-ll1.html">Construção
+                    LL(1)</a><a aria-current="step" href="pilha-entrada-acao.html">Pilha e entrada</a></nav>
+
+            <p class="cl-flow-description">Veja como a tabela preditiva guia o reconhecimento top-down da declaração
+                completa.</p>
+        </header>
+        <div class="cl-syn-grid">
+            <div>
+                <section aria-label="Atividade guiada do aprofundamento" class="cl-syn-card"><span class="cl-syn-label">
+                        <svg aria-hidden="true" viewbox="0 0 24 24">
+                            <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
+                            <path d="M7 11v5c3 3 7 3 10 0v-5M21 9v6"></path>
+                        </svg> ATIVIDADE GUIADA</span>
+                    <h2>Como o parser inicia a declaração?</h2>
+                    <p>No início, a pilha contém <code>$ S</code>, com <code>S</code> no topo à direita. O próximo token
+                        é <code>let</code>. Qual produção o parser aplica primeiro?</p>
+                    <div class="cl-syn-prompt"><span class="cl-syn-question-text">Com <code>S</code> no topo da pilha e
+                            <code>let</code> como
+                            próximo token, qual produção devemos aplicar primeiro?</span></div>
+                    <div aria-label="Alternativas do exercício" class="cl-syn-choices" id="cl-syn-choices" role="group">
+                        <button aria-pressed="false" class="cl-syn-option" data-answer="A" data-correct="true"
+                            data-feedback="Correto. S → D L exige uma primeira declaração. Depois que D terminar, L poderá reconhecer outra declaração ou produzir ε."
+                            type="button"><span class="cl-syn-option-letter">A</span><span
+                                class="cl-syn-option-copy"><code>S → D L</code><span
+                                    class="cl-syn-option-desc">Reconhece a primeira declaração e deixa espaço para
+                                    outras.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                            data-answer="B" data-correct="false"
+                            data-feedback="O topo da pilha ainda é S. Só podemos consultar a produção do não terminal presente no topo."
+                            type="button"><span class="cl-syn-option-letter">B</span><span
+                                class="cl-syn-option-copy"><code>F → id</code><span class="cl-syn-option-desc">Produção
+                                    de fator, não do símbolo inicial.</span></span></button><button aria-pressed="false"
+                            class="cl-syn-option" data-answer="C" data-correct="false"
+                            data-feedback="E' só surge após a expansão de E; neste momento estamos em S."
+                            type="button"><span class="cl-syn-option-letter">C</span><span
+                                class="cl-syn-option-copy"><code>E' → ε</code><span
+                                    class="cl-syn-option-desc">Continuação de expressão, não de
+                                    programa.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                            data-answer="D" data-correct="false"
+                            data-feedback="O parser primeiro aplica S → D L e D → 'let' id '=' E ';'. Depois encontra e consome let."
+                            type="button"><span class="cl-syn-option-letter">D</span><span
+                                class="cl-syn-option-copy"><code>Consumir let</code><span
+                                    class="cl-syn-option-desc">Antes de consumir, precisamos expandir S e
+                                    D.</span></span></button>
+                    </div>
+                    <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
+                    <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Responda ao exercício para
+                        continuar.</p>
+                </section>
+            </div>
+            <aside class="cl-syn-card"><span class="cl-syn-label">PONTO DE PARTIDA</span>
+                <h2>Pilha e entrada</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Topo da pilha à direita</span><code
+                        class="cl-ll1-inline-large">$ S</code></div>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Próximos tokens da entrada</span><code
+                        class="cl-ll1-inline-large">let id = id * num ; $</code></div>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Com um não terminal no topo, o parser
+                        consulta a tabela. Com um terminal igual ao próximo token, ele consome o token.</span></div>
+                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa
+                        usada na simulação</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+            </aside>
+        </div>
+        <section class="cl-syn-reveal cl-syn-worked-example" data-show-on-correct="true" hidden="">
+            <div class="cl-syn-card"><span class="cl-syn-label">SIMULAÇÃO GUIADA</span>
+                <h2>Pilha, entrada e ação</h2>
+                <p>Revele uma ação por vez, no seu ritmo. A pilha mostra o topo à direita; a coluna Entrada contém os
+                    tokens ainda não consumidos. <strong>Você pode seguir para o laboratório sem terminar a
+                        simulação.</strong></p>
+                <div class="cl-ll1-table-wrap">
+                    <table class="cl-syn-mini-table cl-ll1-table">
+                        <thead>
+                            <tr>
+                                <th>Pilha (topo à direita)</th>
+                                <th>Entrada restante</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cl-ll1-trace">
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ S</td>
+                                <td>let id = id * num ; $</td>
+                                <td>S → D L</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L D</td>
+                                <td>let id = id * num ; $</td>
+                                <td>D → 'let' id '=' E ';'</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E = id let</td>
+                                <td>let id = id * num ; $</td>
+                                <td>Consumir let</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E = id</td>
+                                <td>id = id * num ; $</td>
+                                <td>Consumir id</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E =</td>
+                                <td>= id * num ; $</td>
+                                <td>Consumir =</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E</td>
+                                <td>id * num ; $</td>
+                                <td>E → T E'</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T</td>
+                                <td>id * num ; $</td>
+                                <td>T → F T'</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T' F</td>
+                                <td>id * num ; $</td>
+                                <td>F → id</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T' id</td>
+                                <td>id * num ; $</td>
+                                <td>Consumir id</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T'</td>
+                                <td>* num ; $</td>
+                                <td>T' → '*' F T'</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T' F *</td>
+                                <td>* num ; $</td>
+                                <td>Consumir *</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T' F</td>
+                                <td>num ; $</td>
+                                <td>F → num</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T' num</td>
+                                <td>num ; $</td>
+                                <td>Consumir num</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E' T'</td>
+                                <td>; $</td>
+                                <td>T' → ε</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ; E'</td>
+                                <td>; $</td>
+                                <td>E' → ε</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L ;</td>
+                                <td>; $</td>
+                                <td>Consumir ;</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$ L</td>
+                                <td>$</td>
+                                <td>L → ε</td>
+                            </tr>
+                            <tr class="cl-ll1-trace-row">
+                                <td>$</td>
+                                <td>$</td>
+                                <td>Aceitar</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cl-ll1-controls"><button class="cl-syn-link primary" id="cl-ll1-next" type="button">Mostrar
+                        próxima ação</button><button class="cl-syn-link" id="cl-ll1-reset" type="button">Recomeçar
+                        simulação</button><span aria-live="polite" class="cl-syn-caption" id="cl-ll1-status"
+                        role="status">A primeira ação está visível.</span></div>
+                <!-- <p class="cl-ll1-optional-tip" id="cl-ll1-more" role="status" aria-live="polite">Há mais ações para
+                    explorar (opcional). Você pode seguir para o laboratório após responder à atividade.</p> -->
+                <p class="cl-syn-caption">A simulação usa a declaração <code>let total = preco * 2;</code>, representada
+                    pelas categorias <code>let id = id * num ;</code>. Quando chega a <code>L</code>, o parser escolhe
+                    <code>L → ε</code>, pois a entrada terminou. É uma demonstração fixa, não um parser para entradas
+                    arbitrárias.
+                </p>
+            </div>
+        </section>
+        <!-- <p class="cl-ll1-footer-tip" id="cl-ll1-footer-tip">A simulação tem outras ações para explorar. Depois de
+            acertar a atividade, você pode seguir sem concluir todas elas.</p> -->
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="tabela-ll1.html">← Voltar para tabela</a><a
+                class="cl-syn-link primary" data-next-lesson=""
+                href="../../laboratorio/sintatica/gramaticas.html#tabela">Simular no laboratório →</a></footer>
+    </main>
+    <script defer="" src="lesson.js"></script>
+    <script defer="" src="ll1-optional.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>
+                CompilaLab — Análise Léxica
+        </title>
+        <!-- Tailwind CSS v3 -->
+        <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+                rel="stylesheet" />
+        <link href="passo-3.css" rel="stylesheet" />
+        <link href="../../assets/simple.css" rel="stylesheet" />
+        <link href="../../assets/refinement.css" rel="stylesheet" />
+        <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+        <link href="../../assets/lexica-adjustments.css" rel="stylesheet" />
+</head>
+
+<body class="cl-lex-lesson min-h-screen flex flex-col font-sans antialiased text-slate-800">
+        <header class="cl-site-header">
+                <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+                        <nav aria-label="Navegação principal" class="cl-site-nav"><a
+                                        href="../../inicio/index.html">Início</a><a aria-current="page"
+                                        href="../../aprendizado/index.html">Aprendizado</a><a
+                                        href="../../laboratorio/index.html">Laboratório</a><a
+                                        href="../../glossario/index.html">Glossário &amp; Teoria</a></nav>
+                </div>
+        </header>
+        <!-- BEGIN: MainHeader -->
+        <!-- END: MainHeader -->
+        <!-- BEGIN: MainContent -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-6 cl-flow-main">
+                <!-- Activity Subheader -->
+                <header class="cl-flow-header">
+                        <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE LÉXICA</p>
+                        <h1>Classificação de Tokens</h1>
+                        <nav aria-label="Assuntos da trilha" class="cl-lesson-nav cl-flow-nav"><a
+                                        href="passo-1.html">Expressões regulares</a><a href="passo-2.html">Autômatos
+                                        (DFA)</a><a aria-current="step" href="passo-3.html">Classificação de tokens</a>
+                        </nav>
+                        <p class="cl-flow-description">Reconheça as categorias dos elementos de uma instrução, um token
+                                por vez.</p>
+                </header>
+                <!-- Main Workspace Grid (2 Columns) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <!-- LEFT COLUMN: Interactive Questioning & Pedagogical Feedback -->
+                        <section class="lg:col-span-6 flex flex-col gap-6" data-purpose="quiz-panel">
+                                <!-- Activity Card -->
+                                <div
+                                        class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-sm flex flex-col gap-5">
+                                        <!-- Activity Heading & Counter -->
+                                        <div class="flex flex-col items-start justify-between">
+                                                <span
+                                                        class="text-xs font-bold uppercase tracking-wider text-indigo-700 cl-activity-label">
+                                                        Atividade Guiada
+                                                </span>
+
+                                                <p class="cl-step3-guidance" id="lex-core-instruction">Classifique os
+                                                        sete
+                                                        tokens da instrução. Selecione um lexema no código e escolha a
+                                                        categoria
+                                                        correspondente.</p>
+                                        </div>
+                                        <div>
+                                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">
+                                                        Classifique um token por vez
+                                                </h2>
+                                                <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+                                                        Selecione uma parte do código e escolha sua categoria. As partes
+                                                        concluídas ficam identificadas.
+                                                </p>
+                                        </div>
+                                        <!-- Active Prompt Card -->
+                                        <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-4 flex items-center gap-4 transition-colors"
+                                                data-purpose="active-prompt-box" id="active-prompt-box">
+                                                <div>
+                                                        <p class="text-base font-bold text-slate-900 cl-question-inline"
+                                                                id="active-prompt-title">Qual é a categoria de <code
+                                                                        class="cl-prompt-token"
+                                                                        id="active-prompt-token">let</code>?</p>
+                                                        <p class="text-xs font-medium text-slate-500 mt-0.5"
+                                                                id="active-prompt-subtitle">Escolha uma das opções
+                                                                abaixo.</p>
+                                                </div>
+                                        </div>
+                                        <!-- Token Category Options (Accessible Colors + Explicit Icons) -->
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1"
+                                                data-purpose="category-buttons" id="category-buttons-container">
+                                                <!-- Option 1: Palavra reservada -->
+                                                <button aria-pressed="false"
+                                                        class="cat-btn flex items-center gap-3 px-4 py-3 rounded-xl bg-purple-50 text-purple-700 border border-purple-200 font-medium text-sm hover:bg-purple-100 transition-all focus:ring-2 focus:ring-purple-400 focus:outline-none"
+                                                        data-category="keyword" type="button">
+                                                        <span class="text-base leading-none">
+                                                                ◆
+                                                        </span>
+                                                        <span>
+                                                                Palavra reservada
+                                                        </span>
+                                                </button>
+                                                <!-- Option 2: Identificador -->
+                                                <button aria-pressed="false"
+                                                        class="cat-btn flex items-center gap-3 px-4 py-3 rounded-xl bg-sky-50 text-sky-700 border border-sky-200 font-medium text-sm hover:bg-sky-100 transition-all focus:ring-2 focus:ring-sky-400 focus:outline-none"
+                                                        data-category="ident" type="button">
+                                                        <span class="text-base leading-none">
+                                                                ●
+                                                        </span>
+                                                        <span>
+                                                                Identificador
+                                                        </span>
+                                                </button>
+                                                <!-- Option 3: Operador -->
+                                                <button aria-pressed="false"
+                                                        class="cat-btn flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 font-medium text-sm hover:bg-amber-100 transition-all focus:ring-2 focus:ring-amber-400 focus:outline-none"
+                                                        data-category="op" type="button">
+                                                        <span class="text-base leading-none font-bold">
+                                                                +
+                                                        </span>
+                                                        <span>
+                                                                Operador
+                                                        </span>
+                                                </button>
+                                                <!-- Option 4: Número -->
+                                                <button aria-pressed="false"
+                                                        class="cat-btn flex items-center gap-3 px-4 py-3 rounded-xl bg-teal-50 text-teal-800 text-sm hover:bg-teal-100 transition-all focus:ring-2 focus:ring-teal-400 focus:outline-none border border-teal-200 font-medium"
+                                                        data-category="num" type="button">
+                                                        <span class="text-base leading-none">
+                                                                ■
+                                                        </span>
+                                                        <span>
+                                                                Número
+                                                        </span>
+                                                </button>
+                                                <!-- Option 5: Pontuação -->
+                                                <button aria-pressed="false"
+                                                        class="cat-btn flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 font-medium text-sm hover:bg-slate-200 transition-all focus:ring-2 focus:ring-slate-400 focus:outline-none"
+                                                        data-category="punct" type="button">
+                                                        <span class="text-base leading-none">
+                                                                ▲
+                                                        </span>
+                                                        <span>
+                                                                Pontuação
+                                                        </span>
+                                                </button>
+                                        </div>
+                                        <!-- Pedagogical Feedback: Guidance & Hint Card -->
+                                        <div aria-live="polite"
+                                                class="p-4 border-rose-200 hidden animate-pop-in transition-all mt-2 border rounded-xl text-rose-950 flex gap-3 bg-rose-50/90"
+                                                data-purpose="pedagogical-hint" id="pedagogical-hint">
+                                                <div
+                                                        class="w-7 h-7 rounded-full bg-rose-200/90 text-rose-800 flex items-center justify-center shrink-0 mt-0.5">
+                                                        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path clip-rule="evenodd"
+                                                                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                                                        fill-rule="evenodd">
+                                                                </path>
+                                                        </svg>
+                                                </div>
+                                                <div class="text-sm">
+                                                        <p class="font-bold text-rose-900" id="hint-title">
+                                                                Vamos observar de outro jeito
+                                                        </p>
+                                                        <p class="text-rose-800 mt-0.5" id="hint-desc">
+                                                                “2” não é operador.
+                                                        </p>
+                                                        <p class="text-xs text-rose-700 mt-1 font-medium"
+                                                                id="hint-clue">
+                                                                <span class="font-bold">
+                                                                        Pista:
+                                                                </span>
+                                                                É um valor numérico escrito diretamente.
+                                                        </p>
+                                                </div>
+                                        </div>
+                                        <!-- Pedagogical Feedback: Success Feedback Card -->
+                                        <div aria-live="polite"
+                                                class="p-4 border-emerald-200 text-emerald-950 hidden animate-pop-in transition-all gap-3 border rounded-xl bg-emerald-50 flex items-center"
+                                                data-purpose="pedagogical-success" id="pedagogical-success">
+                                                <div
+                                                        class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                                                        <svg class="w-4 h-4 stroke-[3]" fill="none"
+                                                                stroke="currentColor" viewbox="0 0 24 24"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M5 13l4 4L19 7" stroke-linecap="round"
+                                                                        stroke-linejoin="round">
+                                                                </path>
+                                                        </svg>
+                                                </div>
+                                                <div class="text-sm">
+                                                        <p class="font-bold text-emerald-900" id="success-title">
+                                                                Correto
+                                                        </p>
+                                                        <p class="text-emerald-800 mt-0.5" id="success-desc">
+                                                                “=” é operador. É o operador de atribuição.
+                                                        </p>
+                                                </div>
+                                        </div>
+                                </div>
+                        </section>
+                        <!-- RIGHT COLUMN: Original Code & Recognized Tokens Ribbon -->
+                        <section class="lg:col-span-6 flex flex-col gap-6" data-purpose="code-representation-panel">
+                                <div
+                                        class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-sm flex flex-col gap-5">
+                                        <!-- Code Block Header -->
+                                        <div class="flex items-center justify-between">
+                                                <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-700">
+                                                        Código Original
+                                                </h3>
+                                                <span class="text-xs font-medium text-slate-500">
+                                                        Selecione para classificar
+                                                </span>
+                                        </div>
+                                        <!-- Dark Code Editor Window with Interactive Lexemes -->
+                                        <div class="bg-slate-900 text-slate-100 rounded-xl p-5 font-mono shadow-inner border border-slate-800"
+                                                data-purpose="dark-code-container"
+                                                style="background-color: rgb(9, 12, 42);">
+                                                <div class="flex items-center space-x-3 text-base sm:text-lg">
+                                                        <!-- Line Number -->
+                                                        <span
+                                                                class="text-slate-600 select-none font-medium pr-3 border-r border-slate-800">
+                                                                1
+                                                        </span>
+                                                        <!-- Lexemes Sequence -->
+                                                        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2"
+                                                                id="code-tokens-container">
+                                                                <button class="code-token cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all border border-dashed border-slate-600 text-purple-300 bg-slate-800/40 hover:bg-slate-700/60"
+                                                                        data-token-id="let" type="button">
+                                                                        let
+                                                                </button>
+                                                                <button class="code-token cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all border border-dashed border-slate-600 text-sky-300 bg-slate-800/40 hover:bg-slate-700/60"
+                                                                        data-token-id="total" type="button">
+                                                                        total
+                                                                </button>
+                                                                <button class="code-token cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all border border-dashed border-slate-600 text-amber-300 bg-slate-800/40 hover:bg-slate-700/60"
+                                                                        data-token-id="=" type="button">
+                                                                        =
+                                                                </button>
+                                                                <button class="code-token cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all border border-dashed border-slate-600 text-sky-300 bg-slate-800/40 hover:bg-slate-700/60"
+                                                                        data-token-id="preco" type="button">
+                                                                        preco
+                                                                </button>
+                                                                <button class="code-token cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all border border-dashed border-slate-600 text-amber-300 bg-slate-800/40 hover:bg-slate-700/60"
+                                                                        data-token-id="*" type="button">
+                                                                        *
+                                                                </button>
+                                                                <!-- Active Token Under Inspection (Highlighted) -->
+                                                                <button class="code-token cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all border-2 border-indigo-400 bg-indigo-950/70 text-indigo-100 font-bold shadow-md shadow-indigo-500/20 scale-105"
+                                                                        data-token-id="2" type="button">
+                                                                        2
+                                                                </button>
+                                                                <button class="code-token cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all border border-dashed border-slate-600 text-slate-300 bg-slate-800/40 hover:bg-slate-700/60"
+                                                                        data-token-id=";" type="button">
+                                                                        ;
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <!-- Classified Tokens Ribbon -->
+                                        <div class="flex flex-col gap-2 pt-2">
+                                                <p
+                                                        class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                                        Tokens já classificados:
+                                                </p>
+                                                <div class="flex flex-wrap gap-2"
+                                                        data-purpose="classified-tokens-ribbon"
+                                                        id="classified-tokens-ribbon"></div>
+                                                <!-- Accessibility Note -->
+                                        </div>
+                                </div>
+                        </section>
+                </div>
+                <!-- BEGIN: ConceptualSupportSection -->
+                <details class="cl-support-section">
+                        <summary>Ler explicação sobre análise léxica</summary>
+                        <section class="mt-2 transition-all duration-300" data-purpose="concept-support-card"
+                                id="concept-support-section">
+                                <div
+                                        class="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-5 sm:p-6 text-slate-800 flex flex-col gap-3">
+                                        <div class="flex items-start gap-3">
+                                                <div
+                                                        class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                                                        i
+                                                </div>
+                                                <div class="flex-1">
+                                                        <h4 class="text-base font-bold text-slate-900">
+                                                                O que é análise léxica?
+                                                        </h4>
+                                                        <p class="text-sm text-slate-600 mt-1 leading-relaxed">
+                                                                Ela lê o código e o divide em tokens: as menores partes
+                                                                com significado. Cada token recebe uma categoria.
+                                                        </p>
+                                                </div>
+                                        </div>
+                                        <!-- Practical Analogous Example Inside Support -->
+                                        <div
+                                                class="ml-9 bg-white border border-indigo-150 rounded-xl p-3.5 text-xs sm:text-sm text-slate-700 shadow-xs">
+                                                <p class="font-bold text-slate-900 mb-0.5">
+                                                        Exemplo semelhante
+                                                </p>
+                                                <p class="text-slate-600">
+                                                        Em
+                                                        <span class="font-mono font-semibold text-slate-800">
+                                                                “let idade = 18;”
+                                                        </span>
+                                                        ,
+                                                        <span class="font-mono text-purple-700 font-medium">
+                                                                let
+                                                        </span>
+                                                        é palavra reservada,
+                                                        <span class="font-mono text-sky-700 font-medium">
+                                                                idade
+                                                        </span>
+                                                        é identificador,
+                                                        <span class="font-mono text-amber-700 font-medium">
+                                                                =
+                                                        </span>
+                                                        é operador,
+                                                        <span class="font-mono text-teal-700 font-medium">
+                                                                18
+                                                        </span>
+                                                        é número e
+                                                        <span class="font-mono text-slate-600 font-medium">
+                                                                ;
+                                                        </span>
+                                                        é pontuação.
+                                                </p>
+                                        </div>
+                                </div>
+                        </section>
+                </details>
+                <!-- END: ConceptualSupportSection -->
+                <!-- BEGIN: NavigationFooter -->
+                <footer class="pt-4 pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 cl-flow-footer cl-lex-step-actions"
+                        data-purpose="step-actions">
+                        <div>
+                                <a class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold transition-colors shadow-xs cl-lex-step-link"
+                                        href="passo-2.html">
+                                        ← Voltar para Passo 2 (DFA)
+                                </a>
+                        </div>
+                        <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                                <button class="flex-1 sm:flex-none px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold transition-all shadow-sm inline-flex items-center justify-center gap-1 cl-lex-step-link cl-lex-step-link-primary"
+                                        id="continue-step-btn" style="background-color: rgb(55, 71, 214);"
+                                        type="button">
+                                        <span>
+                                                Continuar
+                                        </span>
+                                        <span>
+                                                ›
+                                        </span>
+                                </button>
+                        </div>
+                </footer>
+                <!-- END: NavigationFooter -->
+        </main>
+        <!-- END: MainContent -->
+        <script defer="" src="passo-3.js">
+        </script>
+</body>
+
+</html>

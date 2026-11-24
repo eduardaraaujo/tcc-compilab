@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Laboratório de Análise Sintática — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="lab.css" rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    href="../../aprendizado/index.html">Aprendizado</a><a aria-current="page"
+                    href="../index.html">Laboratório</a><a href="../../glossario/index.html">Glossário &amp; Teoria</a>
+            </nav>
+        </div>
+    </header>
+    <main class="cl-slab">
+        <div class="cl-slab-intro"><span class="cl-eyebrow">Laboratório / Análise Sintática</span>
+            <h1>Explore como o parser verifica a estrutura</h1>
+            <p>Consulte a gramática, analise um código e acompanhe a pilha, a tabela LL(1) e a árvore de derivação passo
+                a passo.</p>
+        </div>
+        <div class="cl-workspace">
+            <div class="cl-syn-left">
+                <section aria-labelledby="syn-grammar-title" class="cl-panel cl-pane-pad cl-syn-grammar-panel"
+                    id="gramatica-base">
+                    <h2 class="cl-pane-title" id="syn-grammar-title">Gramática base</h2>
+                    <p class="cl-desc">GLC fixa utilizada pelo analisador LL(1).</p>
+                    <pre aria-label="Produções da gramática de referência LL(1)" class="cl-grammar cl-syn-grammar"
+                        id="lab-grammar"></pre>
+                    <details class="cl-examples cl-syn-grammar-guide">
+                        <summary>Como ler a gramática</summary>
+                        <p>S inicia o programa, L permite outras declarações e E, T, F organizam as expressões.
+                            <code>id</code> e <code>num</code> são categorias de tokens; <code>ε</code> representa a
+                            produção vazia.
+                        </p>
+                    </details>
+                </section>
+                <section aria-labelledby="entrada-title" class="cl-panel cl-pane-pad">
+                    <h2 class="cl-pane-title" id="entrada-title">Analisador sintático</h2>
+                    <p class="cl-desc">Teste uma ou mais declarações com a gramática acima.</p><label class="cl-label"
+                        for="syntax-input">Digite o código</label><textarea class="cl-code-input" id="syntax-input"
+                        rows="4" spellcheck="false">let total = preco * 2;</textarea>
+                    <div class="cl-actions"><button class="cl-btn cl-btn-primary" id="run-syntax" type="button">Analisar
+                            código</button><button class="cl-btn cl-btn-secondary" id="reset-syntax"
+                            type="button">Limpar</button></div>
+                    <details class="cl-examples">
+                        <summary>Ver exemplos para testar</summary>
+                        <div class="cl-chips"><button class="cl-chip" data-expression="let total = preco * 2;"
+                                type="button">Multiplicação</button><button class="cl-chip"
+                                data-expression="let soma = 2 + 3;" type="button">Soma</button><button class="cl-chip"
+                                data-expression="let media = (a + b) / 2;" type="button">Parênteses e
+                                divisão</button><button class="cl-chip" data-expression="let saldo = -preco + 3;"
+                                type="button">Menos unário</button><button class="cl-chip"
+                                data-expression="let a = 2;\nlet b = a * 4;" type="button">Duas
+                                declarações</button><button class="cl-chip" data-expression="let x = 2 + ;"
+                                type="button">Erro de sintaxe</button></div>
+                    </details>
+                </section>
+            </div>
+            <section aria-labelledby="resultado-title" class="cl-panel cl-lab-result">
+                <h2 class="sr-only" id="resultado-title">Resultados da análise sintática</h2>
+                <div aria-label="Simulação interativa do analisador LL(1)" class="cl-step-player" hidden=""
+                    id="syntax-player">
+                    <div class="cl-step-heading">
+                        <div><span class="cl-step-kicker">Simulação do parser</span>
+                            <h2 class="cl-step-title">Acompanhe uma ação por vez</h2>
+                        </div><span aria-live="polite" class="cl-step-counter" id="step-count">Preparação · 0 de
+                            0</span>
+                    </div>
+                    <div class="cl-step-states">
+                        <div class="cl-step-state"><span class="cl-step-label">Pilha · topo à direita</span><code
+                                id="step-stack">$ S</code></div>
+                        <div class="cl-step-state"><span class="cl-step-label">Entrada restante</span><code
+                                id="step-input">—</code></div>
+                    </div>
+                    <div aria-atomic="true" aria-live="polite" class="cl-step-action"><span class="cl-step-label">Ação
+                            atual</span><strong id="step-action">Preparar análise</strong>
+                        <p id="step-explanation">Avance para começar.</p>
+                        <p class="cl-step-reason" hidden="" id="step-reason"></p>
+                    </div>
+                    <div class="cl-step-buttons"><button class="cl-btn cl-btn-secondary" id="step-reset" type="button">↺
+                            Reiniciar</button><button class="cl-btn cl-btn-secondary" id="step-prev" type="button">←
+                            Anterior</button><button class="cl-btn cl-btn-primary" id="step-next" type="button">Próximo
+                            →</button></div>
+                    <p class="cl-step-help">Pilha e entrada mostram o estado após a ação. Troque de aba sem perder a
+                        etapa.</p>
+                </div>
+                <div aria-label="Visualizações da análise" class="cl-tabs" role="tablist"><button
+                        aria-controls="panel-tokens" aria-selected="true" class="cl-tab" data-view="tokens"
+                        id="tab-tokens" role="tab" tabindex="0" type="button">Tokens</button><button
+                        aria-controls="panel-arvore" aria-selected="false" class="cl-tab" data-view="arvore"
+                        id="tab-arvore" role="tab" tabindex="-1" type="button">Árvore de derivação</button><button
+                        aria-controls="panel-first" aria-selected="false" class="cl-tab" data-view="first"
+                        id="tab-first" role="tab" tabindex="-1" type="button">FIRST</button><button
+                        aria-controls="panel-follow" aria-selected="false" class="cl-tab" data-view="follow"
+                        id="tab-follow" role="tab" tabindex="-1" type="button">FOLLOW</button><button
+                        aria-controls="panel-tabela" aria-selected="false" class="cl-tab" data-view="tabela"
+                        id="tab-tabela" role="tab" tabindex="-1" type="button">Tabela LL(1)</button></div>
+                <div aria-labelledby="tab-first" class="cl-tab-panel" hidden="" id="panel-first" role="tabpanel">
+                    <h2>Conjuntos FIRST</h2>
+                    <p>FIRST mostra quais terminais podem aparecer primeiro quando cada não terminal começa a ser
+                        expandido. Esses conjuntos ajudam o parser a escolher a produção correta olhando apenas o
+                        próximo símbolo da entrada.</p>
+                    <div class="cl-table-scroll" id="first-table"></div>
+                    <div class="cl-note"><strong>Leitura rápida:</strong> se o próximo token for <code>let</code>, a
+                        análise pode começar por <code>S</code>, <code>L</code> e <code>D</code>. Se for
+                        <code>id</code>, <code>num</code>, <code>(</code> ou <code>-</code>, a expansão pode começar por
+                        <code>E</code>, <code>T</code> ou <code>F</code>, dependendo do contexto.
+                    </div>
+                </div>
+                <div aria-labelledby="tab-follow" class="cl-tab-panel" hidden="" id="panel-follow" role="tabpanel">
+                    <h2>Conjuntos FOLLOW</h2>
+                    <p>FOLLOW mostra quais terminais podem aparecer logo depois de cada não terminal em uma derivação
+                        válida. Eles são essenciais para posicionar produções com <code>ε</code> na tabela LL(1).</p>
+                    <div class="cl-table-scroll" id="follow-table"></div>
+                    <div class="cl-note"><strong>Leitura rápida:</strong> como <code>E</code> aparece antes de
+                        <code>;</code> e também dentro de parênteses, <code>FOLLOW(E)</code> inclui <code>;</code> e
+                        <code>)</code>. O símbolo <code>$</code> indica o fim da entrada.
+                    </div>
+                </div>
+                <div aria-labelledby="tab-tokens" class="cl-tab-panel" id="panel-tokens" role="tabpanel">
+                    <h2>Fita de tokens</h2>
+                    <p>A fita destaca o próximo token e marca os já consumidos na análise. Tokens válidos ainda podem
+                        formar uma estrutura inválida.</p>
+                    <div aria-live="polite" id="token-message"></div>
+                    <div class="cl-table-scroll" id="syntax-tokens">
+                        <div class="cl-empty">Execute uma análise para visualizar os tokens.</div>
+                    </div>
+                </div>
+                <div aria-labelledby="tab-arvore" class="cl-tab-panel" hidden="" id="panel-arvore" role="tabpanel">
+                    <h2>Árvore de derivação</h2>
+                    <p>Veja a árvore surgir conforme o parser aplica produções. Cada nó corresponde a um símbolo da
+                        derivação; esta não é uma AST.</p>
+                    <div aria-live="polite" id="tree-message"></div>
+                    <div class="cl-tree-controls"><label for="tree-scope">Visualização</label><select id="tree-scope">
+                            <option value="expression">Primeira expressão (E)</option>
+                            <option selected="selected" value="program">Programa completo (S)</option>
+                        </select></div>
+                    <div class="cl-tree-wrap" id="syntax-tree">
+                        <div class="cl-empty">Execute uma análise para visualizar a árvore.</div>
+                    </div>
+                </div>
+                <div aria-labelledby="tab-tabela" class="cl-tab-panel" hidden="" id="panel-tabela" role="tabpanel">
+                    <h2>Tabela preditiva LL(1)</h2>
+                    <p>A tabela usa FIRST e FOLLOW. Durante a simulação, a célula consultada fica destacada, quando há
+                        expansão de um não terminal.</p>
+                    <div class="cl-table-scroll" id="fixed-ll1-table"></div>
+                    <section class="cl-syn-trace-section" aria-labelledby="syntax-trace-title">
+                        <h3 id="syntax-trace-title">Registro completo de ações</h3>
+                        <p class="cl-trace-hint">Clique em uma etapa do registro para voltar diretamente a ela.</p>
+                        <div class="cl-table-scroll" id="syntax-trace">
+                            <div class="cl-empty">Execute uma análise para ver as ações.</div>
+                        </div>
+                    </section>
+                    <div class="cl-note">A tabela pertence à gramática fixa desta tela. Não é gerada a
+                        partir de uma gramática editável.</div>
+                </div>
+            </section>
+        </div>
+        <div class="cl-slab-footer"><a href="../index.html">Voltar aos laboratórios</a><span>·</span><a
+                href="../../aprendizado/sintatica/passo-1.html">Revisar gramáticas na trilha guiada</a><span>·</span><a
+                href="../../glossario/index.html">Consultar conceitos</a></div>
+    </main>
+    <script defer="" src="../../assets/lexer-core.js"></script>
+    <script defer="" src="lab.js"></script>
+</body>
+
+</html>

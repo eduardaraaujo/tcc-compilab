@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+      <meta charset="utf-8" />
+      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+      <title>
+            CompilaLab - Resultado da Análise Léxica
+      </title>
+      <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+      <link href="https://fonts.googleapis.com" rel="preconnect" />
+      <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+            rel="stylesheet" />
+      <!-- Tailwind CSS v3 CDN -->
+      <!-- Configuração da paleta e fontes fiéis ao CompilaLab -->
+      <!-- Material Symbols -->
+      <meta content="web_standard" name="shell-type" />
+      <link href="resultado-passo-3.css" rel="stylesheet" />
+      <link href="../../assets/simple.css" rel="stylesheet" />
+      <link href="../../assets/refinement.css" rel="stylesheet" />
+      <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+      <link href="../../assets/lexica-adjustments.css" rel="stylesheet" />
+</head>
+
+<body
+      class="cl-lex-lesson min-h-screen bg-[#f8f9ff] text-slate-800 font-sans flex flex-col antialiased selection:bg-brand-100 selection:text-brand-primary">
+      <header class="cl-site-header">
+            <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+                  <nav aria-label="Navegação principal" class="cl-site-nav"><a
+                              href="../../inicio/index.html">Início</a><a aria-current="page"
+                              href="../../aprendizado/index.html">Aprendizado</a><a
+                              href="../../laboratorio/index.html">Laboratório</a><a
+                              href="../../glossario/index.html">Glossário &amp; Teoria</a></nav>
+            </div>
+      </header>
+      <!-- BEGIN: MainHeader -->
+      <!-- END: MainHeader -->
+      <!-- BEGIN: PageContent -->
+      <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 cl-flow-main cl-lex-result">
+            <!-- Cabeçalho da Página / Breadcrumb simplificado -->
+            <header class="cl-flow-header">
+                  <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE LÉXICA</p>
+                  <h1>Tokens Reconhecidos</h1>
+                  <nav aria-label="Assuntos da trilha" class="cl-lesson-nav cl-flow-nav"><a
+                              href="passo-1.html">Expressões regulares</a><a href="passo-2.html">Autômatos (DFA)</a><a
+                              href="passo-3.html">Classificação de tokens</a><a aria-current="step"
+                              href="resultado-passo-3.html">Resultado</a></nav>
+                  <p class="cl-flow-description">Veja os lexemas da instrução, suas categorias e o papel de cada um.</p>
+            </header>
+            <!-- Bloco do Código Analisado (Fiel a SCREEN_5 / IMAGE_18) -->
+            <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm space-y-3 cl-result-source">
+                  <div class="flex items-center justify-between text-xs">
+                        <span class="font-bold tracking-wider text-slate-500 uppercase">
+                              Código Original Analisado
+                        </span>
+                        <span class="text-slate-400 font-mono">
+                              1 linha examinada
+                        </span>
+                  </div>
+                  <!-- Container do código estilo terminal escuro -->
+                  <div
+                        class="rounded-xl bg-[#1a202c] p-4 text-white font-mono text-sm sm:text-base flex items-center gap-3 overflow-x-auto shadow-inner ">
+                        <span class="text-slate-500 select-none text-xs">
+                              1
+                        </span>
+                        <div class="flex items-center gap-2">
+                              <span
+                                    class="px-2 py-0.5 rounded border border-purple-400/40 bg-purple-900/30 text-purple-300 font-semibold">
+                                    let
+                              </span>
+                              <span
+                                    class="px-2 py-0.5 rounded border border-blue-400/40 bg-blue-900/30 text-blue-300 font-semibold">
+                                    total
+                              </span>
+                              <span
+                                    class="px-2 py-0.5 rounded border border-amber-400/40 bg-amber-900/30 text-amber-300 font-semibold">
+                                    =
+                              </span>
+                              <span
+                                    class="px-2 py-0.5 rounded border border-blue-400/40 bg-blue-900/30 text-blue-300 font-semibold">
+                                    preco
+                              </span>
+                              <span
+                                    class="px-2 py-0.5 rounded border border-amber-400/40 bg-amber-900/30 text-amber-300 font-semibold">
+                                    *
+                              </span>
+                              <span
+                                    class="px-2 py-0.5 rounded border border-emerald-400/40 bg-emerald-900/30 text-emerald-300 font-semibold">
+                                    2
+                              </span>
+                              <span
+                                    class="px-2 py-0.5 rounded border border-slate-400/40 bg-slate-800 text-slate-300 font-semibold">
+                                    ;
+                              </span>
+                        </div>
+                  </div>
+            </div>
+            <!-- Tabela consolidada e arejada dos 7 Tokens Classificados -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden cl-result-table">
+                  <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                        <div>
+                              <h2 class="text-base font-bold text-slate-900">
+                                    Fita de Tokens Resultante
+                              </h2>
+                              <p class="text-xs text-slate-500">
+                                    Sequência linear emitida pelo Scanner/Lexer pronta para o Parser
+                              </p>
+                        </div>
+
+                  </div>
+                  <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                              <thead>
+                                    <tr
+                                          class="bg-slate-50/75 border-b border-slate-200/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                                          <th class="py-3 px-6 w-16 text-center">
+                                                #
+                                          </th>
+                                          <th class="py-3 px-6">
+                                                Lexema
+                                          </th>
+                                          <th class="py-3 px-6">
+                                                Categoria Léxica (Token)
+                                          </th>
+                                          <th class="py-3 px-6">Papel no exemplo</th>
+                                    </tr>
+                              </thead>
+                              <tbody class="divide-y divide-slate-100 text-sm">
+                                    <!-- 1: let -->
+                                    <tr class="hover:bg-slate-50/50 transition">
+                                          <td class="py-3 px-6 text-center text-xs font-bold text-slate-400">
+                                                1
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <span
+                                                      class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                                                      let
+                                                </span>
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <div
+                                                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-purple-200 bg-purple-50 text-purple-700 text-xs font-semibold">
+                                                      <span class="text-purple-600 text-sm leading-none">
+                                                            ◆
+                                                      </span>
+                                                      <span>
+                                                            Palavra reservada
+                                                      </span>
+                                                </div>
+                                          </td>
+                                          <td class="cl-token-role">Inicia a declaração da variável</td>
+                                    </tr>
+                                    <!-- 2: total -->
+                                    <tr class="hover:bg-slate-50/50 transition">
+                                          <td class="py-3 px-6 text-center text-xs font-bold text-slate-400">
+                                                2
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <span
+                                                      class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                                                      total
+                                                </span>
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <div
+                                                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 text-xs font-semibold">
+                                                      <span class="text-blue-600 text-sm leading-none">
+                                                            ●
+                                                      </span>
+                                                      <span>
+                                                            Identificador
+                                                      </span>
+                                                </div>
+                                          </td>
+                                          <td class="cl-token-role">Nome da variável declarada</td>
+                                    </tr>
+                                    <!-- 3: = -->
+                                    <tr class="hover:bg-slate-50/50 transition">
+                                          <td class="py-3 px-6 text-center text-xs font-bold text-slate-400">
+                                                3
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <span
+                                                      class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                                                      =
+                                                </span>
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <div
+                                                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 text-xs font-semibold">
+                                                      <span class="text-amber-600 text-sm leading-none font-bold">
+                                                            +
+                                                      </span>
+                                                      <span>
+                                                            Operador
+                                                      </span>
+                                                </div>
+                                          </td>
+                                          <td class="cl-token-role">Atribui um valor à variável</td>
+                                    </tr>
+                                    <!-- 4: preco -->
+                                    <tr class="hover:bg-slate-50/50 transition">
+                                          <td class="py-3 px-6 text-center text-xs font-bold text-slate-400">
+                                                4
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <span
+                                                      class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                                                      preco
+                                                </span>
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <div
+                                                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 text-xs font-semibold">
+                                                      <span class="text-blue-600 text-sm leading-none">
+                                                            ●
+                                                      </span>
+                                                      <span>
+                                                            Identificador
+                                                      </span>
+                                                </div>
+                                          </td>
+                                          <td class="cl-token-role">Identifica o valor usado no cálculo</td>
+                                    </tr>
+                                    <!-- 5: * -->
+                                    <tr class="hover:bg-slate-50/50 transition">
+                                          <td class="py-3 px-6 text-center text-xs font-bold text-slate-400">
+                                                5
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <span
+                                                      class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                                                      *
+                                                </span>
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <div
+                                                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 text-xs font-semibold">
+                                                      <span class="text-amber-600 text-sm leading-none font-bold">
+                                                            +
+                                                      </span>
+                                                      <span>
+                                                            Operador
+                                                      </span>
+                                                </div>
+                                          </td>
+                                          <td class="cl-token-role">Indica a multiplicação</td>
+                                    </tr>
+                                    <!-- 6: 2 -->
+                                    <tr class="hover:bg-slate-50/50 transition">
+                                          <td class="py-3 px-6 text-center text-xs font-bold text-slate-400">
+                                                6
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <span
+                                                      class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                                                      2
+                                                </span>
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <div
+                                                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-800 text-xs font-semibold">
+                                                      <span class="text-emerald-600 text-xs leading-none">
+                                                            ■
+                                                      </span>
+                                                      <span>
+                                                            Número
+                                                      </span>
+                                                </div>
+                                          </td>
+                                          <td class="cl-token-role">Representa um valor numérico</td>
+                                    </tr>
+                                    <!-- 7: ; -->
+                                    <tr class="hover:bg-slate-50/50 transition">
+                                          <td class="py-3 px-6 text-center text-xs font-bold text-slate-400">
+                                                7
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <span
+                                                      class="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                                                      ;
+                                                </span>
+                                          </td>
+                                          <td class="py-3 px-6">
+                                                <div
+                                                      class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-slate-300 bg-slate-100 text-slate-700 text-xs font-semibold">
+                                                      <span class="text-slate-500 text-xs leading-none">
+                                                            ▲
+                                                      </span>
+                                                      <span>
+                                                            Pontuação
+                                                      </span>
+                                                </div>
+                                          </td>
+                                          <td class="cl-token-role">Marca o fim da instrução</td>
+                                    </tr>
+                              </tbody>
+                        </table>
+                  </div>
+            </div>
+            <!-- Card Didático Informativo: O que o analisador léxico fez? -->
+            <div class="bg-blue-50/70 border border-blue-100 rounded-2xl p-5 flex items-start gap-4 cl-result-explanation"
+                  role="note">
+                  <div
+                        class="w-9 h-9 rounded-xl bg-[#3747d6] text-white flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                        <span class="material-symbols-outlined text-lg" data-compilab-symbol="lightbulb"><svg
+                                    aria-hidden="true" class="compilab-icon" focusable="false" viewbox="0 0 384 512"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                          d="M272 384c9.6-31.9 29.5-59.1 49.2-86.2c0 0 0 0 0 0c5.2-7.1 10.4-14.2 15.4-21.4c19.8-28.5 31.4-63 31.4-100.3C368 78.8 289.2 0 192 0S16 78.8 16 176c0 37.3 11.6 71.9 31.4 100.3c5 7.2 10.2 14.3 15.4 21.4c0 0 0 0 0 0c19.8 27.1 39.7 54.4 49.2 86.2l160 0zM192 512c44.2 0 80-35.8 80-80l0-16-160 0 0 16c0 44.2 35.8 80 80 80zM112 176c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.9 50.1-112 112-112c8.8 0 16 7.2 16 16s-7.2 16-16 16c-44.2 0-80 35.8-80 80z">
+                                    </path>
+                              </svg></span>
+                  </div>
+                  <div class="space-y-1">
+                        <h3 class="text-sm font-bold text-slate-900">
+                              O que o analisador léxico fez?
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                              Ele percorreu o código caractere por caractere, descartou espaços em branco e organizou o
+                              texto bruto em unidades lógicas com significado. No exemplo, essa sequência ordenada de
+                              tokens está organizada e pronta para a próxima etapa: a
+                              <strong>
+                                    Análise Sintática
+                              </strong>
+                              .
+                        </p>
+                  </div>
+            </div>
+            <!-- Barra de Ações / Rodapé com Navegação Clara -->
+            <div
+                  class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 cl-flow-footer cl-result-actions">
+                  <a class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold transition text-center shadow-sm flex items-center justify-center gap-2"
+                        href="passo-3.html">
+                        <span class="material-symbols-outlined text-base" data-compilab-symbol="arrow_back"><svg
+                                    aria-hidden="true" class="compilab-icon" focusable="false" viewbox="0 0 448 512"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                          d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                                    </path>
+                              </svg></span>
+                        <span>
+                              Voltar para Passo 3 (Quiz)
+                        </span>
+                  </a>
+                  <a class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#3747d6] hover:bg-[#2b39b5] text-white text-sm font-semibold transition text-center shadow-sm shadow-blue-500/20 flex items-center justify-center gap-2"
+                        href="conclusao.html">Rever conceitos da análise léxica</a>
+            </div>
+      </main>
+      <!-- END: PageContent -->
+      <script defer="True" src="../../assets/icons.js"></script>
+      <script defer="True" src="resultado-passo-3.js"></script>
+</body>
+
+</html>

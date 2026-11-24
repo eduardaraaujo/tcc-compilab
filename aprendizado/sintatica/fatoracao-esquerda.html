@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Fatoração à esquerda — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+    <link href="../../assets/ll1-optional.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main cl-ll1-page">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">APROFUNDAMENTO — ANÁLISE SINTÁTICA</p>
+            <h1>Fatoração à esquerda</h1>
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="leitura-top-down.html">GLC e
+                    LL(1)</a><a href="ambiguidade.html">Ambiguidade</a><a href="recursividade-esquerda.html">Recursão à
+                    esquerda</a><a aria-current="step" href="fatoracao-esquerda.html">Fatoração</a><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Tabela preditiva</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">FIRST/FOLLOW</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Construção LL(1)</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Pilha e entrada</button></nav>
+
+            <p class="cl-flow-description">Reorganize alternativas com prefixo comum para que o parser top-down possa
+                decidir mais tarde.</p>
+        </header>
+        <div class="cl-syn-grid">
+            <section class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label"><svg aria-hidden="true"
+                        viewbox="0 0 24 24">
+                        <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
+                        <path d="M7 11v5c3 3 7 3 10 0v-5M21 9v6"></path>
+                    </svg> ATIVIDADE GUIADA</span>
+                <h2>Como fatorar prefixos comuns?</h2>
+                <p>Quando duas produções de um não terminal começam pelos mesmos tokens, um único lookahead pode não
+                    decidir qual alternativa escolher. A fatoração coloca o prefixo compartilhado em uma única produção.
+                </p>
+                <div class="cl-syn-prompt"><span class="cl-syn-question-text">Para
+                        <code>R → id "=" num | id "(" ")"</code>, qual gramática
+                        <strong>fatora à esquerda</strong> o prefixo comum <code>id</code>?</span></div>
+                <div aria-label="Alternativas do exercício" class="cl-syn-choices" id="cl-syn-choices" role="group">
+                    <button aria-pressed="false" class="cl-syn-option" data-answer="A" data-correct="true"
+                        data-feedback="Correto. O prefixo id é reconhecido primeiro; depois o próximo símbolo (= ou () determina qual alternativa de R' usar."
+                        type="button"><span class="cl-syn-option-letter">A</span><span
+                            class="cl-syn-option-copy"><code>R → id R' ; R' → '=' num | '(' ')'</code><span
+                                class="cl-syn-option-desc">Consome id uma vez e deixa a continuação
+                                decidir.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="B" data-correct="false"
+                        data-feedback="Essa é a gramática original. As produções continuam começando por id, então o próximo token não as distingue imediatamente."
+                        type="button"><span class="cl-syn-option-letter">B</span><span
+                            class="cl-syn-option-copy"><code>R → id '=' num | id '(' ')'</code><span
+                                class="cl-syn-option-desc">Mantém as duas alternativas com o mesmo
+                                prefixo.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="C" data-correct="false"
+                        data-feedback="Essa transformação perdeu a alternativa id ( ) e permite apenas id, que não existia na linguagem do exemplo."
+                        type="button"><span class="cl-syn-option-letter">C</span><span
+                            class="cl-syn-option-copy"><code>R → id R' ; R' → '=' num | ε</code><span
+                                class="cl-syn-option-desc">Elimina a chamada id() e aceita uma entrada
+                                incompleta.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="D" data-correct="false"
+                        data-feedback="O token id faz parte das duas sequências originais. Sem ele, a linguagem foi alterada."
+                        type="button"><span class="cl-syn-option-letter">D</span><span
+                            class="cl-syn-option-copy"><code>R → '=' num | '(' ')'</code><span
+                                class="cl-syn-option-desc">Remove o identificador obrigatório.</span></span></button>
+                </div>
+                <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
+                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            </section>
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
+                <h2>Duas alternativas começam igual</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática ilustrativa completa — símbolo
+                        inicial R</span>
+                    <pre class="cl-syn-editor">R → id '=' num | id '(' ')'</pre>
+                </div>
+                <p>O primeiro token de ambas as alternativas é <code>id</code>. A escolha só fica clara quando aparece o
+                    token seguinte: <code>=</code> ou <code>(</code>.</p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Fatorar não é eliminar alternativas: é
+                        <strong>adiar a decisão</strong> até depois de reconhecer o prefixo comum.</span></div>
+                <p class="cl-syn-caption">Este exemplo tem somente o não terminal R. A gramática principal S/E/T/F será
+                    retomada em FIRST/FOLLOW e na tabela LL(1).</p>
+            </aside>
+        </div>
+        <section class="cl-syn-reveal cl-syn-worked-example" data-show-on-correct="" hidden="">
+            <div class="cl-syn-card"><span class="cl-syn-label">TRANSFORMAÇÃO COMENTADA</span>
+                <h2>A decisão acontece depois de id</h2>
+                <pre class="cl-syn-editor">R  → id R'
+R' → '=' num | '(' ')'</pre>
+                <p>Após reconhecer <code>id</code>, o parser consulta o próximo token e escolhe a continuação adequada.
+                    Aqui os prefixos das alternativas de <code>R'</code> são diferentes.</p>
+                <p class="cl-syn-caption">Fatoração e eliminação de recursão à esquerda ajudam no projeto da gramática,
+                    mas a condição LL(1) ainda depende da ausência de conflitos nas escolhas.</p>
+            </div>
+        </section>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="recursividade-esquerda.html">← Voltar à
+                recursão</a><a class="cl-syn-link primary" data-next-lesson="" href="passo-4.html">Como funciona a
+                tabela preditiva →</a></footer>
+    </main>
+    <script defer="" src="lesson.js"></script>
+</body>
+
+</html>

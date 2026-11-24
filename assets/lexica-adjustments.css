@@ -1,0 +1,598 @@
+/* Passo 1: a área para digitação deve ser reconhecida imediatamente como campo editável. */
+.cl-lexical-reference #tester-input.cl-identifier-input {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 46px !important;
+  padding: 10px 13px !important;
+  background-color: #f6f9ff !important;
+  color: #17213c !important;
+  border: 1.5px solid #a9b9ce !important;
+  border-radius: 9px !important;
+  box-shadow: inset 0 1px 2px rgba(9, 12, 42, .06), 0 1px 2px rgba(9, 12, 42, .03) !important;
+  caret-color: #3747d6;
+  font: 600 13px/1.45 'JetBrains Mono', ui-monospace, monospace !important;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.cl-lexical-reference #tester-input.cl-identifier-input::placeholder {
+  color: #73829a !important;
+  opacity: 1
+}
+
+.cl-lexical-reference #tester-input.cl-identifier-input:focus {
+  outline: none !important;
+  background: #fff !important;
+  border-color: #3747d6 !important;
+  box-shadow: 0 0 0 3px rgba(55, 71, 214, .15) !important;
+}
+
+.cl-flow-main #active-prompt-box {
+  gap: 0 !important;
+  align-items: center !important;
+  background: #f1f5ff !important;
+  border-color: #dde6fa !important
+}
+
+.cl-flow-main #active-prompt-title.cl-question-inline {
+  font-size: 15px !important;
+  font-weight: 750 !important;
+  line-height: 1.75 !important;
+  white-space: normal
+}
+
+.cl-flow-main #active-prompt-title .cl-prompt-token {
+  display: inline-block !important;
+  margin: 0 1px;
+  padding: 2px 8px;
+  background: #e1eaff !important;
+  border: 1px solid #bdcafe !important;
+  border-radius: 5px;
+  color: #283ab4 !important;
+  font: 800 15px/1.4 'JetBrains Mono', ui-monospace, monospace !important;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+/* Mesmo peso visual para as cinco alternativas antes da escolha. */
+.cl-flow-main #category-buttons-container .cat-btn {
+  border-width: 1px !important;
+  font-weight: 500 !important;
+  box-shadow: none !important;
+  outline: none;
+  min-height: 48px;
+}
+
+.cl-flow-main #category-buttons-container .cat-btn:focus-visible {
+  outline: 2px solid #3747d6 !important;
+  outline-offset: 2px
+}
+
+.cl-flow-main #category-buttons-container .cat-btn.cl-category-good {
+  border-width: 2px !important;
+  outline: 2px solid rgba(5, 150, 105, .16) !important;
+  font-weight: 700 !important
+}
+
+.cl-flow-main #category-buttons-container .cat-btn.cl-category-wrong {
+  border-width: 2px !important;
+  outline: 2px solid rgba(200, 80, 80, .12) !important;
+  font-weight: 700 !important
+}
+
+/* A cor da categoria só aparece na fita após o estudante classificá-la. */
+.cl-reviewed-token[data-category="keyword"] {
+  background: #f4edff !important;
+  border-color: #dfc9fb !important;
+  color: #6d28d9 !important
+}
+
+.cl-reviewed-token[data-category="ident"] {
+  background: #e8f4fe !important;
+  border-color: #c6e4fa !important;
+  color: #075b9a !important
+}
+
+.cl-reviewed-token[data-category="op"] {
+  background: #fff6df !important;
+  border-color: #f5df9d !important;
+  color: #92400e !important
+}
+
+.cl-reviewed-token[data-category="num"] {
+  background: #e5f8ef !important;
+  border-color: #b1eacb !important;
+  color: #056947 !important
+}
+
+.cl-reviewed-token[data-category="punct"] {
+  background: #f0f3f7 !important;
+  border-color: #d8e0eb !important;
+  color: #475569 !important
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-solved[data-token-category="keyword"] {
+  background: #39265c !important;
+  border-color: #b794ee !important;
+  color: #f3e8ff !important
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-solved[data-token-category="ident"] {
+  background: #183e64 !important;
+  border-color: #7bc4f4 !important;
+  color: #d4efff !important
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-solved[data-token-category="op"] {
+  background: #53401c !important;
+  border-color: #e9be6e !important;
+  color: #fff2cb !important
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-solved[data-token-category="num"] {
+  background: #16473a !important;
+  border-color: #6fe0a7 !important;
+  color: #d1fae5 !important
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-solved[data-token-category="punct"] {
+  background: #354258 !important;
+  border-color: #9da9bc !important;
+  color: #eff4f8 !important
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-solved.cl-token-active {
+  box-shadow: 0 0 0 2px #90a4ff !important;
+  outline: 1px solid #fff !important;
+  outline-offset: 2px
+}
+
+body .cl-flow-main.cl-lex-result {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 18px !important;
+  max-width: 1230px !important;
+  margin: 0 auto !important;
+  padding: 28px 24px 64px !important;
+}
+
+.cl-lex-result>.cl-flow-header {
+  flex: 0 0 auto !important;
+  margin-bottom: 4px !important
+}
+
+.cl-lex-result>.cl-result-source,
+.cl-lex-result>.cl-result-table,
+.cl-lex-result>.cl-result-explanation,
+.cl-lex-result>.cl-result-actions {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+  clear: both !important;
+  float: none !important;
+}
+
+.cl-lex-result .cl-result-source,
+.cl-lex-result .cl-result-table {
+  background: #fff !important;
+  border: 1px solid #e2e8f2 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 3px 12px rgba(9, 12, 42, .045) !important
+}
+
+.cl-lex-result .cl-result-source {
+  padding: 19px 22px !important
+}
+
+.cl-lex-result .cl-result-source>div:last-child {
+  max-width: 100%;
+  overflow-x: auto
+}
+
+.cl-lex-result .cl-result-table {
+  overflow: hidden !important
+}
+
+.cl-lex-result .cl-result-table>div:first-child {
+  padding: 19px 22px !important;
+  gap: 12px;
+  flex-wrap: wrap !important
+}
+
+.cl-lex-result .cl-result-table .overflow-x-auto {
+  overflow-x: auto !important;
+  display: block !important;
+  max-width: 100% !important
+}
+
+.cl-lex-result table {
+  width: 100% !important;
+  min-width: 620px !important;
+  border-collapse: collapse !important;
+  table-layout: auto !important
+}
+
+.cl-lex-result table th,
+.cl-lex-result table td {
+  vertical-align: middle !important;
+  white-space: normal !important
+}
+
+.cl-lex-result table td.cl-token-role {
+  max-width: none !important;
+  width: 32%;
+  text-align: left !important;
+  padding: 12px 20px !important;
+  overflow-wrap: break-word !important
+}
+
+.cl-lex-result .cl-result-explanation {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 15px !important;
+  padding: 20px 22px !important;
+  background: #eef4ff !important;
+  border: 1px solid #dce6f8 !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+
+.cl-lex-result .cl-result-explanation>div:first-child {
+  flex: 0 0 38px !important;
+  width: 38px !important;
+  height: 38px !important;
+  margin: 0 !important
+}
+
+.cl-lex-result .cl-result-explanation>div:last-child {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  display: block !important
+}
+
+.cl-lex-result .cl-result-explanation h3 {
+  margin: 0 0 5px !important;
+  font: 800 15px/1.4 'Plus Jakarta Sans', sans-serif !important;
+  color: #1d2d4f !important
+}
+
+.cl-lex-result .cl-result-explanation p {
+  margin: 0 !important;
+  font: 450 13px/1.75 'Plus Jakarta Sans', sans-serif !important;
+  color: #43556e !important;
+  max-width: none !important
+}
+
+.cl-lex-result .cl-result-actions {
+  margin-top: 4px !important
+}
+
+body:has(.cl-lex-conclusion) {
+  margin: 0 !important;
+  background: #f2f6fc !important
+}
+
+.cl-lex-conclusion {
+  box-sizing: border-box !important;
+  max-width: 1230px !important;
+  width: 100% !important;
+  min-height: calc(100vh - 66px);
+  margin: 0 auto !important;
+  padding: 28px 24px 64px !important;
+}
+
+.cl-lex-conclusion .cl-flow-header {
+  margin-bottom: 20px !important
+}
+
+.cl-lex-conclusion .cl-flow-header h1 {
+  font-size: clamp(24px, 2.6vw, 31px) !important
+}
+
+.cl-lex-conclusion .cl-flow-description {
+  max-width: 750px !important
+}
+
+.cl-lex-conclusion .cl-review-card {
+  padding: 23px 25px !important;
+  margin: 0 0 18px !important
+}
+
+.cl-lex-conclusion .cl-conclusion-example {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 18px 0;
+  padding: 17px 18px;
+  background: #f4f7fd;
+  border: 1px solid #e0e8f4;
+  border-radius: 12px;
+}
+
+.cl-lex-conclusion .cl-conclusion-example>span {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+  color: #47607c
+}
+
+.cl-lex-conclusion .cl-conclusion-example code.cl-conclusion-code {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 14px 16px;
+  color: #e8eefc;
+  background: #090c2a;
+  border: 1px solid #29385e;
+  border-radius: 9px;
+  font: 600 14px/1.55 'JetBrains Mono', ui-monospace, monospace;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.cl-lex-conclusion .cl-conclusion-example p {
+  margin: 0 !important
+}
+
+.cl-lex-conclusion .cl-review-actions {
+  padding: 18px 0 !important;
+  border-top: 1px solid #dfe6f0;
+  margin-top: 18px !important
+}
+
+@media (max-width:700px) {
+
+  body .cl-flow-main.cl-lex-result,
+  .cl-lex-conclusion {
+    padding: 23px 15px 45px !important
+  }
+
+  .cl-lex-result .cl-result-source {
+    padding: 15px !important
+  }
+
+  .cl-lex-result .cl-result-table>div:first-child {
+    padding: 15px !important
+  }
+
+  .cl-lex-result .cl-result-explanation {
+    padding: 16px !important;
+    gap: 11px !important
+  }
+
+  .cl-lex-result .cl-result-explanation>div:first-child {
+    flex-basis: 31px !important;
+    width: 31px !important;
+    height: 31px !important
+  }
+
+  .cl-lex-conclusion .cl-review-card {
+    padding: 17px !important
+  }
+}
+
+.cl-flow-main .cl-dfa-question {
+  display: block !important;
+  color: #1b2442 !important;
+  font: 650 15px/1.7 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: 0;
+  white-space: normal !important
+}
+
+.cl-flow-main .cl-dfa-question code {
+  display: inline-block !important;
+  margin: 0 2px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: #fff !important;
+  color: #3747d6 !important;
+  font: 700 13px/1.5 'JetBrains Mono', monospace !important
+}
+
+/* Em telas estreitas a tabela vira uma lista legível, mostrando o papel do token
+   sem depender de rolagem horizontal para encontrar a quarta coluna. */
+@media(max-width:680px) {
+  .cl-lex-result .cl-result-table .overflow-x-auto {
+    overflow-x: visible !important
+  }
+
+  .cl-lex-result .cl-result-table table {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100% !important
+  }
+
+  .cl-lex-result .cl-result-table thead {
+    display: none !important
+  }
+
+  .cl-lex-result .cl-result-table tbody {
+    display: block !important;
+    width: 100% !important
+  }
+
+  .cl-lex-result .cl-result-table tbody tr {
+    display: grid !important;
+    grid-template-columns: 25px minmax(0, .55fr) minmax(0, 1.7fr) !important;
+    gap: 3px 9px !important;
+    align-items: center !important;
+    padding: 11px 14px !important;
+    border-bottom: 1px solid #e6ebf3 !important;
+    width: 100% !important;
+  }
+
+  .cl-lex-result .cl-result-table tbody tr:last-child {
+    border-bottom: 0 !important
+  }
+
+  .cl-lex-result .cl-result-table tbody td {
+    width: auto !important;
+    max-width: none !important;
+    padding: 2px 0 !important;
+    border: 0 !important;
+    min-width: 0 !important
+  }
+
+  .cl-lex-result .cl-result-table tbody td.cl-token-role {
+    grid-column: 2/4 !important;
+    max-width: none !important;
+    width: auto !important;
+    padding: 4px 0 0 !important;
+    color: #526179 !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  .cl-lex-result .cl-result-table tbody td.cl-token-role::before {
+    content: 'Papel: ';
+    color: #526179;
+    font-weight: 750
+  }
+}
+
+
+.cl-flow-main .cl-step3-guidance {
+  background: #f1f5ff !important;
+  border-color: #d9e2fa !important;
+  color: #364568 !important;
+}
+
+.cl-flow-main .cl-step3-guidance code {
+  color: #293ba7 !important;
+  background: #fff !important;
+}
+
+.cl-flow-main .cl-support-section>summary::before,
+.cl-flow-main .cl-specs>summary::before,
+.cl-flow-main .cl-concept-details>summary::before {
+  background: #eef2ff !important;
+  color: #3747d6 !important;
+}
+
+/* O estado de aceitação mostrado no diagrama é informativo, não um feedback de resposta. */
+.cl-lesson-dfa .cl-dfa-acceptance {
+  background: #edf2ff !important;
+  border: 1px solid #cbd7f6 !important;
+  color: #293c93 !important;
+}
+
+.cl-lesson-dfa .cl-dfa-acceptance .text-emerald-700,
+.cl-lesson-dfa .cl-dfa-acceptance .text-emerald-800 {
+  color: #304eaa !important
+}
+
+.cl-lesson-dfa .cl-lesson-choice:not(.cl-choice-correct):not(.cl-choice-wrong) code,
+.cl-lesson-dfa .cl-lesson-choice.cl-choice-correct code,
+.cl-lesson-dfa .cl-lesson-choice.cl-choice-wrong code {
+  background: #eaf0ff !important;
+  color: #31429e !important;
+  border: 1px solid #cfdbfb !important;
+}
+
+.cl-lesson-dfa .cl-lesson-choice input[type="radio"] {
+  accent-color: #3747d6 !important
+}
+
+/* Numero: ciano para a categoria lexical, não o mesmo verde das mensagens de acerto. */
+.cl-flow-main #category-buttons-container .cat-btn[data-category="num"]:not(.cl-category-good):not(.cl-category-wrong) {
+  background: #ecfeff !important;
+  color: #0e7490 !important;
+  border-color: #a5e8ed !important;
+}
+
+.cl-reviewed-token[data-category="num"] {
+  background: #ecfeff !important;
+  border-color: #a5e8ed !important;
+  color: #0e7490 !important;
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-solved[data-token-category="num"] {
+  background: #163f55 !important;
+  border-color: #67d8e8 !important;
+  color: #d9fbff !important;
+}
+
+/* Alternativa anteriormente correta, ao revisitar token: destaque explícito e acessível. */
+.cl-flow-main #category-buttons-container .cat-btn.cl-category-good[aria-pressed="true"] {
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, .10) !important;
+}
+
+html:has(body.cl-lex-lesson),
+body.cl-lex-lesson {
+  background: #f2f6fc !important;
+  min-height: 100vh !important;
+}
+
+body.cl-lex-lesson .cl-flow-main,
+body.cl-lex-lesson .cl-lex-conclusion {
+  background: #f2f6fc !important;
+}
+
+body.cl-lex-lesson .cl-lex-step-actions {
+  padding: 18px 0 !important;
+  margin-top: 24px !important;
+}
+
+body.cl-lex-lesson .cl-lex-step-actions .cl-lex-step-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-height: 40px !important;
+  padding: 10px 15px !important;
+  border: 1px solid #dce4f0 !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+  color: #26375b !important;
+  box-shadow: 0 2px 4px rgba(9, 12, 42, .045) !important;
+  font: 700 12px/1.4 'Plus Jakarta Sans', sans-serif !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+body.cl-lex-lesson .cl-lex-step-actions .cl-lex-step-link-primary {
+  background: #3747d6 !important;
+  border-color: #3747d6 !important;
+  color: #fff !important;
+}
+
+body.cl-lex-lesson .cl-lex-step-actions .cl-lex-step-link-primary:hover {
+  background: #283ab9 !important;
+}
+
+body.cl-lex-lesson .cl-lex-step-actions .cl-lex-step-link:not(.cl-lex-step-link-primary):hover {
+  background: #edf2ff !important;
+}
+
+body.cl-lex-lesson .cl-lex-step-link:focus-visible {
+  outline: 3px solid #92b9fa !important;
+  outline-offset: 2px !important;
+}
+
+body.cl-lex-lesson .cl-lex-step-link svg.compilab-icon {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+@media(max-width:600px) {
+
+  body.cl-lex-lesson .cl-lex-step-actions,
+  body.cl-lex-lesson .cl-lex-step-actions>div {
+    width: 100% !important;
+    align-items: stretch !important;
+  }
+
+  body.cl-lex-lesson .cl-lex-step-actions .cl-lex-step-link {
+    width: 100% !important;
+  }
+}

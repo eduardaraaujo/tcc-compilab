@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>FIRST e FOLLOW — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+    <link href="../../assets/ll1-optional.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main cl-ll1-page">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">APROFUNDAMENTO — ANÁLISE SINTÁTICA</p>
+            <h1>FIRST e FOLLOW</h1>
+
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="leitura-top-down.html">GLC e
+                    LL(1)</a><a href="ambiguidade.html">Ambiguidade</a><a href="recursividade-esquerda.html">Recursão à
+                    esquerda</a><a href="fatoracao-esquerda.html">Fatoração</a><a href="passo-4.html">Tabela
+                    preditiva</a><a aria-current="step" href="first-follow.html">FIRST/FOLLOW</a><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Construção LL(1)</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Pilha e entrada</button></nav>
+
+            <p class="cl-flow-description">
+                Acompanhe como encontrar os símbolos que iniciam (FIRST) e sucedem (FOLLOW) cada não-terminal.
+            </p>
+
+            <p class="cl-flow-description">Resolva duas perguntas, uma de FIRST e outra de FOLLOW, antes de consultar a
+                resolução completa.</p>
+
+
+        </header>
+        <div class="cl-syn-grid">
+            <div>
+                <section class="cl-syn-card cl-ff-stage" id="cl-ff-first"><span class="cl-syn-label">ATIVIDADE GUIADA —
+                        FIRST</span>
+                    <h2>O que pode começar E'?</h2>
+                    <p>FIRST reúne os terminais que podem iniciar uma derivação. Incluímos <code>ε</code> quando o não
+                        terminal pode gerar a cadeia vazia.</p>
+                    <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">1</span><span
+                            class="cl-syn-question-text">Qual conjunto é <strong>FIRST(E')</strong> para a gramática de
+                            referência?</span></div>
+                    <div aria-label="Alternativas de FIRST" class="cl-syn-choices" role="group"><button
+                            aria-pressed="false" class="cl-syn-option" data-correct="false"
+                            data-feedback="Este é o conjunto de terminais que iniciam E, T e F. E' é a continuação opcional de somas/subtrações."
+                            data-ff-answer="A" type="button"><span class="cl-syn-option-letter">A</span><span
+                                class="cl-syn-option-copy"><code>{ id, num, (, - }</code><span
+                                    class="cl-syn-option-desc">Inícios de uma expressão ou
+                                    fator.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                            data-correct="true"
+                            data-feedback="Correto. E' pode iniciar uma soma (+), uma subtração (-) ou encerrar com ε."
+                            data-ff-answer="B" type="button"><span class="cl-syn-option-letter">B</span><span
+                                class="cl-syn-option-copy"><code>{ +, -, ε }</code><span
+                                    class="cl-syn-option-desc">Soma, subtração ou cadeia
+                                    vazia.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                            data-correct="false"
+                            data-feedback="Esse conjunto é FOLLOW(E'), os símbolos que podem vir após a expressão."
+                            data-ff-answer="C" type="button"><span class="cl-syn-option-letter">C</span><span
+                                class="cl-syn-option-copy"><code>{ ), ; }</code><span
+                                    class="cl-syn-option-desc">Símbolos de FOLLOW(E').</span></span></button><button
+                            aria-pressed="false" class="cl-syn-option" data-correct="false"
+                            data-feedback="Esses operadores iniciam alternativas de T', não de E'." data-ff-answer="D"
+                            type="button"><span class="cl-syn-option-letter">D</span><span
+                                class="cl-syn-option-copy"><code>{ *, / }</code><span class="cl-syn-option-desc">Inícios
+                                    da continuação T'.</span></span></button></div>
+                    <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-ff-first-feedback" role="status"></p>
+                </section>
+                <section class="cl-syn-card cl-ff-stage" hidden="" id="cl-ff-follow"><span
+                        class="cl-syn-label">ATIVIDADE GUIADA — FOLLOW</span>
+                    <h2>O que pode vir depois de E'?</h2>
+                    <p>FOLLOW reúne os terminais que podem aparecer depois de um não terminal. Como <code>S</code> é
+                        inicial, <code>FOLLOW(S) = { $ }</code>. Em <code>S → D L</code>, <code>D</code> pode ser
+                        seguido por outra declaração (<code>let</code>) ou pelo fim do programa (<code>$</code>); por
+                        isso, <code>FOLLOW(D) = { let, $ }</code>. Já <code>E</code> aparece antes de <code>;</code> em
+                        <code>D</code> e antes de <code>)</code> em <code>F</code>.
+                    </p>
+                    <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">2</span><span
+                            class="cl-syn-question-text">Para a gramática completa com <code>S</code> como símbolo
+                            inicial, qual é <code>FOLLOW(E')</code>?</span></div>
+                    <div aria-label="Alternativas de FOLLOW" class="cl-syn-choices" role="group"><button
+                            aria-pressed="false" class="cl-syn-option" data-correct="false"
+                            data-feedback="Este é FIRST(E'); FOLLOW nunca contém ε." data-ff-answer="A"
+                            type="button"><span class="cl-syn-option-letter">A</span><span
+                                class="cl-syn-option-copy"><code>{ +, -, ε }</code><span class="cl-syn-option-desc">Esse
+                                    é o conjunto FIRST(E').</span></span></button><button aria-pressed="false"
+                            class="cl-syn-option" data-correct="false"
+                            data-feedback="+ e - são reconhecidos pela continuação E'; * e / são operações internas a T."
+                            data-ff-answer="B" type="button"><span class="cl-syn-option-letter">B</span><span
+                                class="cl-syn-option-copy"><code>{ *, /, +, - }</code><span
+                                    class="cl-syn-option-desc">Operadores da expressão, mas não são o FOLLOW
+                                    pedido.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                            data-correct="true"
+                            data-feedback="Correto. E' está no fim de E → T E' e herda FOLLOW(E): ) ou ;."
+                            data-ff-answer="C" type="button"><span class="cl-syn-option-letter">C</span><span
+                                class="cl-syn-option-copy"><code>{ ), ; }</code><span class="cl-syn-option-desc">Fim da
+                                    expressão antes de parêntese ou ponto e vírgula.</span></span></button><button
+                            aria-pressed="false" class="cl-syn-option" data-correct="false"
+                            data-feedback="Esses símbolos podem iniciar uma expressão, portanto são exemplos de FIRST(E), não de FOLLOW(E')."
+                            data-ff-answer="D" type="button"><span class="cl-syn-option-letter">D</span><span
+                                class="cl-syn-option-copy"><code>{ id, num, (, - }</code><span
+                                    class="cl-syn-option-desc">Inícios de expressão.</span></span></button></div>
+                    <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-ff-follow-feedback" role="status">
+                    </p>
+                </section>
+                <p class="cl-syn-alert" hidden="" id="cl-ff-alert" role="alert">Responda às questões de FIRST e FOLLOW
+                    para continuar.</p>
+            </div>
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">GRAMÁTICA DE REFERÊNCIA</span>
+                <h2>Uma gramática para LL(1)</h2>
+                <p>Usaremos a mesma gramática no cálculo de conjuntos, na tabela preditiva e na simulação com pilha.</p>
+                <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span><strong>FIRST</strong>: como uma derivação
+                        pode começar. <strong>FOLLOW</strong>: o que pode vir imediatamente depois do não terminal.
+                        <strong>ε</strong> não é um token; <strong>$</strong> marca o fim da entrada.</span></div>
+            </aside>
+        </div>
+        <section class="cl-syn-reveal cl-syn-worked-example" hidden="" id="cl-ff-resolution">
+            <div class="cl-syn-card"><span class="cl-syn-label">CONCLUSÃO DAS DUAS QUESTÕES</span>
+                <h2>Conjuntos FIRST e FOLLOW da gramática completa</h2>
+                <p>Você encontrou <code>FIRST(E') = { +, -, ε }</code> e <code>FOLLOW(E') = { ), ; }</code>. Como
+                    <code>E'</code> aparece no fim de <code>E → T E'</code>, ele herda FOLLOW(E). A gramática também
+                    aceita uma lista de declarações através de <code>L</code>.
+                </p>
+                <div class="cl-ll1-table-wrap">
+                    <table class="cl-syn-mini-table">
+                        <thead>
+                            <tr>
+                                <th>Não terminal</th>
+                                <th>FIRST</th>
+                                <th>FOLLOW</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">S</th>
+                                <td>{ let }</td>
+                                <td>{ $ }</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">L</th>
+                                <td>{ let, ε }</td>
+                                <td>{ $ }</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">D</th>
+                                <td>{ let }</td>
+                                <td>{ let, $ }</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">E</th>
+                                <td>{ id, num, -, ( }</td>
+                                <td>{ ), ; }</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">E'</th>
+                                <td>{ +, -, ε }</td>
+                                <td>{ ), ; }</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">T</th>
+                                <td>{ id, num, -, ( }</td>
+                                <td>{ +, -, ), ; }</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">T'</th>
+                                <td>{ *, /, ε }</td>
+                                <td>{ +, -, ), ; }</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">F</th>
+                                <td>{ id, num, -, ( }</td>
+                                <td>{ +, -, *, /, ), ; }</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="cl-syn-caption">FOLLOW não inclui ε. Os conjuntos apresentados são fixos para esta gramática
+                    didática; não são calculados a partir de entradas editáveis.</p>
+            </div>
+        </section>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-4.html">← Voltar à introdução</a><a
+                class="cl-syn-link primary" data-next-lesson="" href="tabela-ll1.html">Construir tabela LL(1) →</a>
+        </footer>
+    </main>
+    <script defer="" src="first-follow.js"></script>
+</body>
+
+</html>

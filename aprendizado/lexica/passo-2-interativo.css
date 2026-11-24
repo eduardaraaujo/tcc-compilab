@@ -1,0 +1,117 @@
+.cl-dfa-sim {
+    background: #f7f9ff;
+    border: 1px solid #dce5f3;
+    border-radius: 11px;
+    padding: 12px 14px;
+    margin-top: 2px
+}
+
+.cl-dfa-sim-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 7px;
+    font-size: 12px;
+    color: #293e69
+}
+
+.cl-dfa-sim-status span {
+    font-size: 11px;
+    color: #64748b;
+    font-family: 'JetBrains Mono', monospace
+}
+
+.cl-dfa-sim>p {
+    margin: 8px 0 !important;
+    color: #4a5d7b;
+    font-size: 12px;
+    line-height: 1.55
+}
+
+.cl-dfa-sim-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap
+}
+
+.cl-dfa-sim-controls button {
+    border: 1px solid #d5e0f0;
+    border-radius: 8px;
+    color: #29466f;
+    background: #fff;
+    font: 700 12px 'Plus Jakarta Sans', sans-serif;
+    padding: 8px 12px;
+    cursor: pointer
+}
+
+.cl-dfa-sim-controls #cl-dfa-next {
+    background: #3747d6;
+    color: white;
+    border-color: #3747d6
+}
+
+.cl-dfa-sim-controls button:disabled {
+    opacity: .45;
+    cursor: not-allowed
+}
+
+.cl-dfa-sim-controls button:focus-visible {
+    outline: 3px solid rgba(5, 150, 105, .35);
+    outline-offset: 2px
+}
+
+#lex-dfa-trace [data-lex-dfa-cell] {
+    background: #eef2fa !important;
+    color: #34445f !important;
+    box-shadow: none !important;
+    transition: background .12s, border-color .12s;
+    border: 2px solid transparent
+}
+
+#lex-dfa-trace [data-lex-dfa-cell].cl-dfa-read {
+    background: #e8f7ef !important;
+    color: #065f46 !important
+}
+
+#lex-dfa-trace [data-lex-dfa-cell].cl-dfa-active {
+    border-color: #059669;
+    box-shadow: 0 0 0 2px #bbf7d0
+}
+
+#lex-dfa-trace [data-dfa-trace-state][hidden],
+#cl-dfa-acceptance[hidden] {
+    display: none !important
+}
+
+#lex-dfa-trace [data-dfa-trace-state].cl-dfa-active-state {
+    outline: 2px solid #059669;
+    outline-offset: 1px;
+    border-radius: 5px
+}
+
+.cl-dfa-node-active {
+    stroke: #059669 !important;
+    stroke-width: 4px !important
+}
+
+@media(max-width:500px) {
+    .cl-dfa-sim {
+        padding: 11px
+    }
+
+    .cl-dfa-sim-controls button {
+        flex: 1;
+        padding: 9px 5px;
+        font-size: 11px
+    }
+}
+
+#lex-dfa-trace [data-dfa-trace-state]~span[hidden] {
+    display: none !important
+}
+
+#lex-dfa-trace [data-lex-dfa-cell].cl-dfa-active {
+    box-shadow: 0 0 0 2px #bbf7d0 !important
+}

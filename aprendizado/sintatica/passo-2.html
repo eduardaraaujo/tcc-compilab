@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Derivação à esquerda — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE SINTÁTICA</p>
+            <h1>Derivação à esquerda</h1>
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="passo-1.html">Gramáticas
+                    (GLC)</a><a aria-current="step" href="passo-2.html">Derivação à esquerda</a><a data-next-lesson=""
+                    href="passo-3.html">Árvore de derivação</a></nav>
+            <p class="cl-flow-description">Veja como a gramática constrói a expressão, substituindo sempre o símbolo
+                não-terminal mais à esquerda a partir do símbolo inicial.</p>
+        </header>
+        <div class="cl-syn-grid">
+            <section class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label"><svg aria-hidden="true"
+                        viewbox="0 0 24 24">
+                        <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
+                        <path d="M7 11v5c3 3 7 3 10 0v-5M21 9v6"></path>
+                    </svg> ATIVIDADE GUIADA</span>
+                <h2>Como expandir a multiplicação?</h2>
+                <p>Na análise <strong>top-down</strong>, começamos pelo não terminal inicial e expandimos sempre o
+                    símbolo mais à esquerda até corresponder aos tokens de entrada.</p>
+                <div class="cl-syn-prompt"><span class="cl-syn-question-text">Depois de reconhecer <code>preco</code>
+                        como <code>id</code>, o
+                        próximo token é <code>*</code>. Qual produção escolher para <code>T'</code>?</span></div>
+                <div aria-label="Alternativas do exercício" class="cl-syn-choices" id="cl-syn-choices" role="group">
+                    <button aria-pressed="false" class="cl-syn-option" data-answer="A" data-correct="false"
+                        data-feedback="A entrada ainda contém *, então terminar T' agora deixaria um operador sem reconhecimento."
+                        type="button"><span class="cl-syn-option-letter">A</span><span
+                            class="cl-syn-option-copy"><code>T' → ε</code><span class="cl-syn-option-desc">Encerraria o
+                                termo antes da multiplicação.</span></span></button><button aria-pressed="false"
+                        class="cl-syn-option" data-answer="B" data-correct="true"
+                        data-feedback="Com * como lookahead, T' expande para * F T'. Em seguida F reconhece o token num correspondente a 2."
+                        type="button"><span class="cl-syn-option-letter">B</span><span
+                            class="cl-syn-option-copy"><code>T' → '*' F T'</code><span
+                                class="cl-syn-option-desc">Reconhece a multiplicação e seu próximo
+                                fator.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="C" data-correct="false"
+                        data-feedback="O símbolo que o parser precisa expandir é T' e o próximo token é *, não +."
+                        type="button"><span class="cl-syn-option-letter">C</span><span
+                            class="cl-syn-option-copy"><code>E' → '+' T E'</code><span class="cl-syn-option-desc">É a
+                                continuação de soma, não de multiplicação.</span></span></button><button
+                        aria-pressed="false" class="cl-syn-option" data-answer="D" data-correct="false"
+                        data-feedback="F → num será usada depois que o * for reconhecido por T'." type="button"><span
+                            class="cl-syn-option-letter">D</span><span
+                            class="cl-syn-option-copy"><code>F → num</code><span class="cl-syn-option-desc">Reconhece um
+                                número, mas não consome *.</span></span></button>
+                </div>
+                <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
+                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            </section>
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
+                <h2>O que o parser já reconheceu?</h2>
+                <p>Vamos derivar a expressão <strong>preco * 2</strong>, partindo da subárvore <strong>E</strong> da
+                    declaração.
+                    Na gramática completa, o reconhecimento começa por <code>S → D L</code>; aqui focamos somente na
+                    expressão para acompanhar cada substituição.</p>
+                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
+                        exemplo</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>O parser já reconheceu
+                        <strong>preco</strong> como <code>id</code>. Agora precisa escolher uma regra compatível com
+                        <strong>*</strong> para continuar.</span></div>
+            </aside>
+        </div>
+        <section class="cl-syn-reveal cl-syn-worked-example" data-progressive="derivation" data-show-on-correct=""
+            hidden="">
+            <div class="cl-syn-card"><span class="cl-syn-label">DERIVAÇÃO À ESQUERDA — RESOLUÇÃO</span>
+                <h2>De <ins>E</ins> até <ins>id * num</ins></h2>
+                <p>Cada linha mostra a expansão do não terminal mais à esquerda. A derivação termina em categorias de
+                    tokens; o identificador preco corresponde a id e o número 2 corresponde a num.</p>
+                <div aria-label="Resolução passo a passo" class="cl-syn-progressive">
+                    <div class="cl-syn-prog-top"><strong>Resolução guiada</strong><span aria-live="polite"
+                            data-prog-count="">Etapa 0</span></div>
+                    <p aria-live="polite" data-prog-description=""></p>
+                    <div class="cl-syn-prog-actions"><button data-prog-restart="" type="button">↺
+                            Reiniciar</button><button data-prog-prev="" type="button">← Anterior</button><button
+                            data-prog-next="" type="button">Próximo →</button></div>
+                </div>
+                <ol class="cl-syn-sequence cl-syn-detailed-sequence">
+                    <li><span>Começamos na expressão E, depois de S reconhecer o começo da
+                            declaração.</span></li>
+                    <li><code>⇒ T E'</code><span>Expandimos a expressão.</span></li>
+                    <li><code>⇒ F T' E'</code><span>Expandimos o termo mais à esquerda.</span></li>
+                    <li><code>⇒ id T' E'</code><span>O primeiro fator reconhece id (preco).</span></li>
+                    <li><code>⇒ id '*' F T' E'</code><span>Expandimos T' para reconhecer a multiplicação.</span></li>
+                    <li><code>⇒ id '*' num T' E'</code><span>O segundo fator reconhece num (2).</span></li>
+                    <li><code>⇒ id '*' num E'</code><span>T' gera ε porque não há nova multiplicação.</span></li>
+                    <li><code>⇒ id '*' num</code><span>E' gera ε, encerrando a expressão antes de ;.</span></li>
+                </ol>
+            </div>
+            <div class="cl-syn-wide-explanation"><strong>Ligação com a entrada:</strong> as folhas <code>id * num</code>
+                são as categorias de tokens geradas pela gramática. Na instrução concreta, elas correspondem a
+                <code>preco * 2</code>. O próximo passo mostra as produções na forma de uma árvore de derivação.
+            </div>
+        </section>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-1.html">← Voltar para gramáticas</a><a
+                class="cl-syn-link primary" data-next-lesson="" href="passo-3.html">Avançar para árvore →</a></footer>
+    </main>
+    <script defer="" src="lesson.js"></script>
+    <script defer="True" src="lesson-progressive.js"></script>
+</body>
+
+</html>

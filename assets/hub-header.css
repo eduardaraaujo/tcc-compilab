@@ -1,0 +1,13 @@
+/* Ajuste tipográfico dos cabeçalhos das páginas de entrada*/
+.cl-site-header .cl-brand {
+    font-weight: 700 !important;
+    letter-spacing: -.65px !important
+}
+
+.cl-site-header .cl-site-nav a {
+    font-weight: 500 !important
+}
+
+.cl-site-header .cl-site-nav a[aria-current="page"] {
+    font-weight: 650 !important
+}

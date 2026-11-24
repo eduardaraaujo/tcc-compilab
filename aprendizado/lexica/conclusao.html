@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CompilaLab — Análise Léxica</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/simple.css" rel="stylesheet" />
+    <link href="../../assets/review.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/lexica-adjustments.css" rel="stylesheet" />
+</head>
+
+<body class="cl-lex-lesson">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-review cl-lex-conclusion">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE LÉXICA</p>
+            <h1>Análise Léxica</h1>
+            <nav aria-label="Assuntos da trilha" class="cl-lesson-nav cl-flow-nav"><a href="passo-1.html">Expressões
+                    regulares</a><a href="passo-2.html">Autômatos (DFA)</a><a href="passo-3.html">Classificação de
+                    tokens</a><a href="resultado-passo-3.html">Resultado</a><a aria-current="step"
+                    href="conclusao.html">Revisão</a></nav>
+            <p class="cl-flow-description">Uma síntese dos conceitos vistos na trilha. Retome algum assunto ou
+                experimente exemplos no laboratório.</p>
+        </header>
+        <section class="cl-review-card">
+            <h2>Três ideias centrais</h2>
+            <div class="cl-review-steps">
+                <article>
+                    <h3>Expressões regulares</h3>
+                    <p>Descrevem padrões que identificam elementos do código, como nomes e números.</p>
+                </article>
+                <article>
+                    <h3>Autômatos finitos</h3>
+                    <p>Representam o reconhecimento dos padrões por estados e transições.</p>
+                </article>
+                <article>
+                    <h3>Tokens</h3>
+                    <p>Organizam os lexemas reconhecidos em categorias que serão usadas pelo parser.</p>
+                </article>
+            </div>
+        </section>
+        <section class="cl-review-card">
+            <h2>O que aconteceu com o código?</h2>
+            <p>Na análise léxica, o compilador começa lendo o texto do programa. Ele compara os caracteres com padrões
+                definidos por expressões regulares e reconhece as sequências válidas com ajuda de estados e transições
+                de um autômato.</p>
+            <p>Em seguida, cada sequência reconhecida recebe uma categoria: <strong>palavra reservada</strong>,
+                <strong>identificador</strong>, <strong>operador</strong>, <strong>número</strong> ou
+                <strong>pontuação</strong>. Os espaços que apenas separam as palavras não precisam virar tokens.
+            </p>
+            <div class="cl-conclusion-example"><span>Exemplo analisado</span><code
+                    class="cl-conclusion-code">let total = preco * 2 ;</code>
+                <p>A saída é uma <strong>fita ordenada de tokens</strong>. O próximo componente, o analisador sintático,
+                    poderá usar essa sequência para verificar a estrutura da instrução.</p>
+            </div>
+            <p class="fineprint">*Esta trilha usou um exemplo fixo para explicar o processo. No laboratório, você poderá
+                editar definições léxicas e testar como diferentes padrões reconhecem os lexemas de um código.</p>
+        </section>
+        <div class="cl-review-actions"><a href="passo-3.html">Rever classificação de tokens</a><a class="primary"
+                href="../../laboratorio/lexica/scanner.html">Experimentar no laboratório</a><a
+                href="../sintatica/passo-1.html">Estudar Análise Sintática</a></div>
+    </main>
+</body>
+
+</html>

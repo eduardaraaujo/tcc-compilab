@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Eliminação da recursão à esquerda — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+    <link href="../../assets/ll1-optional.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main cl-ll1-page">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">APROFUNDAMENTO — ANÁLISE SINTÁTICA</p>
+            <h1>Eliminação da recursão à esquerda</h1>
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="leitura-top-down.html">GLC e
+                    LL(1)</a><a href="ambiguidade.html">Ambiguidade</a><a aria-current="step"
+                    href="recursividade-esquerda.html">Recursão à esquerda</a><button class="cl-syn-nav-locked"
+                    data-locked-step="" type="button">Fatoração</button><button class="cl-syn-nav-locked"
+                    data-locked-step="" type="button">Tabela preditiva</button><button class="cl-syn-nav-locked"
+                    data-locked-step="" type="button">FIRST/FOLLOW</button><button class="cl-syn-nav-locked"
+                    data-locked-step="" type="button">Construção LL(1)</button><button class="cl-syn-nav-locked"
+                    data-locked-step="" type="button">Pilha e entrada</button></nav>
+
+            <p class="cl-flow-description">Reconheça tipos de recursão direta e a indireta e transforme as produções
+                para a
+                análise descendente.</p>
+        </header>
+        <div class="cl-syn-grid" id="cl-direct-stage">
+            <section class="cl-syn-card cl-syn-lesson-activity" id="cl-first-exercise"><span class="cl-syn-label"><svg
+                        aria-hidden="true" viewbox="0 0 24 24">
+                        <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
+                        <path d="M7 11v5c3 3 7 3 10 0v-5M21 9v6"></path>
+                    </svg> ATIVIDADE GUIADA - RECURSÃO DIRETA</span>
+                <h2>Como evitar a recursão à esquerda?</h2>
+                <p>Uma produção como <code>E → E + T</code> começa pelo mesmo não terminal que estamos tentando
+                    expandir. Um parser descendente simples poderia repetir essa expansão sem consumir tokens, podendo
+                    levar a um loop infinito.</p>
+                <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">1</span><span
+                        class="cl-syn-question-text">Qual transformação elimina a <strong>recursão à esquerda
+                            direta</strong> de <code>E → E + T | T</code>, preservando as expressões desse
+                        exemplo?</span></div>
+                <div aria-label="Alternativas do exercício" class="cl-syn-choices" id="cl-syn-choices" role="group">
+                    <button aria-pressed="false" class="cl-syn-option" data-answer="A" data-correct="false"
+                        data-feedback="A primeira alternativa ainda começa por E, antes de consumir qualquer símbolo. É justamente o problema que queremos evitar."
+                        data-stage-choice="direct" type="button"><span class="cl-syn-option-letter">A</span><span
+                            class="cl-syn-option-copy"><code>E → E '+' T | T</code><span
+                                class="cl-syn-option-desc">Repete a regra com recursão à
+                                esquerda.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="B" data-correct="false"
+                        data-feedback="Depois do operador +, precisamos derivar outro termo T. Essa regra permite + sem nenhum operando."
+                        data-stage-choice="direct" type="button"><span class="cl-syn-option-letter">B</span><span
+                            class="cl-syn-option-copy"><code>E → T E' ; E' → '+' E' | ε</code><span
+                                class="cl-syn-option-desc">Perde o termo que deve aparecer depois de
+                                +.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="C" data-correct="true"
+                        data-feedback="Correto. A regra principal começa por T; E' permite repetir + T ou encerrar com ε, sem recursão à esquerda direta."
+                        data-stage-choice="direct" type="button"><span class="cl-syn-option-letter">C</span><span
+                            class="cl-syn-option-copy"><code>E → T E' ; E' → '+' T E' | ε</code><span
+                                class="cl-syn-option-desc">Começa com T e coloca repetições na
+                                continuação.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="D" data-correct="false"
+                        data-feedback="O exemplo original também aceita um único T, sem operador +. Esta produção não preserva essa possibilidade."
+                        data-stage-choice="direct" type="button"><span class="cl-syn-option-letter">D</span><span
+                            class="cl-syn-option-copy"><code>E → T '+' E</code><span class="cl-syn-option-desc">Exige
+                                uma soma e não permite apenas um termo.</span></span></button>
+                </div>
+                <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
+                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            </section>
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
+                <h2>Gramática com recursão direta</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática original completa — símbolo
+                        inicial E</span>
+                    <pre class="cl-syn-editor">E → E '+' T | T
+T → T '*' F | F
+F → '(' E ')' | id | num</pre>
+                </div>
+                <p>Se escolhermos a primeira alternativa, <code>E</code> volta a aparecer como primeiro símbolo:
+                    <code>E ⇒ E + T ⇒ E + T + T ...</code>. A expansão pode prosseguir sem consumir a entrada.
+                </p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Na recursão <strong>direta</strong>, E
+                        começa por E. Na recursão <strong>indireta</strong>, o retorno acontece através de outro não
+                        terminal, como A → B… e B → A….</span></div>
+            </aside>
+        </div>
+        <section class="cl-syn-grid cl-syn-second-exercise" id="cl-indirect-stage">
+            <div class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label">ATIVIDADE GUIADA — RECURSÃO
+                    INDIRETA</span>
+                <h2>E quando a recursão passa por outro símbolo?</h2>
+                <p>A gramática a seguir não tem a mesma letra logo após a seta, mas <code>A</code> pode voltar a
+                    <code>A</code> por meio de <code>B</code>.
+                </p>
+                <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">2</span><span
+                        class="cl-syn-question-text">Ao substituir <code>B</code> em <code>A → B 'a'</code>, qual
+                        produção revela a recursão à esquerda?</span></div>
+                <div aria-label="Alternativas da recursão indireta" class="cl-syn-choices" role="group"><button
+                        aria-pressed="false" class="cl-syn-option" data-answer="A" data-correct="false"
+                        data-feedback="Esta é a produção original. Precisamos substituir B para revelar o retorno a A."
+                        data-stage-choice="indirect" type="button"><span class="cl-syn-option-letter">A</span><span
+                            class="cl-syn-option-copy"><code>A → B 'a' | 'x'</code><span class="cl-syn-option-desc">A
+                                regra ainda esconde o caminho por B.</span></span></button><button aria-pressed="false"
+                        class="cl-syn-option" data-answer="B" data-correct="true"
+                        data-feedback="Ao expandir B, aparece A → A b a: a recursão indireta tornou-se direta e pode ser eliminada."
+                        data-stage-choice="indirect" type="button"><span class="cl-syn-option-letter">B</span><span
+                            class="cl-syn-option-copy"><code>A → A 'b' 'a' | 'y' 'a' | 'x'</code><span
+                                class="cl-syn-option-desc">Aparece A no início de uma de suas próprias
+                                alternativas.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                        data-answer="C" data-correct="false"
+                        data-feedback="Essa forma não resulta de substituir B e não preserva a posição de a."
+                        data-stage-choice="indirect" type="button"><span class="cl-syn-option-letter">C</span><span
+                            class="cl-syn-option-copy"><code>A → 'a' B | 'x'</code><span class="cl-syn-option-desc">Muda
+                                a ordem dos símbolos reconhecidos.</span></span></button><button aria-pressed="false"
+                        class="cl-syn-option" data-answer="D" data-correct="false"
+                        data-feedback="A gramática original também permite cadeias iniciadas por y e repetições de b a."
+                        data-stage-choice="indirect" type="button"><span class="cl-syn-option-letter">D</span><span
+                            class="cl-syn-option-copy"><code>A → 'x'</code><span class="cl-syn-option-desc">Descarta
+                                alternativas que geram outras cadeias.</span></span></button></div>
+                <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-indirect-feedback" role="status"></p>
+            </div>
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
+                <h2>Gramática com recursão indireta</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática ilustrativa completa — símbolo
+                        inicial A</span>
+                    <pre class="cl-syn-editor">A → B 'a' | 'x'
+B → A 'b' | 'y'</pre>
+                </div>
+                <p>Como <code>B → A 'b'</code>, uma expansão de <code>A</code> pode voltar a <code>A</code> antes de
+                    consumir algum terminal.</p>
+            </aside>
+        </section>
+        <section class="cl-syn-reveal cl-syn-worked-example" hidden="">
+            <div class="cl-syn-card"><span class="cl-syn-label">RESOLUÇÃO COMENTADA</span>
+                <h2>Recursão direta: transformar E</h2>
+                <pre class="cl-syn-editor">E  → T E'
+E' → '+' T E' | ε</pre>
+
+                <h3>Recursão indireta: tornar visível antes de eliminar</h3>
+                <pre class="cl-syn-editor">A → B 'a' | 'x'
+B → A 'b' | 'y'
+
+Substituindo B em A:
+A  → A 'b' 'a' | 'y' 'a' | 'x'
+B  → A 'b' | 'y'
+
+Eliminando a recursão direta obtida:
+A  → 'y' 'a' A' | 'x' A'
+A' → 'b' 'a' A' | ε
+B  → A 'b' | 'y'</pre>
+                <p>Primeiro substituímos o não terminal intermediário; depois eliminamos a recursão direta que apareceu
+                    em A. O exemplo de letras <code>a</code>, <code>b</code>, <code>x</code> e <code>y</code> é
+                    independente da gramática principal de expressões.</p>
+            </div>
+        </section>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="leitura-top-down.html">← Voltar à leitura</a><a
+                class="cl-syn-link primary" data-next-lesson="" href="fatoracao-esquerda.html">Fatoração à esquerda
+                →</a></footer>
+    </main>
+    <script defer="" src="recursividade-dupla.js"></script>
+</body>
+
+</html>

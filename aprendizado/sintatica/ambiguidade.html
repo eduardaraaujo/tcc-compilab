@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Ambiguidade de gramáticas — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+    <link href="../../assets/ll1-optional.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+                    aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+                    href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main cl-ll1-page cl-ambig-page">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">APROFUNDAMENTO — ANÁLISE SINTÁTICA</p>
+            <h1>Ambiguidade de gramáticas</h1>
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="leitura-top-down.html">GLC e
+                    LL(1)</a><a aria-current="step" href="ambiguidade.html">Ambiguidade</a><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Recursão à esquerda</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Fatoração</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Tabela preditiva</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">FIRST/FOLLOW</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Construção LL(1)</button><button
+                    class="cl-syn-nav-locked" data-locked-step="" type="button">Pilha e entrada</button></nav>
+
+            <p class="cl-flow-description">Por que duas árvores para a mesma entrada deixam uma gramática inadequada
+                para uma análise sintática determinística?</p>
+        </header>
+        <div class="cl-syn-advanced-overview">
+            <section class="cl-syn-card"><span class="cl-syn-label">LEITURA PRÉVIA</span>
+                <h2>O que torna uma gramática ambígua?</h2>
+                <p>Uma GLC é <strong>ambígua</strong> quando a mesma cadeia pode ter duas árvores de derivação
+                    distintas. Isso importa porque a estrutura de uma expressão deve determinar qual operador tem
+                    precedência.</p>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática ilustrativa completa — símbolo
+                        inicial E</span>
+                    <pre class="cl-syn-editor">E → E '+' E | E '*' E | id | num</pre>
+                </div>
+                <p>Para <code>id + id * id</code>, esta gramática permite tanto <code>(id + id) * id</code> quanto
+                    <code>id + (id * id)</code>. O problema não é a posição dos parênteses digitados: é a existência de
+                    <strong>duas estruturas possíveis</strong> para a mesma sequência.
+                </p>
+            </section>
+            <section class="cl-syn-card">
+                <h2>Como a gramática de referência expressa precedência?</h2>
+                <p>Separar expressão (<code>E</code>), termo (<code>T</code>) e fator (<code>F</code>) faz a
+                    multiplicação aparecer em um nível mais interno que a soma. Esta é a mesma parte de expressões da
+                    gramática usada nas demais atividades.</p>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática principal — completa, não ambígua
+                        neste exemplo</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <p>A gramática principal separa <code>E</code>, <code>T</code> e <code>F</code>, fazendo <code>*</code>
+                    e <code>/</code> terem precedência sobre <code>+</code> e <code>-</code>. O menos unário aparece na
+                    regra de <code>F</code>. Resolver ambiguidade, eliminar recursão à esquerda e fatorar produções são
+                    operações relacionadas, mas diferentes.</p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Nem toda linguagem livre de contexto possui
+                        uma GLC não ambígua equivalente. Aqui estamos resolvendo a ambiguidade <strong>deste exemplo de
+                            expressões</strong>, não prometendo um método geral.</span></div>
+            </section>
+        </div>
+        <section class="cl-syn-card cl-syn-lesson-activity cl-syn-reading-check"><span class="cl-syn-label">ATIVIDADE
+                GUIADA</span>
+            <h2>Confira o conceito</h2>
+            <div class="cl-syn-prompt"><span
+                    class="cl-syn-question-text">Para a mesma sequência id + id * id, qual mudança resolve a ambiguidade
+                    de precedência deste exemplo?</span></div>
+            <div aria-label="Alternativas da leitura" class="cl-syn-choices" role="group"><button aria-pressed="false"
+                    class="cl-syn-option" data-answer="A" data-correct="false"
+                    data-feedback="Renomear um símbolo não impõe precedência entre os operadores." type="button"><span
+                        class="cl-syn-option-letter">A</span><span class="cl-syn-option-copy"><span
+                            class="cl-syn-choice-text">Apenas trocar E por outro nome</span><span
+                            class="cl-syn-option-desc">A estrutura continua admitindo duas
+                            árvores.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                    data-answer="B" data-correct="true"
+                    data-feedback="Separar E, T e F distingue soma de multiplicação, removendo esta ambiguidade."
+                    type="button"><span class="cl-syn-option-letter">B</span><span class="cl-syn-option-copy"><span
+                            class="cl-syn-choice-text">Usar E para soma e T/F para produtos e fatores</span><span
+                            class="cl-syn-option-desc">A gramática passa a separar os níveis de
+                            precedência.</span></span></button><button aria-pressed="false" class="cl-syn-option"
+                    data-answer="C" data-correct="false"
+                    data-feedback="Eliminar o operador não é uma solução adequada: mudaria a linguagem reconhecida."
+                    type="button"><span class="cl-syn-option-letter">C</span><span class="cl-syn-option-copy"><span
+                            class="cl-syn-choice-text">Apagar toda produção com multiplicação</span><span
+                            class="cl-syn-option-desc">Impediria a análise de expressões válidas com
+                            *.</span></span></button><button aria-pressed="false" class="cl-syn-option" data-answer="D"
+                    data-correct="false"
+                    data-feedback="Fatoração lida com prefixos comuns, mas não define automaticamente a interpretação dos operadores."
+                    type="button"><span class="cl-syn-option-letter">D</span><span class="cl-syn-option-copy"><span
+                            class="cl-syn-choice-text">Fatorar prefixos sem considerar a precedência</span><span
+                            class="cl-syn-option-desc">Não escolhe entre as duas árvores.</span></span></button></div>
+            <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
+            <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                continuar.</p>
+        </section>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="leitura-top-down.html">← Voltar à leitura</a><a
+                class="cl-syn-link primary" data-next-lesson="" href="recursividade-esquerda.html">Recursão à esquerda
+                →</a></footer>
+    </main>
+    <script defer="" src="lesson.js"></script>
+</body>
+
+</html>

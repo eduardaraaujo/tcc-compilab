@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Como o parser escolhe uma produção — CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="../../assets/refinement.css" rel="stylesheet" />
+    <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+    <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+    <link href="../../assets/ll1-optional.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner">
+            <a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav">
+                <a href="../../inicio/index.html">Início</a><a aria-current="page"
+                    href="../../aprendizado/index.html">Aprendizado</a>
+                <a href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário
+                    &amp; Teoria</a>
+            </nav>
+        </div>
+    </header>
+    <main class="cl-syntax-page cl-flow-main">
+        <header class="cl-flow-header">
+            <p class="cl-flow-kicker">APROFUNDAMENTO — ANÁLISE SINTÁTICA</p>
+            <h1>Como o parser escolhe uma produção</h1>
+
+            <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a href="leitura-top-down.html">GLC e
+                    LL(1)</a><a href="recursividade-esquerda.html">Recursão à
+                    esquerda</a><a href="fatoracao-esquerda.html">Fatoração</a><a aria-current="step"
+                    href="passo-4.html">Introdução à tabela</a><a href="first-follow.html">FIRST/FOLLOW</a><a
+                    href="tabela-ll1.html">Tabela LL(1)</a><a href="pilha-entrada-acao.html">Pilha e entrada</a>
+            </nav>
+
+            <p class="cl-flow-description">Entenda a decisão preditiva: um não terminal, um próximo token e uma célula
+                da tabela.</p>
+        </header>
+        <div class="cl-syn-advanced-overview">
+            <section class="cl-syn-card"><span class="cl-syn-label">LEITURA COMPLEMENTAR</span>
+                <h2>Uma decisão com apenas um token</h2>
+                <p>O parser LL(1) expande os não terminais de cima para baixo. Ele consulta uma tabela usando a
+                    <strong>linha do não terminal</strong> e a <strong>coluna do próximo token</strong>
+                    (<em>lookahead</em>). Assim, escolhe uma produção sem testar várias alternativas por tentativa e
+                    erro.
+                </p>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática principal completa — símbolo
+                        inicial S</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <p>Essa mesma gramática aparecerá nas questões de FIRST/FOLLOW, na tabela preditiva e na simulação da
+                    declaração <code>let total = preco * 2;</code>.</p>
+            </section>
+            <section class="cl-syn-card">
+                <h2>Exemplo de consulta: [E', +]</h2>
+                <p>Se o topo da pilha é <code>E'</code> e o próximo token é <code>+</code>, o parser escolhe
+                    <code>E' → '+' T E'</code>. Se o próximo símbolo é <code>;</code> ou <code>)</code>, escolhe
+                    <code>E' → ε</code>, sem consumir entrada.
+                </p>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Exemplo resumido da tabela</span>
+                    <table class="cl-syn-mini-table">
+                        <thead>
+                            <tr>
+                                <th>Não terminal</th>
+                                <th>Lookahead</th>
+                                <th>Produção</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>E'</td>
+                                <td>+</td>
+                                <td>E' → + T E'</td>
+                            </tr>
+                            <tr>
+                                <td>E'</td>
+                                <td>; ou )</td>
+                                <td>E' → ε</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>FIRST e FOLLOW permitirão preencher todas as
+                        células da tabela. Uma gramática LL(1) não pode ter escolhas conflitantes na mesma
+                        célula.</span></div>
+            </section>
+            <section aria-label="Exercício opcional LL1" class="cl-syn-card"><span class="cl-syn-label"><svg
+                        aria-hidden="true" viewbox="0 0 24 24">
+                        <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
+                        <path d="M7 11v5c3 3 7 3 10 0v-5M21 9v6"></path>
+                    </svg> ATIVIDADE GUIADA</span>
+                <h2>Qual produção a tabela deve escolher?</h2>
+                <div class="cl-syn-prompt"><span class="cl-syn-question-text">Na linha de E', com + como próximo token,
+                        qual produção deve ser
+                        escolhida?</span></div>
+                <div aria-label="Alternativas sobre tabela preditiva" class="cl-syn-choices" id="cl-syn-choices"
+                    role="group">
+                    <button aria-pressed="false" class="cl-syn-option" data-answer="A" data-correct="true"
+                        data-feedback="Correto. O símbolo + está no início dessa produção; assim a tabela pode escolhê-la para o lookahead +."
+                        type="button">
+                        <span class="cl-syn-option-letter">A</span><span
+                            class="cl-syn-option-copy"><code>E' → '+' T E'</code>
+                            <span class="cl-syn-option-desc">Consome + e continua a expressão.</span></span></button>
+                    <button aria-pressed="false" class="cl-syn-option" data-answer="B" data-correct="false"
+                        data-feedback="A produção vazia é adequada quando o próximo símbolo pertence ao conjunto FOLLOW(E'), como ) ou fim da entrada, não quando ele é +."
+                        type="button">
+                        <span class="cl-syn-option-letter">B</span><span class="cl-syn-option-copy"><code>E' → ε</code>
+                            <span class="cl-syn-option-desc">Não consome nenhum símbolo.</span></span></button>
+                    <button aria-pressed="false" class="cl-syn-option" data-answer="C" data-correct="false"
+                        data-feedback="A linha consultada é E', portanto a produção escolhida deve ter E' à esquerda."
+                        type="button">
+                        <span class="cl-syn-option-letter">C</span><span
+                            class="cl-syn-option-copy"><code>E → T E'</code>
+                            <span class="cl-syn-option-desc">Produção de outro não terminal.</span></span></button>
+                </div>
+                <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
+                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            </section>
+        </div>
+        <footer class="cl-syn-footer"><a class="cl-syn-link" href="fatoracao-esquerda.html">← Voltar para
+                fatoração</a><a class="cl-syn-link primary" data-next-lesson="" href="first-follow.html">Continuar:
+                FIRST e FOLLOW →</a></footer>
+    </main>
+    <script defer="" src="lesson.js"></script>
+</body>
+
+</html>

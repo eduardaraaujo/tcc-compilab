@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>GLC, análise top-down e LL(1) — CompiLab</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link href="../../assets/refinement.css" rel="stylesheet" />
+  <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+  <link href="../../assets/sintatica-lesson.css" rel="stylesheet" />
+  <link href="../../assets/ll1-optional.css" rel="stylesheet" />
+</head>
+
+<body class="cl-syntax-body">
+  <header class="cl-site-header">
+    <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+      <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../../inicio/index.html">Início</a><a
+          aria-current="page" href="../../aprendizado/index.html">Aprendizado</a><a
+          href="../../laboratorio/index.html">Laboratório</a><a href="../../glossario/index.html">Glossário &amp;
+          Teoria</a></nav>
+    </div>
+  </header>
+  <main class="cl-syntax-page cl-flow-main cl-ll1-page cl-reading-page">
+    <header class="cl-flow-header">
+      <p class="cl-flow-kicker">APROFUNDAMENTO — ANÁLISE SINTÁTICA</p>
+      <h1>GLC, análise top-down e LL(1)</h1>
+      <nav aria-label="Assuntos da trilha" class="cl-flow-nav cl-lesson-nav"><a aria-current="step"
+          href="leitura-top-down.html">GLC e LL(1)</a><button class="cl-syn-nav-locked" data-locked-step=""
+          type="button">Ambiguidade</button><button class="cl-syn-nav-locked" data-locked-step="" type="button">Recursão
+          à esquerda</button><button class="cl-syn-nav-locked" data-locked-step=""
+          type="button">Fatoração</button><button class="cl-syn-nav-locked" data-locked-step="" type="button">Tabela
+          preditiva</button><button class="cl-syn-nav-locked" data-locked-step=""
+          type="button">FIRST/FOLLOW</button><button class="cl-syn-nav-locked" data-locked-step=""
+          type="button">Construção LL(1)</button><button class="cl-syn-nav-locked" data-locked-step=""
+          type="button">Pilha e entrada</button></nav>
+
+      <p class="cl-flow-description">Uma leitura curta para entender a análise antes dos exercícios de
+        transformação de gramáticas.</p>
+    </header>
+    <div class="cl-syn-advanced-overview">
+      <section class="cl-syn-card"><span class="cl-syn-label">LEITURA PRÉVIA</span>
+        <h2>O que é uma GLC?</h2>
+        <p>Uma <strong>Gramática Livre de Contexto (GLC)</strong> define símbolos não terminais, terminais, produções e
+          um símbolo
+          inicial. Ou seja: G=(N, T, P, S). Ela descreve como expandir estruturas sintáticas até obter uma sequência de
+          tokens
+          aceita.</p>
+        <div class="cl-syn-panel"><span class="cl-syn-panel__title">GLC de referência — símbolo inicial S</span>
+          <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+          <p class="cl-syn-caption">Nesta gramática, <code>S → D L</code> impede que um programa vazio seja aceito;
+            <code>L → D L | ε</code> aceita novas declarações ou encerra o programa. A regra de <code>F</code> também
+            permite parênteses e menos unário. <code>E'</code> representa soma ou subtração, enquanto <code>T'</code>
+            representa multiplicação ou divisão.
+          </p>
+        </div>
+        <p>A entrada <code>let total = preco * 2;</code> é transformada pelo analisador léxico em
+          <code>let id = id * num ;</code>. O parser começa em <code>S → D L</code>. A regra de <code>D</code> reconhece
+          a primeira declaração; depois <code>L</code> pode reconhecer outra declaração (<code>D L</code>) ou encerrar
+          (<code>ε</code>). Assim, o exemplo exige ao menos uma declaração e pode conter várias.
+        </p>
+        <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Legenda: <code>S</code> = símbolo inicial;
+            <code>D</code> = declaração; <code>L</code> = lista de declarações adicionais; <code>E</code> = expressão;
+            <code>T</code> = termo; <code>F</code> = fator. <code>E'</code> e <code>T'</code> representam continuações
+            opcionais; <code>ε</code> é a cadeia vazia.</span></div>
+      </section>
+      <section class="cl-syn-card">
+        <h2>Como funciona a análise top-down?</h2>
+        <p>Um analisador <strong>descendente</strong> parte do símbolo inicial e escolhe produções para reconhecer a
+          entrada. Na derivação à esquerda, o não terminal mais à esquerda é o próximo a ser expandido.</p>
+        <div class="cl-syn-panel"><span class="cl-syn-panel__title">Primeira expansão da declaração</span>
+          <pre class="cl-syn-editor">S ⇒ D L
+  ⇒ 'let' id '=' E ';' L
+  ⇒* 'let' id '=' id '*' num ';' L
+  ⇒ 'let' id '=' id '*' num ';'</pre>
+        </div>
+        <p>Para decidir uma expansão, o parser pode usar o próximo token ainda não consumido, chamado
+          <em>lookahead</em>.
+        </p>
+      </section>
+      <section class="cl-syn-card">
+        <h2>O que significa LL(1)?</h2>
+        <p><strong>L</strong>: lê a entrada da esquerda para a direita. <strong>L</strong>: produz uma derivação mais à
+          esquerda. <strong>1</strong>: usa um token de antecipação (lookahead) na decisão preditiva.</p>
+        <p>Uma gramática só é LL(1) quando as decisões podem ser feitas sem conflito com esse único token. Eliminar
+          recursão à esquerda e fatorar prefixos comuns pode ajudar a prepará-la, <strong>mas não garante</strong> que
+          ela será LL(1): depois precisamos verificar os conjuntos FIRST/FOLLOW e as entradas da tabela.</p>
+        <div class="cl-syn-note"><span class="symbol">ⓘ</span><span><strong>Nas próximas telas:</strong> primeiro
+            tratamos recursão à esquerda e fatoração; depois usamos uma gramática de expressões já adequada ao exemplo
+            para construir FIRST, FOLLOW e a tabela preditiva.</span></div>
+
+      </section>
+    </div>
+    <section class="cl-syn-card cl-syn-lesson-activity cl-syn-reading-check">
+      <span class="cl-syn-label">ATIVIDADE GUIADA</span>
+      <h2>Confira os três conceitos</h2>
+      <p class="cl-syn-caption">As três perguntas estão disponíveis. Responda a todas corretamente para continuar.</p>
+      <div class="cl-reading-stage" id="cl-reading-stage-1">
+        <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">1</span><span
+            class="cl-syn-question-text">Qual símbolo inicia a análise na GLC de referência?</span></div>
+        <div aria-label="Questão sobre GLC" class="cl-syn-choices" role="group">
+          <button aria-pressed="false" class="cl-syn-option" data-correct="true"
+            data-feedback="S é o símbolo inicial. A produção S → D L inicia a primeira declaração e permite reconhecer outras depois."
+            data-reading-answer="A" type="button"><span class="cl-syn-option-letter">A</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">S</span><span class="cl-syn-option-desc">Ponto
+                de partida da derivação.</span></span></button>
+          <button aria-pressed="false" class="cl-syn-option" data-correct="false"
+            data-feedback="D descreve a declaração, mas o símbolo inicial designado pela gramática é S."
+            data-reading-answer="B" type="button"><span class="cl-syn-option-letter">B</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">D</span><span class="cl-syn-option-desc">Não
+                terminal da declaração.</span></span></button>
+          <button aria-pressed="false" class="cl-syn-option" data-correct="false"
+            data-feedback="E descreve expressões usadas dentro da declaração, não a frase completa desde o início."
+            data-reading-answer="C" type="button"><span class="cl-syn-option-letter">C</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">E</span><span class="cl-syn-option-desc">Não
+                terminal da expressão.</span></span></button>
+        </div>
+        <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-reading-feedback-1" role="status"></p>
+      </div>
+      <div class="cl-reading-stage" id="cl-reading-stage-2">
+        <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">2</span><span
+            class="cl-syn-question-text">Na análise top-down, por onde o parser começa?</span></div>
+        <div aria-label="Questão sobre análise descendente" class="cl-syn-choices" role="group">
+          <button aria-pressed="false" class="cl-syn-option" data-correct="false"
+            data-feedback="Reduzir os tokens até alcançar S descreve uma abordagem ascendente (bottom-up), não top-down."
+            data-reading-answer="A" type="button"><span class="cl-syn-option-letter">A</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">Pelos tokens, reduzindo-os até chegar a
+                S.</span></span></button>
+          <button aria-pressed="false" class="cl-syn-option" data-correct="true"
+            data-feedback="Isso mesmo: partimos de S, expandimos os não terminais e verificamos a sequência de tokens da entrada."
+            data-reading-answer="B" type="button"><span class="cl-syn-option-letter">B</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">Por S, expandindo produções até os
+                terminais.</span></span></button>
+          <button aria-pressed="false" class="cl-syn-option" data-correct="false"
+            data-feedback="O parser não parte de um operador isolado; a derivação inicia em S e segue a gramática."
+            data-reading-answer="C" type="button"><span class="cl-syn-option-letter">C</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">Pelo último operador da
+                expressão.</span></span></button>
+        </div>
+        <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-reading-feedback-2" role="status"></p>
+      </div>
+      <div class="cl-reading-stage" id="cl-reading-stage-3">
+        <div class="cl-syn-prompt"><span aria-hidden="true" class="cl-syn-question-number">3</span><span
+            class="cl-syn-question-text">O que significa usar um parser LL(1)?</span></div>
+        <div aria-label="Questão sobre LL(1)" class="cl-syn-choices" role="group">
+          <button aria-pressed="false" class="cl-syn-option" data-correct="false"
+            data-feedback="LL(1) usa um token de antecipação (lookahead), não necessariamente toda a entrada para decidir a próxima produção."
+            data-reading-answer="A" type="button"><span class="cl-syn-option-letter">A</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">É preciso ler a entrada inteira antes de cada
+                escolha.</span></span></button>
+          <button aria-pressed="false" class="cl-syn-option" data-correct="false"
+            data-feedback="LL(1) é uma técnica de análise descendente; reduzir tokens para formar S é uma visão de análise ascendente."
+            data-reading-answer="B" type="button"><span class="cl-syn-option-letter">B</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">O analisador reduz tokens de baixo para
+                cima.</span></span></button>
+          <button aria-pressed="false" class="cl-syn-option" data-correct="true"
+            data-feedback="Correto: LL(1) lê da esquerda para a direita, constrói uma derivação mais à esquerda e usa um token de antecipação para escolher uma produção sem conflito."
+            data-reading-answer="C" type="button"><span class="cl-syn-option-letter">C</span><span
+              class="cl-syn-option-copy"><span class="cl-syn-choice-text">Leitura da esquerda para a direita, derivação
+                à esquerda e um lookahead.</span></span></button>
+        </div>
+        <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-reading-feedback-3" role="status"></p>
+      </div>
+      <p class="cl-syn-alert" hidden="" id="cl-reading-alert" role="alert">Responda às três questões antes de continuar.
+      </p>
+    </section>
+    <footer class="cl-syn-footer"><a class="cl-syn-link" href="conclusao.html">← Voltar à revisão</a><a
+        class="cl-syn-link primary" data-next-lesson="" href="ambiguidade.html">Entender ambiguidade →</a></footer>
+  </main>
+  <script defer="" src="leitura-top-down.js"></script>
+</body>
+
+</html>

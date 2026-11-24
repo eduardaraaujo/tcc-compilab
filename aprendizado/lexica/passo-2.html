@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+        <link href="passo-2.css" rel="stylesheet" />
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta content="web_standard" name="shell-type" />
+        <title>
+                CompilaLab — Análise Léxica
+        </title>
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+                rel="stylesheet" />
+        <link href="../../assets/simple.css" rel="stylesheet" />
+        <link href="../../assets/refinement.css" rel="stylesheet" />
+        <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+        <link href="../../assets/lexica-adjustments.css" rel="stylesheet" />
+        <link href="passo-2-interativo.css" rel="stylesheet" />
+</head>
+
+<body class="cl-lex-lesson bg-surface font-body-md text-body-md text-on-surface antialiased cl-lesson-dfa">
+        <header class="cl-site-header">
+                <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+                        <nav aria-label="Navegação principal" class="cl-site-nav"><a
+                                        href="../../inicio/index.html">Início</a><a aria-current="page"
+                                        href="../../aprendizado/index.html">Aprendizado</a><a
+                                        href="../../laboratorio/index.html">Laboratório</a><a
+                                        href="../../glossario/index.html">Glossário &amp; Teoria</a></nav>
+                </div>
+        </header>
+        <main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)] flex flex-col cl-flow-main">
+                <div class="flex flex-col w-full">
+                        <!-- Content Container -->
+                        <div class="w-full max-w-7xl mx-auto px-margin py-space-lg flex flex-col gap-space-lg">
+                                <!-- Header Section with Breadcrumb / Stepper -->
+                                <header class="cl-flow-header">
+                                        <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE LÉXICA</p>
+                                        <h1>Autômatos Finitos (DFA)</h1>
+                                        <p class="cl-required-message" hidden="" id="lex-step-required" role="alert">
+                                                Escolha a transição correta do autômato antes de continuar.</p>
+                                        <nav aria-label="Assuntos da trilha" class="cl-lesson-nav cl-flow-nav"><a
+                                                        href="passo-1.html">Expressões regulares</a><a
+                                                        aria-current="step" href="passo-2.html">Autômatos (DFA)</a><a
+                                                        aria-describedby="lex-step-required" data-lex-next="true"
+                                                        href="passo-3.html" id="lex-step-next-nav">Classificação de
+                                                        tokens</a></nav>
+                                        <p class="cl-flow-description">Observe como um autômato lê os caracteres de um
+                                                identificador e muda de estado.</p>
+                                </header>
+                                <!-- Main 2-Column Balanced Architecture -->
+                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+                                        <!-- Left Column: Guided Interactive Activity -->
+                                        <section class="lg:col-span-6 flex flex-col gap-space-md">
+                                                <!-- Activity Card -->
+                                                <div
+                                                        class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+                                                        <!-- Card Header & Badge -->
+                                                        <div class="flex items-center justify-between">
+                                                                <div
+                                                                        class="inline-flex items-center gap-1.5 text-primary font-label-sm text-label-sm font-bold uppercase tracking-wider">
+                                                                        <span class="material-symbols-outlined text-[16px]"
+                                                                                data-compilab-symbol="school"><svg
+                                                                                        aria-hidden="true"
+                                                                                        class="compilab-icon"
+                                                                                        focusable="false"
+                                                                                        viewbox="0 0 640 512"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                                d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9l0 28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5l0-24.6c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z">
+                                                                                        </path>
+                                                                                </svg></span>
+                                                                        ATIVIDADE GUIADA
+                                                                </div>
+                                                        </div>
+                                                        <!-- Prompt & Context -->
+                                                        <div class="flex flex-col gap-space-xs">
+                                                                <h2
+                                                                        class="font-title-md text-title-md font-bold text-on-surface">
+                                                                        Como o compilador reconhece um Identificador
+                                                                        usando estados?
+                                                                </h2>
+                                                                <p
+                                                                        class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                                                        Após definir a regex
+                                                                        <code
+                                                                                class="px-2 py-0.5 rounded bg-surface-container font-mono text-primary font-semibold">
+           [a-zA-Z_][a-zA-Z0-9_]*
+          </code>
+                                                                        , o compilador constrói uma máquina de estados
+                                                                        (DFA). Ela inicia no estado inicial
+                                                                        <strong class="text-on-surface">
+                                                                                q0
+                                                                        </strong>
+                                                                        , transita para
+                                                                        <strong class="text-on-surface">
+                                                                                q1
+                                                                        </strong>
+                                                                        ao ler o primeiro caractere válido e se mantém
+                                                                        em
+                                                                        <strong class="text-on-surface">
+                                                                                q1
+                                                                        </strong>
+                                                                        para os caracteres alfanuméricos seguintes.
+                                                                </p>
+                                                        </div>
+                                                        <!-- Active Question Statement -->
+
+
+                                                        <div
+                                                                class="p-4 rounded-xl bg-surface-container-low flex items-start gap-3">
+                                                                <div
+                                                                        class="font-body-md text-body-md font-semibold text-on-surface">
+                                                                        Ao ler a primeira letra
+                                                                        <code
+                                                                                class="rounded bg-surface-container-lowest px-1.5 py-0.5 font-mono text-sm font-normal text-primary">t</code>
+                                                                        da palavra
+                                                                        <code
+                                                                                class="rounded bg-surface-container-lowest px-1.5 py-0.5 font-mono text-sm font-normal text-primary">total</code>,
+                                                                        para qual estado o autômato transita?
+                                                                </div>
+                                                        </div>
+
+
+                                                        <!-- Multiple Choice Options -->
+                                                        <div class="flex flex-col gap-2.5">
+                                                                <!-- Option A: Selected / Correct -->
+                                                                <label class="group relative flex items-start gap-space-sm p-space-md rounded-xl bg-emerald-50/90 border-2 border-emerald-500 cursor-pointer transition-all shadow-sm cl-lesson-choice"
+                                                                        data-correct="true" data-lesson-choice="A">
+                                                                        <input class="mt-1 text-indigo-600 focus:ring-indigo-400 accent-indigo-600 w-4 h-4"
+                                                                                name="dfa_step" type="radio" />
+                                                                        <div class="flex flex-col">
+                                                                                <span
+                                                                                        class="font-title-md text-title-md flex items-center gap-1.5 font-bold">
+                                                                                        q1 (Estado de Aceitação)
+
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-body-md text-body-md mt-0.5 leading-relaxed">
+                                                                                        Transita pelo arco
+                                                                                        <code
+                                                                                                class="font-mono text-emerald-900 bg-emerald-100/80 px-1.5 py-0.5 rounded font-semibold">
+             [a-zA-Z_]
+            </code>
+                                                                                        e reconhece que um identificador
+                                                                                        válido foi iniciado com sucesso.
+                                                                                </span>
+                                                                        </div>
+                                                                </label>
+                                                                <!-- Option B: Incorrect -->
+                                                                <label class="group relative flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer transition-all cl-lesson-choice"
+                                                                        data-correct="false" data-lesson-choice="B">
+                                                                        <input class="mt-1 text-outline focus:ring-primary-fixed"
+                                                                                name="dfa_step" type="radio" />
+                                                                        <div class="flex flex-col">
+                                                                                <span
+                                                                                        class="font-title-md text-title-md text-on-surface">
+                                                                                        q_erro (Estado de Rejeição)
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+                                                                                        Descarta imediatamente a palavra
+                                                                                        por considerar o caractere
+                                                                                        inválido.
+                                                                                </span>
+                                                                        </div>
+                                                                </label>
+                                                                <!-- Option C: Incorrect -->
+                                                                <label class="group relative flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer transition-all cl-lesson-choice"
+                                                                        data-correct="false" data-lesson-choice="C">
+                                                                        <input class="mt-1 text-outline focus:ring-primary-fixed"
+                                                                                name="dfa_step" type="radio" />
+                                                                        <div class="flex flex-col">
+                                                                                <span
+                                                                                        class="font-title-md text-title-md text-on-surface">
+                                                                                        Permanece em q0
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+                                                                                        Não avança o ponteiro de leitura
+                                                                                        e repete a inspeção sobre o
+                                                                                        mesmo índice.
+                                                                                </span>
+                                                                        </div>
+                                                                </label>
+                                                                <div aria-live="polite" class="cl-lesson-feedback"
+                                                                        hidden="hidden" id="lesson-choice-feedback"
+                                                                        role="status"></div>
+                                                        </div>
+                                                        <!-- A explicação específica para cada alternativa aparece após a seleção, no feedback da questão. -->
+                                                </div>
+                                        </section>
+                                        <!-- Right Column: Graphical DFA State Diagram & Tape Visualizer -->
+                                        <section class="lg:col-span-6 flex flex-col gap-space-md">
+                                                <!-- Top Card: Interactive State Machine Diagram -->
+                                                <div
+                                                        class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+                                                        <div class="flex items-center justify-between">
+                                                                <div class="flex items-center gap-2">
+                                                                        <span class="material-symbols-outlined text-primary-container"
+                                                                                data-compilab-symbol="account_tree"
+                                                                                style="font-size: 20px;"><svg
+                                                                                        aria-hidden="true"
+                                                                                        class="compilab-icon"
+                                                                                        focusable="false"
+                                                                                        viewbox="0 0 576 512"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                                d="M208 80c0-26.5 21.5-48 48-48l64 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-8 0 0 40 152 0c30.9 0 56 25.1 56 56l0 32 8 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-64 0c-26.5 0-48-21.5-48-48l0-64c0-26.5 21.5-48 48-48l8 0 0-32c0-4.4-3.6-8-8-8l-152 0 0 40 8 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-64 0c-26.5 0-48-21.5-48-48l0-64c0-26.5 21.5-48 48-48l8 0 0-40-152 0c-4.4 0-8 3.6-8 8l0 32 8 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-64 0c-26.5 0-48-21.5-48-48l0-64c0-26.5 21.5-48 48-48l8 0 0-32c0-30.9 25.1-56 56-56l152 0 0-40-8 0c-26.5 0-48-21.5-48-48l0-64z">
+                                                                                        </path>
+                                                                                </svg></span>
+                                                                        <h3
+                                                                                class="font-label-md text-label-md font-bold uppercase tracking-wider text-secondary">
+                                                                                Diagrama de Transição de Estados (DFA)
+                                                                        </h3>
+                                                                </div>
+                                                                <span
+                                                                        class="font-label-sm text-label-sm text-outline uppercase font-semibold">
+                                                                        MÁQUINA DETERMINÍSTICA
+                                                                </span>
+                                                        </div>
+                                                        <!-- Clean SVG State Graph -->
+                                                        <div
+                                                                class="w-full bg-surface-container-low rounded-xl p-4 flex flex-col items-center justify-center relative overflow-hidden">
+                                                                <svg class="w-full h-56 text-on-surface select-none"
+                                                                        fill="none" viewbox="0 0 520 220"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <defs>
+                                                                                <marker id="arrow" markerheight="6"
+                                                                                        markerwidth="6"
+                                                                                        orient="auto-start-reverse"
+                                                                                        refx="8" refy="5"
+                                                                                        viewbox="0 0 10 10">
+                                                                                        <path d="M 0 1 L 9 5 L 0 9 z"
+                                                                                                fill="#3747d6">
+                                                                                        </path>
+                                                                                </marker>
+                                                                                <marker id="arrow-error"
+                                                                                        markerheight="6" markerwidth="6"
+                                                                                        orient="auto-start-reverse"
+                                                                                        refx="8" refy="5"
+                                                                                        viewbox="0 0 10 10">
+                                                                                        <path d="M 0 1 L 9 5 L 0 9 z"
+                                                                                                fill="#ba1a1a">
+                                                                                        </path>
+                                                                                </marker>
+                                                                        </defs>
+                                                                        <!-- Entry Pointer to q0 -->
+                                                                        <path d="M 25 110 L 65 110"
+                                                                                marker-end="url(#arrow)"
+                                                                                stroke="#3747d6" stroke-width="2.5">
+                                                                        </path>
+                                                                        <text fill="#3d608c"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="11" font-weight="700" x="30"
+                                                                                y="100">
+                                                                                Início
+                                                                        </text>
+                                                                        <!-- State q0 -->
+                                                                        <circle cx="95" cy="110" fill="#f4f2ff" r="26"
+                                                                                stroke="#3747d6" stroke-width="2.5">
+                                                                        </circle>
+                                                                        <text fill="#161937"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="14" font-weight="700"
+                                                                                text-anchor="middle" x="95" y="115">
+                                                                                q0
+                                                                        </text>
+                                                                        <!-- Transition q0 -> q1 (Valid identifier start) -->
+                                                                        <path d="M 121 110 L 260 110"
+                                                                                marker-end="url(#arrow)"
+                                                                                stroke="#3747d6" stroke-width="2.5">
+                                                                        </path>
+                                                                        <rect fill="#ffffff" height="20" rx="4"
+                                                                                width="80" x="150" y="88">
+                                                                        </rect>
+                                                                        <text fill="#1729bf"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="11" font-weight="700"
+                                                                                text-anchor="middle" x="190" y="102">
+                                                                                [a-zA-Z_]
+                                                                        </text>
+                                                                        <!-- State q1 (Acceptance - Double Circle) -->
+                                                                        <circle cx="295" cy="110" fill="#e0e0ff" r="30"
+                                                                                stroke="#3747d6" stroke-width="2.5">
+                                                                        </circle>
+                                                                        <circle cx="295" cy="110" fill="#edecff" r="24"
+                                                                                stroke="#3747d6" stroke-width="2">
+                                                                        </circle>
+                                                                        <text fill="#1729bf"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="15" font-weight="800"
+                                                                                text-anchor="middle" x="295" y="115">
+                                                                                q1
+                                                                        </text>
+                                                                        <text fill="#3d608c"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="10" font-weight="700"
+                                                                                text-anchor="middle" x="295" y="156">
+                                                                                Aceitação
+                                                                        </text>
+                                                                        <!-- Self Loop on q1 -->
+                                                                        <path d="M 285 81 C 285 45, 305 45, 305 81"
+                                                                                fill="none" marker-end="url(#arrow)"
+                                                                                stroke="#3747d6" stroke-width="2.5">
+                                                                        </path>
+                                                                        <rect fill="#ffffff" height="20" rx="4"
+                                                                                width="90" x="250" y="32">
+                                                                        </rect>
+                                                                        <text fill="#1729bf"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="11" font-weight="700"
+                                                                                text-anchor="middle" x="295" y="46">
+                                                                                [a-zA-Z0-9_]
+                                                                        </text>
+                                                                        <!-- Transition q0 -> q_erro (Digits or invalid first char) -->
+                                                                        <path d="M 112 130 C 135 185, 415 185, 435 133"
+                                                                                fill="none"
+                                                                                marker-end="url(#arrow-error)"
+                                                                                stroke="#ba1a1a" stroke-dasharray="4 4"
+                                                                                stroke-width="2">
+                                                                        </path>
+                                                                        <rect fill="#ffffff" height="18" rx="4"
+                                                                                width="105" x="235" y="185">
+                                                                        </rect>
+                                                                        <text fill="#ba1a1a"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="10" font-weight="600"
+                                                                                text-anchor="middle" x="287" y="198">
+                                                                                [0-9] ou símbolo
+                                                                        </text>
+                                                                        <!-- State q_erro -->
+                                                                        <circle cx="445" cy="110" fill="#ffdad6" r="24"
+                                                                                stroke="#ba1a1a" stroke-width="2">
+                                                                        </circle>
+                                                                        <text fill="#93000a"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="11" font-weight="700"
+                                                                                text-anchor="middle" x="445" y="114">
+                                                                                q_err
+                                                                        </text>
+                                                                        <text fill="#ba1a1a"
+                                                                                font-family="Plus Jakarta Sans"
+                                                                                font-size="10" font-weight="600"
+                                                                                text-anchor="middle" x="445" y="148">
+                                                                                Rejeição
+                                                                        </text>
+                                                                </svg>
+                                                                <!-- Diagram Key / Legend -->
+                                                                <div
+                                                                        class="w-full flex flex-wrap items-center justify-center gap-space-md pt-2">
+                                                                        <div
+                                                                                class="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+                                                                                <span
+                                                                                        class="w-3.5 h-3.5 rounded-full bg-surface-container border-2 border-primary-container">
+                                                                                </span>
+                                                                                <span>
+                                                                                        Estado Inicial (q0)
+                                                                                </span>
+                                                                        </div>
+                                                                        <div
+                                                                                class="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+                                                                                <span
+                                                                                        class="w-3.5 h-3.5 rounded-full bg-surface-variant border-2 border-primary-container p-0.5 flex items-center justify-center">
+                                                                                        <span
+                                                                                                class="w-1.5 h-1.5 rounded-full bg-primary-container">
+                                                                                        </span>
+                                                                                </span>
+                                                                                <span>
+                                                                                        Estado Final / Aceito (q1)
+                                                                                </span>
+                                                                        </div>
+                                                                        <div
+                                                                                class="flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant">
+                                                                                <span
+                                                                                        class="w-3.5 h-3.5 rounded-full bg-error-container border border-error">
+                                                                                </span>
+                                                                                <span>
+                                                                                        Rejeição (q_err)
+                                                                                </span>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                <!-- Bottom Card: Tape Trace Simulator -->
+                                                <div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md"
+                                                        id="lex-dfa-trace">
+                                                        <div class="flex items-center justify-between">
+                                                                <div class="flex items-center gap-2">
+                                                                        <span class="material-symbols-outlined text-secondary"
+                                                                                data-compilab-symbol="developer_board"
+                                                                                style="font-size: 20px;"><svg
+                                                                                        aria-hidden="true"
+                                                                                        class="compilab-icon"
+                                                                                        focusable="false"
+                                                                                        viewbox="0 0 512 512"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                                d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c-35.3 0-64 28.7-64 64l-40 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l40 0 0 56-40 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l40 0 0 56-40 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l40 0c0 35.3 28.7 64 64 64l0 40c0 13.3 10.7 24 24 24s24-10.7 24-24l0-40 56 0 0 40c0 13.3 10.7 24 24 24s24-10.7 24-24l0-40 56 0 0 40c0 13.3 10.7 24 24 24s24-10.7 24-24l0-40c35.3 0 64-28.7 64-64l40 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-40 0 0-56 40 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-40 0 0-56 40 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-40 0c0-35.3-28.7-64-64-64l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40-56 0 0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40-56 0 0-40zM160 128l192 0c17.7 0 32 14.3 32 32l0 192c0 17.7-14.3 32-32 32l-192 0c-17.7 0-32-14.3-32-32l0-192c0-17.7 14.3-32 32-32zm192 32l-192 0 0 192 192 0 0-192z">
+                                                                                        </path>
+                                                                                </svg></span>
+                                                                        <h3
+                                                                                class="font-label-md text-label-md font-bold uppercase tracking-wider text-secondary">
+                                                                                Rastreamento Passo a Passo na Fita
+                                                                        </h3>
+                                                                </div>
+                                                                <div
+                                                                        class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-mono">
+                                                                        Entrada: "total"
+                                                                </div>
+                                                        </div>
+                                                        <!-- Tape Cell Grid -->
+                                                        <div class="flex flex-col gap-space-xs">
+                                                                <span
+                                                                        class="font-label-sm text-label-sm font-semibold text-outline uppercase tracking-wider">
+                                                                        Células da Fita (Memória de Leitura)
+                                                                </span>
+                                                                <div class="grid grid-cols-5 gap-2">
+                                                                        <div class="flex flex-col items-center p-2 rounded-lg bg-primary-container text-on-primary shadow-sm"
+                                                                                data-lex-dfa-cell="0">
+                                                                                <span
+                                                                                        class="font-label-sm text-label-sm opacity-80 font-mono">
+                                                                                        Índice 0
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-headline-sm text-headline-sm font-mono font-bold mt-1">
+                                                                                        't'
+                                                                                </span>
+                                                                                <span
+                                                                                        class="mt-1 font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-on-primary/20">
+                                                                                        Lido
+                                                                                </span>
+                                                                        </div>
+                                                                        <div class="flex flex-col items-center p-2 rounded-lg bg-surface-container text-on-surface"
+                                                                                data-lex-dfa-cell="1">
+                                                                                <span
+                                                                                        class="font-label-sm text-label-sm text-outline font-mono">
+                                                                                        Índice 1
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-headline-sm text-headline-sm font-mono font-bold mt-1">
+                                                                                        'o'
+                                                                                </span>
+                                                                                <span
+                                                                                        class="mt-1 font-label-sm text-label-sm text-secondary font-medium">
+                                                                                        Auto-loop
+                                                                                </span>
+                                                                        </div>
+                                                                        <div class="flex flex-col items-center p-2 rounded-lg bg-surface-container text-on-surface"
+                                                                                data-lex-dfa-cell="2">
+                                                                                <span
+                                                                                        class="font-label-sm text-label-sm text-outline font-mono">
+                                                                                        Índice 2
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-headline-sm text-headline-sm font-mono font-bold mt-1">
+                                                                                        't'
+                                                                                </span>
+                                                                                <span
+                                                                                        class="mt-1 font-label-sm text-label-sm text-secondary font-medium">
+                                                                                        Auto-loop
+                                                                                </span>
+                                                                        </div>
+                                                                        <div class="flex flex-col items-center p-2 rounded-lg bg-surface-container text-on-surface"
+                                                                                data-lex-dfa-cell="3">
+                                                                                <span
+                                                                                        class="font-label-sm text-label-sm text-outline font-mono">
+                                                                                        Índice 3
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-headline-sm text-headline-sm font-mono font-bold mt-1">
+                                                                                        'a'
+                                                                                </span>
+                                                                                <span
+                                                                                        class="mt-1 font-label-sm text-label-sm text-secondary font-medium">
+                                                                                        Auto-loop
+                                                                                </span>
+                                                                        </div>
+                                                                        <div class="flex flex-col items-center p-2 rounded-lg bg-surface-container text-on-surface"
+                                                                                data-lex-dfa-cell="4">
+                                                                                <span
+                                                                                        class="font-label-sm text-label-sm text-outline font-mono">
+                                                                                        Índice 4
+                                                                                </span>
+                                                                                <span
+                                                                                        class="font-headline-sm text-headline-sm font-mono font-bold mt-1">
+                                                                                        'l'
+                                                                                </span>
+                                                                                <span
+                                                                                        class="mt-1 font-label-sm text-label-sm text-secondary font-medium">
+                                                                                        Auto-loop
+                                                                                </span>
+                                                                        </div>
+                                                                </div>
+                                                                <div aria-label="Controle do rastreamento do DFA"
+                                                                        class="cl-dfa-sim">
+                                                                        <div aria-live="polite"
+                                                                                class="cl-dfa-sim-status"><strong
+                                                                                        id="cl-dfa-state">q0 · estado
+                                                                                        inicial</strong><span
+                                                                                        id="cl-dfa-position">0 de 5
+                                                                                        caracteres</span></div>
+                                                                        <p id="cl-dfa-explain">O autômato está em q0.
+                                                                                Avance para ler a primeira letra.</p>
+                                                                        <div class="cl-dfa-sim-controls"><button
+                                                                                        id="cl-dfa-reset"
+                                                                                        type="button">↺
+                                                                                        Reiniciar</button><button
+                                                                                        id="cl-dfa-prev" type="button">←
+                                                                                        Anterior</button><button
+                                                                                        id="cl-dfa-next"
+                                                                                        type="button">Próximo →</button>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <!-- Chronological State Trace Route -->
+                                                        <div
+                                                                class="flex flex-col gap-1.5 p-3 rounded-xl bg-surface-container-low">
+                                                                <span
+                                                                        class="font-label-sm text-label-sm font-semibold text-secondary uppercase tracking-wider">
+                                                                        Histórico de Estados Percorridos:
+                                                                </span>
+                                                                <div
+                                                                        class="flex flex-wrap items-center gap-1.5 font-mono font-bold text-body-md text-on-surface">
+                                                                        <span class="px-2 py-0.5 rounded bg-surface-container-lowest text-primary"
+                                                                                data-dfa-trace-state="0">
+                                                                                q0
+                                                                        </span>
+                                                                        <span class="text-primary-container">
+                                                                                ➔
+                                                                        </span>
+                                                                        <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary"
+                                                                                data-dfa-trace-state="1">
+                                                                                q1
+                                                                        </span>
+                                                                        <span class="text-secondary">
+                                                                                ➔
+                                                                        </span>
+                                                                        <span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface"
+                                                                                data-dfa-trace-state="2">
+                                                                                q1
+                                                                        </span>
+                                                                        <span class="text-secondary">
+                                                                                ➔
+                                                                        </span>
+                                                                        <span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface"
+                                                                                data-dfa-trace-state="3">
+                                                                                q1
+                                                                        </span>
+                                                                        <span class="text-secondary">
+                                                                                ➔
+                                                                        </span>
+                                                                        <span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface"
+                                                                                data-dfa-trace-state="4">
+                                                                                q1
+                                                                        </span>
+                                                                        <span class="text-secondary">
+                                                                                ➔
+                                                                        </span>
+                                                                        <span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface"
+                                                                                data-dfa-trace-state="5">
+                                                                                q1
+                                                                        </span>
+                                                                </div>
+                                                        </div>
+                                                        <!-- Success Acceptance Badge -->
+                                                        <div class="cl-dfa-acceptance flex items-center justify-between p-3 rounded-lg bg-emerald-100/90 text-emerald-900 border border-emerald-200 shadow-xs"
+                                                                id="cl-dfa-acceptance">
+                                                                <div class="flex items-center gap-2">
+                                                                        <span class="material-symbols-outlined text-emerald-700"
+                                                                                data-compilab-symbol="verified"
+                                                                                style='font-variation-settings: "FILL" 1; font-size: 20px;'><svg
+                                                                                        aria-hidden="true"
+                                                                                        class="compilab-icon"
+                                                                                        focusable="false"
+                                                                                        viewbox="0 0 512 512"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z">
+                                                                                        </path>
+                                                                                </svg></span>
+                                                                        <span
+                                                                                class="font-label-md text-label-md font-bold">
+                                                                                ✓ Padrão Identificador Aceito
+                                                                        </span>
+                                                                </div>
+                                                                <span
+                                                                        class="font-label-sm text-label-sm font-mono text-emerald-800 font-semibold">
+                                                                        Fim da Cadeia (EOF)
+                                                                </span>
+                                                        </div>
+                                                </div>
+                                        </section>
+                                </div>
+                                <!-- Theoretical Connection Banner -->
+                                <details class="cl-support-section">
+                                        <summary>Por que compiladores usam autômatos?</summary>
+                                        <section
+                                                class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row items-start md:items-center gap-space-md">
+                                                <div class="p-3 rounded-xl bg-secondary-fixed text-secondary shrink-0">
+                                                        <span class="material-symbols-outlined"
+                                                                data-compilab-symbol="lightbulb"
+                                                                style='font-variation-settings: "FILL" 1; font-size: 28px;'><svg
+                                                                        aria-hidden="true" class="compilab-icon"
+                                                                        focusable="false" viewbox="0 0 384 512"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                                d="M272 384c9.6-31.9 29.5-59.1 49.2-86.2c0 0 0 0 0 0c5.2-7.1 10.4-14.2 15.4-21.4c19.8-28.5 31.4-63 31.4-100.3C368 78.8 289.2 0 192 0S16 78.8 16 176c0 37.3 11.6 71.9 31.4 100.3c5 7.2 10.2 14.3 15.4 21.4c0 0 0 0 0 0c19.8 27.1 39.7 54.4 49.2 86.2l160 0zM192 512c44.2 0 80-35.8 80-80l0-16-160 0 0 16c0 44.2 35.8 80 80 80zM112 176c0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.9 50.1-112 112-112c8.8 0 16 7.2 16 16s-7.2 16-16 16c-44.2 0-80 35.8-80 80z">
+                                                                        </path>
+                                                                </svg></span>
+                                                </div>
+                                                <div class="flex-1 flex flex-col gap-1">
+                                                        <h4
+                                                                class="font-headline-sm text-headline-sm text-on-surface font-bold">
+                                                                Por que compiladores usam Autômatos Finitos?
+                                                        </h4>
+                                                        <p
+                                                                class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                                                Na análise léxica de compiladores, as expressões
+                                                                regulares definem de forma declarativa <em
+                                                                        class="text-on-surface font-semibold">
+                                                                        quais
+                                                                </em> padrões de texto (tokens) devem ser reconhecidos,
+                                                                enquanto o Autômato Finito Determinístico (DFA) funciona
+                                                                <em class="text-on-surface font-semibold">
+                                                                        como
+                                                                </em> a máquina de execução que processa o código-fonte
+                                                                caractere por caractere. Por ter apenas uma transição
+                                                                possível para cada símbolo, o DFA garante o
+                                                                reconhecimento em tempo linear <strong>
+                                                                        O(n)
+                                                                </strong>, utilizando memória constante e sem
+                                                                necessidade de retrocesso (backtracking).
+                                                        </p>
+                                                </div>
+                                                <div class="shrink-0">
+                                                        <span
+                                                                class="px-3 py-1.5 rounded-full bg-surface-container font-mono text-label-sm text-primary font-bold">
+                                                                Complexidade O(n)
+                                                        </span>
+                                                </div>
+                                        </section>
+                                </details>
+                                <!-- Navigation Footer Bar -->
+                                <div
+                                        class="w-full pt-space-md pb-space-lg flex flex-col-reverse sm:flex-row items-center justify-between gap-space-md border-t border-outline-variant/40 cl-flow-footer cl-lex-step-actions">
+                                        <a class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-outline-variant/40 bg-surface-container-lowest text-on-surface hover:bg-surface-container font-medium flex items-center justify-center gap-2 shadow-sm transition-all cl-lex-step-link"
+                                                href="passo-1.html">
+                                                <span class="material-symbols-outlined text-secondary"
+                                                        data-compilab-symbol="arrow_back" style="font-size: 18px;"><svg
+                                                                aria-hidden="true" class="compilab-icon"
+                                                                focusable="false" viewbox="0 0 448 512"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path
+                                                                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                                                                </path>
+                                                        </svg></span>
+                                                <span>
+                                                        Voltar para Passo 1 (Regex)
+                                                </span>
+                                        </a>
+                                        <a aria-describedby="lex-step-required"
+                                                class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-primary-container hover:bg-primary text-on-primary font-semibold transition-all flex items-center justify-center gap-2 shadow-md cl-lex-step-link cl-lex-step-link-primary"
+                                                data-lex-next="true" href="passo-3.html" id="lex-step-next">
+                                                <span>
+                                                        Avançar para Passo 3 (Classificação)
+                                                </span>
+                                                <span class="material-symbols-outlined"
+                                                        data-compilab-symbol="arrow_forward"
+                                                        style="font-size: 18px;"><svg aria-hidden="true"
+                                                                class="compilab-icon" focusable="false"
+                                                                viewbox="0 0 448 512"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path
+                                                                        d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z">
+                                                                </path>
+                                                        </svg></span>
+                                        </a>
+                                </div>
+                        </div>
+                </div>
+        </main>
+        <script defer="True" src="../../assets/icons.js"></script>
+        <script defer="True" src="passo-2.js"></script>
+        <script defer="True" src="passo-2-interativo.js"></script>
+</body>
+
+</html>

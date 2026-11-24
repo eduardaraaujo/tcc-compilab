@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta
+        content="Glossário e teoria do CompiLab: análise léxica, análise sintática LL(1) e demais etapas de compiladores."
+        name="description" />
+    <title>Glossário &amp; Teoria | CompiLab</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+    <link href="../assets/refinement.css" rel="stylesheet" />
+    <link href="../assets/hub-header.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="cl-site-header">
+        <div class="cl-site-header__inner"><a class="cl-brand" href="../inicio/index.html">CompiLab</a>
+            <nav aria-label="Navegação principal" class="cl-site-nav"><a href="../inicio/index.html">Início</a><a
+                    href="../aprendizado/index.html">Aprendizado</a><a
+                    href="../laboratorio/index.html">Laboratório</a><a aria-current="page"
+                    href="../glossario/index.html">Glossário &amp; Teoria</a></nav>
+        </div>
+    </header>
+    <main class="gl-main">
+        <header class="gl-intro">
+            <p class="gl-eyebrow">GLOSSÁRIO &amp; TEORIA</p>
+            <h1>Conceitos para consultar quando precisar</h1>
+            <p>Consulte os conceitos essenciais de compiladores. As definições ficam visíveis e os exemplos detalhados
+                podem ser abertos quando você quiser.</p>
+
+        </header>
+        <section aria-labelledby="overview-title" class="gl-overview">
+            <div class="gl-overview-heading">
+                <div>
+                    <p class="gl-small-label">MAPA</p>
+                    <h2 id="overview-title">Como as etapas se conectam</h2>
+                </div>
+                <p>Conheça as fases de um compilador e o papel de cada uma.</p>
+            </div>
+            <div class="gl-pipeline"><a class="gl-phase" href="#lexico"><span
+                        class="gl-phase-number">01</span><strong>Análise léxica</strong><span>Caracteres →
+                        tokens</span></a><a class="gl-phase" href="#sintatico"><span
+                        class="gl-phase-number">02</span><strong>Análise sintática</strong><span>Tokens →
+                        estrutura</span></a><a class="gl-phase" href="#outras"><span
+                        class="gl-phase-number">03</span><strong>Análise semântica</strong><span>Estrutura →
+                        verificações</span></a><a class="gl-phase" href="#outras"><span
+                        class="gl-phase-number">04</span><strong>Código Intermediário e
+                        otimização</strong><span>Representar e
+                        transformar</span></a><a class="gl-phase" href="#outras"><span
+                        class="gl-phase-number">05</span><strong>Geração de código</strong><span>Representação →
+                        destino</span></a></div>
+        </section>
+        <section aria-label="Buscar e filtrar conceitos" class="gl-tools">
+            <div class="gl-search-wrap"><label for="glossary-search">Encontre um conceito</label>
+                <div class="gl-search-control"><svg aria-hidden="true" fill="none" height="19" stroke="currentColor"
+                        stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="19">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path d="m20 20-4-4"></path>
+                    </svg><input autocomplete="off" id="glossary-search"
+                        placeholder="Busque por token, FOLLOW, tipos..." type="search" /></div>
+            </div>
+            <div aria-label="Filtrar por assunto" class="gl-filter-controls" role="group"><button aria-pressed="true"
+                    class="gl-filter is-current" data-filter="all" type="button">Todos</button><button
+                    aria-pressed="false" class="gl-filter" data-filter="fundamentos" type="button">Visão
+                    geral</button><button aria-pressed="false" class="gl-filter" data-filter="lexico"
+                    type="button">Léxico</button><button aria-pressed="false" class="gl-filter" data-filter="sintatico"
+                    type="button">Sintático</button><button aria-pressed="false" class="gl-filter" data-filter="outras"
+                    type="button">Outras etapas</button></div>
+            <p aria-live="polite" class="gl-filter-state" id="glossary-count" role="status"></p>
+        </section>
+        <div class="gl-no-results" hidden="" id="gl-no-results"><strong>Nenhum conceito encontrado.</strong>
+            <p>Experimente outro termo ou selecione “Todos”.</p><button id="gl-reset" type="button">Limpar
+                filtros</button>
+        </div>
+        <div class="gl-collections">
+            <section aria-labelledby="heading-fundamentos" class="gl-section gl-section--base" data-group="fundamentos"
+                id="fundamentos">
+                <div class="gl-section-head">
+                    <div>
+                        <p class="gl-small-label">Entenda o processo</p>
+                        <h2 id="heading-fundamentos">Visão geral</h2>
+                        <p>Conceitos para localizar cada etapa no processo de compilação.</p>
+                    </div><span class="gl-section-count">6 conceitos</span>
+                </div>
+                <div class="gl-term-grid">
+                    <details class="gl-term" data-keywords="traducao linguagem programa" id="conceito-compilador">
+                        <summary><span class="gl-term-summary"><strong>Compilador</strong><span>Programa que traduz um
+                                    código de uma linguagem para outra representação.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Um compilador é um programa que recebe código escrito em uma linguagem e produz uma
+                                representação em outra linguagem ou formato. Seu objetivo é preservar o significado do
+                                programa, respeitando as regras da linguagem de origem e as limitações da representação
+                                de destino.</p>
+                            <p>Em uma arquitetura comum, a parte de análise reconhece os elementos e a estrutura do
+                                programa; depois, outras etapas verificam propriedades como tipos, produzem
+                                representações intermediárias e geram o resultado. Essa divisão varia: alguns
+                                compiladores geram código de máquina, outros geram bytecode ou mesmo outra linguagem de
+                                alto nível.</p>
+                            <div class="gl-example"><strong>Exemplo:</strong> um compilador pode receber uma expressão
+                                como <code>2 + 3</code> e produzir instruções equivalentes para uma máquina virtual,
+                                após verificar sua estrutura e seus tipos.</div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="codigo entrada instrucao" id="conceito-codigo-fonte">
+                        <summary><span class="gl-term-summary"><strong>Código-fonte</strong><span>Texto escrito pelo
+                                    programador e usado como entrada da análise.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Código-fonte é o texto escrito pelo programador em uma linguagem de programação. Ele
+                                contém construções como declarações, expressões, identificadores e operadores; cada
+                                linguagem define quais combinações são válidas.</p>
+                            <p>É importante distinguir o texto original dos elementos reconhecidos pelo compilador. A
+                                palavra <code>total</code> é formada por caracteres, mas pode ser reconhecida como um
+                                único lexema e classificada como identificador. Depois, o analisador sintático verifica
+                                como esse identificador participa de uma declaração ou expressão.</p>
+                            <div class="gl-example"><strong>Trecho ilustrativo:</strong>
+                                <pre class="gl-code"><code>let preco = 10;
+let total = preco * 2;</code></pre><span>O código tem duas declarações; os espaços e as quebras de linha podem separar
+                                    os lexemas.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="pipeline etapas compilacao"
+                        id="conceito-fases-de-compilacao">
+                        <summary><span class="gl-term-summary"><strong>Fases de compilação</strong><span>Transformações
+                                    e verificações que acontecem ao longo do compilador.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>As fases organizam o trabalho do compilador para que problemas diferentes sejam tratados
+                                por mecanismos apropriados. A análise léxica reconhece tokens; a sintática verifica se
+                                os tokens formam estruturas; a semântica verifica condições como nomes declarados e
+                                tipos compatíveis.</p>
+                            <p>Em muitos projetos, a análise é seguida por uma representação intermediária,
+                                transformações de otimização e geração de código. Essas etapas podem se repetir ou ser
+                                combinadas. O importante é perceber que reconhecer uma sequência de tokens não
+                                significa, por si só, que o programa seja sintaticamente ou semanticamente válido.</p>
+                            <div class="gl-example"><strong>Visão simplificada:</strong>
+                                <pre class="gl-code"><code>Código-fonte
+    ↓
+Tokens → Estrutura sintática
+    ↓
+Verificações semânticas
+    ↓
+Representação intermediária
+    ↓
+Otimização e geração de código</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="erro diagnostico semantica"
+                        id="conceito-erro-lexico-sintatico-e-sem-ntico">
+                        <summary><span class="gl-term-summary"><strong>Erro léxico, sintático e
+                                    semântico</strong><span>Erros diferentes aparecem em momentos diferentes da
+                                    análise.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Os erros costumam receber nomes diferentes conforme a propriedade violada. Um
+                                <strong>erro léxico</strong> ocorre quando o scanner não consegue reconhecer determinado
+                                trecho pelas regras disponíveis. Um <strong>erro sintático</strong> ocorre quando tokens
+                                reconhecidos não formam uma construção permitida pela gramática.
+                            </p>
+                            <p>Já um <strong>erro semântico</strong> envolve regras de significado: por exemplo,
+                                referenciar um nome inexistente ou usar uma operação entre tipos incompatíveis,
+                                dependendo da linguagem. A mesma linha pode ter tokens corretos e ainda falhar na
+                                análise sintática; também pode ter sintaxe válida e falhar nas verificações semânticas.
+                            </p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>let x = 2 + ;   // estrutura incompleta
+let y = z + 1; // z pode não estar declarado</code></pre><span>O primeiro caso ilustra erro sintático. O segundo pode
+                                    ser semântico se <code>z</code> não existir no escopo.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="linguagem formal regras regex glc"
+                        id="conceito-linguagem-formal">
+                        <summary><span class="gl-term-summary"><strong>Linguagem formal</strong><span>Conjunto de
+                                    cadeias de símbolos descrito por regras.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Uma linguagem formal é um conjunto de cadeias sobre um alfabeto de símbolos. Para
+                                descrevê-la, podemos usar regras ou mecanismos de reconhecimento, como expressões
+                                regulares, autômatos e gramáticas.</p>
+                            <p>Na compilação, padrões regulares são úteis para identificar unidades lexicais, como
+                                números e identificadores. Gramáticas livres de contexto podem descrever estruturas
+                                aninhadas, como expressões entre parênteses. Esses modelos não são intercambiáveis: cada
+                                um destaca propriedades diferentes das cadeias.</p>
+                            <div class="gl-example"><strong>Comparação:</strong> <code>[0-9]+</code> descreve uma
+                                sequência de dígitos; já uma gramática pode combinar um número com operadores e
+                                parênteses para formar expressões.</div>
+                        </div>
+                    </details>
+
+                </div>
+            </section>
+            <section aria-labelledby="heading-lexico" class="gl-section gl-section--lex" data-group="lexico"
+                id="lexico">
+                <div class="gl-section-head">
+                    <div>
+                        <p class="gl-small-label">Do texto aos tokens</p>
+                        <h2 id="heading-lexico">Análise léxica</h2>
+                        <p>Reconhecimento de padrões, tokens, expressões regulares e autômatos.</p>
+                    </div><span class="gl-section-count">11 conceitos</span>
+                </div>
+                <div class="gl-term-grid">
+                    <details class="gl-term" data-keywords="lexer reconhecimento palavras"
+                        id="conceito-analise-lexica-scanner">
+                        <summary><span class="gl-term-summary"><strong>Análise léxica / scanner</strong><span>Etapa que
+                                    reconhece lexemas no texto e produz tokens.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>A análise léxica percorre o código-fonte e agrupa caracteres em lexemas. Cada lexema
+                                reconhecido é associado a uma categoria de token, como <code>id</code>,
+                                <code>num</code>, palavra reservada ou operador. Esse resultado costuma ser entregue ao
+                                parser.
+                            </p>
+                            <p>O scanner segue regras de reconhecimento e, em geral, ignora espaços e comentários quando
+                                eles não têm função sintática. Regras concorrentes precisam de critérios de escolha,
+                                como maior correspondência e prioridade. Reconhecer um token não prova que ele esteja em
+                                uma posição válida dentro de uma expressão.</p>
+                            <div class="gl-example"><strong>Exemplo de reconhecimento:</strong>
+                                <pre class="gl-code"><code>let total = preco * 2;
+
+let   → palavra reservada
+total → identificador
+=     → atribuição
+preco → identificador
+*     → multiplicação
+2     → número
+;     → pontuação</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="token cadeia texto" id="conceito-lexema">
+                        <summary><span class="gl-term-summary"><strong>Lexema</strong><span>Trecho concreto do código
+                                    que corresponde a uma regra léxica.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Lexema é a sequência exata de caracteres encontrada no código que corresponde a um padrão
+                                léxico. É o valor textual reconhecido durante a leitura do programa.</p>
+                            <p>O mesmo tipo de token pode reunir muitos lexemas: <code>total</code>, <code>preco</code>
+                                e <code>resultado2</code> são textos diferentes, mas podem pertencer à mesma classe de
+                                identificadores. A distinção permite ao parser trabalhar com categorias enquanto outras
+                                fases preservam informações específicas sobre o texto.</p>
+                            <div class="gl-example"><strong>Exemplo:</strong> no código <code>let preco = 20;</code>,
+                                <code>preco</code> é o lexema; a classificação pode ser <code>ID</code>.
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="fita categoria id num" id="conceito-token">
+                        <summary><span class="gl-term-summary"><strong>Token</strong><span>Unidade reconhecida pelo
+                                    scanner, representada por uma categoria e, quando útil, um valor.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Token é a unidade lexical classificada produzida pelo scanner. Em sua forma mais simples,
+                                tem uma categoria; em implementações reais, também pode carregar um valor, posição ou
+                                atributo que ajude nas próximas fases.</p>
+                            <p>O parser geralmente toma decisões usando as categorias, não comparando cada nome de
+                                variável individualmente. Por exemplo, duas declarações com nomes diferentes podem ter a
+                                mesma sequência de tipos de token. A categoria <code>id</code> não deve ser confundida
+                                com o texto específico reconhecido.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>total  → ID
+preco  → ID
+20     → NUM
+=      → OP_ATRIB</code></pre><span>A posição pode ser guardada para mensagens de erro, mas não altera a categoria do
+                                    token.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="regular padroes repeticao"
+                        id="conceito-expressao-regular-regex">
+                        <summary><span class="gl-term-summary"><strong>Expressão regular (regex)</strong><span>Notação
+                                    para descrever padrões de sequências de caracteres.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Expressões regulares descrevem padrões de sequências de caracteres. São úteis para
+                                definir a aparência de identificadores, números, operadores e outras unidades lexicais.
+                            </p>
+                            <p>Em uma sintaxe comum, <code>[0-9]</code> é uma classe de caracteres; <code>*</code>
+                                representa zero ou mais repetições; <code>+</code>, uma ou mais; <code>|</code>,
+                                alternativas; e parênteses agrupam subexpressões. As convenções exatas variam conforme o
+                                mecanismo de regex utilizado.</p>
+                            <div class="gl-example"><strong>Definições ilustrativas:</strong>
+                                <pre class="gl-code"><code>DIGITO = [0-9]
+LETRA  = [a-zA-Z_]
+ID     = {LETRA}({LETRA}|{DIGITO})*
+NUM    = {DIGITO}+</code></pre><span>O identificador começa por uma letra ou sublinhado e pode continuar com letras ou
+                                    dígitos.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="macros definicoes references letra digito"
+                        id="conceito-definicao-auxiliar">
+                        <summary><span class="gl-term-summary"><strong>Definição auxiliar</strong><span>Nome que pode
+                                    ser reutilizado na escrita de outras regras léxicas.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Uma definição auxiliar recebe um nome e representa parte de um padrão maior. Ela torna
+                                regras complexas mais legíveis e diminui a repetição, principalmente quando várias
+                                classes de token usam os mesmos grupos de caracteres.</p>
+                            <p>Por exemplo, <code>DIGITO</code> pode definir um único algarismo, e <code>NUM</code> pode
+                                reutilizar essa definição com repetição. O fato de um nome existir como auxiliar não
+                                significa que ele precise gerar tokens independentes; isso depende da configuração do
+                                scanner.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>DIGITO = [0-9]
+NUM    = {DIGITO}+</code></pre><span><code>DIGITO</code> ajuda a escrever a regra, enquanto <code>NUM</code> descreve o
+                                    token completo.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="maximal munch empate ordem regras"
+                        id="conceito-maior-correspondencia-e-prioridade">
+                        <summary><span class="gl-term-summary"><strong>Maior correspondência e
+                                    prioridade</strong><span>O scanner escolhe o maior trecho reconhecível; empates
+                                    seguem a prioridade das regras.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Quando mais de uma regra pode reconhecer o início de uma entrada, scanners costumam
+                                escolher o <strong>maior trecho possível</strong> (maior correspondência, ou <em>maximal
+                                    munch</em>). Isso evita que um identificador como <code>total</code> seja quebrado
+                                em letras isoladas.</p>
+                            <p>Se duas regras reconhecem lexemas do mesmo comprimento, um critério de prioridade define
+                                qual vence, frequentemente a ordem das regras. Isso é útil para separar palavras
+                                reservadas de identificadores e para distinguir operadores com prefixos em comum.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>==  → operador de comparação
+=   → operador de atribuição</code></pre><span>Ao ler <code>==</code>, a regra mais longa deve vencer. Se
+                                    <code>let</code> também casa com <code>ID</code>, a prioridade pode classificá-la
+                                    como palavra reservada.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="whitespace ignorar espacos" id="conceito-ignorar-espacos">
+                        <summary><span class="gl-term-summary"><strong>Ignorar espaços</strong><span>Regra para
+                                    descartar separadores sem criar tokens de saída.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Espaços, tabulações e quebras de linha podem funcionar como separadores entre lexemas. Em
+                                muitas linguagens, eles são reconhecidos ou consumidos pelo scanner sem produzir tokens
+                                entregues ao parser.</p>
+                            <p>Isso não significa que espaços sejam sempre irrelevantes: em linguagens sensíveis à
+                                indentação, a organização das linhas pode ter papel sintático. A regra de ignorar
+                                caracteres depende da especificação da linguagem.</p>
+                            <div class="gl-example"><strong>Definição ilustrativa:</strong>
+                                <pre class="gl-code"><code>IGNORAR = [\ \t\n\r]+</code></pre><span>O scanner pode
+                                    descartá-los como tokens, mas ainda deve atualizar a posição de linha e coluna para
+                                    diagnosticar erros.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="afd dfa transicao estados finais"
+                        id="conceito-aut-mato-finito-deterministico-dfa">
+                        <summary><span class="gl-term-summary"><strong>Autômato finito determinístico
+                                    (DFA)</strong><span>Máquina de estados usada para reconhecer padrões
+                                    regulares.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Um autômato finito determinístico (DFA) possui estados, um estado inicial, estados de
+                                aceitação e transições. Para cada combinação de estado e símbolo de entrada, há no
+                                máximo um próximo estado.</p>
+                            <p>Ao ler os caracteres, o autômato acompanha as transições e verifica se o percurso termina
+                                em um estado de aceitação. É um dos modelos clássicos para reconhecer linguagens
+                                regulares. Um scanner real também precisa decidir onde um lexema termina e qual regra o
+                                reconheceu.</p>
+                            <div class="gl-example"><strong>Exemplo simplificado de identificador:</strong>
+                                <pre class="gl-code"><code>q0 --letra--&gt; q1
+q1 --letra--&gt; q1
+q1 --dígito-&gt; q1</code></pre><span><code>q1</code> é um estado de aceitação: depois da primeira letra, podem vir
+                                    outras letras ou dígitos.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="tabela automato estados" id="conceito-tabela-de-transic-es">
+                        <summary><span class="gl-term-summary"><strong>Tabela de transições</strong><span>Representação
+                                    tabular das mudanças de estado de um autômato.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>A tabela de transições descreve o mesmo comportamento de um autômato em linhas e colunas.
+                                Cada linha representa um estado; cada coluna, um símbolo ou classe de símbolos; a célula
+                                indica o estado de destino.</p>
+                            <p>Uma célula sem transição pode indicar que o próximo caractere não pertence ao padrão
+                                naquele ponto. A tabela é especialmente útil para entender o processamento de uma
+                                entrada passo a passo, sem depender apenas de um diagrama.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>Estado | letra | dígito
+q0     | q1    | —
+q1     | q1    | q1</code></pre><span>Para reconhecer identificadores, <code>q1</code> é um estado de aceitação.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="producao regular formal gramatica"
+                        id="conceito-gramatica-regular">
+                        <summary><span class="gl-term-summary"><strong>Gramática regular</strong><span>Gramática que
+                                    gera uma linguagem regular, equivalente em poder descritivo a um autômato
+                                    finito.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Uma gramática regular gera cadeias de uma linguagem regular. Em uma forma linear à
+                                direita, as produções seguem modelos como <code>A → aB</code>, <code>A → a</code> ou,
+                                quando permitido, <code>A → ε</code>, com condições apropriadas para a linguagem
+                                descrita.</p>
+                            <p>Ela se relaciona às expressões regulares e aos autômatos finitos por descrever a mesma
+                                classe de linguagens. Embora estejam conectados, a notação de produções e a sintaxe de
+                                um editor de expressões regulares são formas diferentes de escrever padrões.</p>
+                            <div class="gl-example"><strong>Gramática para uma ou mais letras <code>a</code>:</strong>
+                                <pre class="gl-code"><code>S → aS
+S → a</code></pre><span>Produz <code>a</code>, <code>aa</code>, <code>aaa</code> e assim por diante.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="nfa afn determinização epsilon"
+                        id="conceito-automato-finito-nao-deterministico">
+                        <summary><span class="gl-term-summary"><strong>Autômato finito não determinístico
+                                    (NFA)</strong><span>Autômato em que pode haver mais de um caminho para a mesma
+                                    entrada.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Um autômato finito não determinístico (NFA) pode ter múltiplas transições possíveis para
+                                um símbolo e, em certas definições, transições que não consomem entrada
+                                (<code>ε</code>). Uma cadeia é aceita quando existe ao menos um percurso que chega a um
+                                estado de aceitação.</p>
+                            <p>NFAs e DFAs reconhecem a mesma classe de linguagens regulares. Em implementações de
+                                scanners, expressões regulares podem ser convertidas para uma representação não
+                                determinística e depois transformadas em DFA para executar o reconhecimento de maneira
+                                previsível.</p>
+                            <div class="gl-example"><strong>Ideia central:</strong> o NFA pode ter vários caminhos
+                                candidatos; o DFA representa o comportamento em estados com uma escolha determinada para
+                                cada símbolo.</div>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            <section aria-labelledby="heading-sintatico" class="gl-section gl-section--syn" data-group="sintatico"
+                id="sintatico">
+                <div class="gl-section-head">
+                    <div>
+                        <p class="gl-small-label">Dos tokens à estrutura</p>
+                        <h2 id="heading-sintatico">Análise sintática</h2>
+                        <p>Gramáticas, derivações, análise descendente e predição LL(1).</p>
+                    </div><span class="gl-section-count">17 conceitos</span>
+                </div>
+                <div class="gl-term-grid">
+                    <details class="gl-term" data-keywords="parser sintaxe estrutura"
+                        id="conceito-analise-sintatica-parser">
+                        <summary><span class="gl-term-summary"><strong>Análise sintática / parser</strong><span>Etapa
+                                    que verifica se a sequência de tokens segue a gramática.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>A análise sintática recebe uma sequência de tokens e verifica se ela pode ser gerada
+                                pelas produções de uma gramática. Seu trabalho é reconhecer relações estruturais: onde
+                                começa uma declaração, quais símbolos formam uma expressão e como os operadores são
+                                agrupados.</p>
+                            <p>Um parser pode produzir uma árvore de derivação, registrar decisões de reconhecimento e
+                                informar o ponto de uma falha. Em análise descendente, a construção começa pelo símbolo
+                                inicial e avança até os terminais que devem corresponder à entrada.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>let total = 2 + 3;  // estrutura completa
+let total = 2 + ;   // falta um operando</code></pre><span>Mesmo que todos os caracteres sejam reconhecíveis, a segunda
+                                    entrada pode ser rejeitada pela gramática.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="cfg bnf glc producoes"
+                        id="conceito-gramatica-livre-de-contexto-glc">
+                        <summary><span class="gl-term-summary"><strong>Gramática livre de contexto
+                                    (GLC)</strong><span>Conjunto de produções que descreve como formar construções
+                                    válidas.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Uma gramática livre de contexto (GLC) é definida por terminais, não terminais, um símbolo
+                                inicial e produções. Cada produção substitui um único não terminal por uma sequência de
+                                símbolos, independentemente do contexto em que esse não terminal aparece.</p>
+                            <p>GLCs são adequadas para representar construções aninhadas, como expressões entre
+                                parênteses, e estruturas recursivas. Uma gramática descreve a linguagem, mas a escolha
+                                de um método de análise — como LL(1) — pode exigir restrições adicionais à forma das
+                                produções.</p>
+                            <div class="gl-example"><strong>Exemplo simples de expressões:</strong>
+                                <pre class="gl-code"><code>E → T R
+R → '+' T R | ε
+T → id | num</code></pre><span><code>E</code> é o símbolo inicial; essa GLC permite <code>id</code>, <code>num</code> e
+                                    somas como <code>id + num</code>.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="terminal nao terminal simbolos glc"
+                        id="conceito-terminais-e-nao-terminais">
+                        <summary><span class="gl-term-summary"><strong>Terminais e não terminais</strong><span>Terminais
+                                    são os símbolos consumidos; não terminais precisam ser
+                                    expandidos.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p><strong>Terminais</strong> são os símbolos que aparecem na sequência final reconhecida
+                                pelo parser: categorias como <code>id</code>, <code>num</code> e operadores como
+                                <code>+</code>. <strong>Não terminais</strong> são nomes usados pela gramática para
+                                representar estruturas intermediárias.
+                            </p>
+                            <p>Durante a derivação, cada não terminal é substituído conforme uma produção. O processo
+                                termina quando resta apenas uma sequência de terminais. Os lexemas concretos podem
+                                variar, mas o parser enxerga a categoria correspondente.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>E → E '+' T | T
+T → id | num</code></pre><span><code>E</code> e <code>T</code> são não terminais; <code>id</code>, <code>num</code> e
+                                    <code>+</code> são terminais.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="inicio derivacao regras"
+                        id="conceito-simbolo-inicial-e-producao">
+                        <summary><span class="gl-term-summary"><strong>Símbolo inicial e produção</strong><span>Ponto de
+                                    partida da derivação e regras de substituição.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>O símbolo inicial indica a estrutura completa que a gramática deve reconhecer. Uma
+                                produção é uma regra escrita como <code>A → α</code>, em que <code>A</code> é um não
+                                terminal e <code>α</code> é a sequência que pode substituí-lo.</p>
+                            <p>Partindo do símbolo inicial, as produções descrevem caminhos possíveis para gerar cadeias
+                                de terminais. Dividir o problema em não terminais facilita mostrar como um programa é
+                                composto por declarações e expressões.</p>
+                            <div class="gl-example"><strong>Pequena gramática de declarações:</strong>
+                                <pre class="gl-code"><code>P → D P | D
+D → 'let' id '=' num ';'</code></pre><span><code>P</code> é o símbolo inicial e <code>D</code> representa uma
+                                    declaração.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="epsilon vazio opcional" id="conceito-cadeia-vazia">
+                        <summary><span class="gl-term-summary"><strong>Cadeia vazia (ε)</strong><span>Possibilidade de
+                                    uma produção não gerar símbolos.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>O símbolo <code>ε</code> representa a cadeia vazia: uma derivação que não acrescenta
+                                nenhum terminal à entrada. Não é uma letra que o scanner precise encontrar, nem um token
+                                a ser consumido.</p>
+                            <p>Produções vazias são comuns para listas ou continuações opcionais. Na análise LL(1),
+                                FIRST mostra quando uma produção pode gerar <code>ε</code>, enquanto FOLLOW ajuda a
+                                decidir quando essa opção deve ser utilizada.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>L → D L | ε</code></pre><span>Depois de reconhecer uma
+                                    declaração <code>D</code>, a lista <code>L</code> pode reconhecer outra declaração
+                                    ou terminar.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="derivacao esquerda passos"
+                        id="conceito-derivacao-a-esquerda">
+                        <summary><span class="gl-term-summary"><strong>Derivação à esquerda</strong><span>Expansão que
+                                    sempre substitui primeiro o não terminal mais à esquerda.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Uma derivação é uma sequência de substituições de não terminais pelas produções de uma
+                                gramática. Na <strong>derivação à esquerda</strong>, em cada passo substituímos o não
+                                terminal mais à esquerda da forma sentencial atual.</p>
+                            <p>Esse processo é útil para compreender como uma análise descendente pode construir uma
+                                estrutura a partir do símbolo inicial. A derivação descreve símbolos gramaticais, não o
+                                ato de reconhecer lexemas pelo scanner; por isso, categorias como <code>id</code> são
+                                mantidas até a etapa lexical fornecer o texto correspondente.</p>
+                            <div class="gl-example"><strong>Derivação pela gramática <code>E → T R</code>,
+                                    <code>R → + T R | ε</code> e <code>T → id | num</code>:</strong>
+                                <pre class="gl-code"><code>E
+⇒ T R
+⇒ id R
+⇒ id + T R
+⇒ id + num R
+⇒ id + num</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="arvore sintatica concreta cst"
+                        id="conceito-arvore-de-derivacao-cst">
+                        <summary><span class="gl-term-summary"><strong>Árvore de derivação
+                                    (CST)</strong><span>Representação hierárquica das produções usadas para reconhecer a
+                                    entrada.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>A árvore de derivação, também chamada <em>concrete syntax tree</em> (CST), organiza
+                                visualmente as aplicações das produções de uma gramática. Sua raiz é o símbolo inicial e
+                                seus filhos mostram como cada não terminal foi expandido.</p>
+                            <p>Em geral, a árvore preserva não terminais, terminais e eventuais produções vazias.
+                                Diferentemente de uma representação sintática resumida, ela deixa explícita a estrutura
+                                da gramática, o que a torna adequada para estudar derivação e análise top-down.</p>
+                            <div class="gl-example"><strong>Para a produção <code>E → T R</code>:</strong>
+                                <pre class="gl-code"><code>     E
+    / \
+   T   R
+   |   |
+  id   ε</code></pre><span>A estrutura é um exemplo didático de como os nós registram as produções aplicadas.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="descendente preditiva" id="conceito-analise-top-down">
+                        <summary><span class="gl-term-summary"><strong>Análise top-down</strong><span>Estratégia que
+                                    parte do símbolo inicial e expande produções até alcançar os
+                                    tokens.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>A análise descendente (<em>top-down</em>) tenta reconhecer a entrada começando pelo
+                                símbolo inicial. O parser escolhe produções para os não terminais e compara os terminais
+                                produzidos com os tokens recebidos.</p>
+                            <p>Há diferentes estratégias descendentes. Na forma preditiva LL(1), uma tabela pode
+                                orientar a escolha com base no não terminal atual e em um único símbolo de antecipação.
+                                Gramáticas com recursão à esquerda não podem ser processadas diretamente por essa
+                                estratégia.</p>
+                            <div class="gl-example"><strong>Fluxo conceitual:</strong>
+                                <pre class="gl-code"><code>Iniciar em E
+Expandir E → T R
+Expandir T → id
+Consumir id
+Escolher R pelo próximo token</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="lookahead parsing previsao" id="conceito-ll-1-e-lookahead">
+                        <summary><span class="gl-term-summary"><strong>LL(1) e lookahead</strong><span>Análise da
+                                    esquerda para a direita com derivação à esquerda e um token de
+                                    antecipação.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Na sigla <strong>LL(1)</strong>, o primeiro L significa que a entrada é lida da esquerda
+                                para a direita; o segundo, que é construída uma derivação à esquerda; e o 1 indica que
+                                basta observar um token de antecipação (<em>lookahead</em>) para escolher uma produção.
+                            </p>
+                            <p>Nem toda GLC é LL(1). Para ser analisada dessa forma, as alternativas de um mesmo não
+                                terminal precisam ser distinguíveis a partir das condições de FIRST e FOLLOW. Recursão à
+                                esquerda e certos prefixos comuns podem impedir uma escolha preditiva direta.</p>
+                            <div class="gl-example"><strong>Exemplo:</strong>
+                                <pre class="gl-code"><code>R → '+' T R | ε</code></pre><span>Se o próximo token for
+                                    <code>+</code>, usa-se a primeira alternativa. Quando o próximo token pertence a
+                                    FOLLOW(R), pode-se escolher <code>ε</code>.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="ambiguo precedencia associatividade"
+                        id="conceito-ambiguidade">
+                        <summary><span class="gl-term-summary"><strong>Ambiguidade</strong><span>Quando uma mesma cadeia
+                                    admite mais de uma árvore de derivação.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Uma gramática é <strong>ambígua</strong> quando existe ao menos uma cadeia de terminais
+                                que admite duas árvores de derivação distintas (ou duas derivações à esquerda
+                                distintas). Isso significa que a gramática não determina uma única estrutura para aquela
+                                entrada.</p>
+                            <p>Expressões aritméticas são um exemplo clássico: se soma e multiplicação aparecem no mesmo
+                                nível, uma cadeia como <code>id + id * id</code> pode admitir interpretações diferentes.
+                                Separar níveis de expressão, termo e fator ajuda a representar precedência e
+                                associatividade.</p>
+                            <div class="gl-example"><strong>Gramática ambígua ilustrativa:</strong>
+                                <pre class="gl-code"><code>E → E '+' E
+E → E '*' E
+E → id</code></pre><span>Com essas regras, <code>id + id * id</code> pode ser agrupada de mais de uma maneira.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="recursividade direta indireta"
+                        id="conceito-recursao-a-esquerda">
+                        <summary><span class="gl-term-summary"><strong>Recursão à esquerda</strong><span>Situação em que
+                                    um não terminal pode produzir uma cadeia começando por ele
+                                    próprio.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Há recursão à esquerda quando um não terminal pode derivar uma forma que começa por ele
+                                mesmo. Ela pode ser <strong>direta</strong>, como <code>A → A a</code>, ou
+                                <strong>indireta</strong>, quando a volta ao mesmo símbolo passa por outros não
+                                terminais.
+                            </p>
+                            <p>Um parser descendente preditivo não processa diretamente essa recursão, pois pode
+                                expandir o mesmo não terminal indefinidamente sem consumir entrada. Em certos casos,
+                                podemos transformar a gramática para eliminar a recursão preservando a linguagem gerada;
+                                a forma da derivação resultante pode mudar.</p>
+                            <div class="gl-example"><strong>Exemplo de eliminação direta:</strong>
+                                <pre class="gl-code"><code>Antes:
+A → A a | b
+
+Depois:
+A  → b A′
+A′ → a A′ | ε</code></pre><span>Recursão indireta: <code>A → B a</code> e <code>B → A b | c</code>.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="fatoracao prefixo comum" id="conceito-fatoracao-a-esquerda">
+                        <summary><span class="gl-term-summary"><strong>Fatoração à esquerda</strong><span>Transformação
+                                    que separa prefixos comuns de alternativas.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Fatoração à esquerda é a transformação que coloca um prefixo comum em evidência. Quando
+                                alternativas começam com a mesma sequência, o parser pode precisar olhar além desse
+                                prefixo para decidir qual produção aplicar.</p>
+                            <p>Ao fatorar, a parte comum é reconhecida primeiro; a decisão entre os sufixos fica para um
+                                novo não terminal. Essa transformação não é o mesmo que eliminar recursão à esquerda e,
+                                sozinha, não garante que a gramática resultante seja LL(1).</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>Antes:
+A → a b | a c
+
+Depois:
+A  → a A′
+A′ → b | c</code></pre><span>O terminal <code>a</code> é comum às alternativas e passa a ser reconhecido uma única
+                                    vez.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="primeiro conjunto inicio epsilon" id="conceito-first">
+                        <summary><span class="gl-term-summary"><strong>FIRST</strong><span>Conjunto dos terminais que
+                                    podem iniciar uma derivação de um símbolo ou sequência.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>FIRST(α) é o conjunto de terminais que podem aparecer no início de alguma cadeia derivada
+                                da sequência α. Se α puder derivar a cadeia vazia, o conjunto também contém
+                                <code>ε</code>.
+                            </p>
+                            <p>Na construção de um analisador LL(1), FIRST das alternativas indica quais tokens permitem
+                                escolher cada produção. O cálculo leva em conta as produções dos não terminais e a
+                                possibilidade de um símbolo desaparecer por <code>ε</code>.</p>
+                            <div class="gl-example"><strong>Gramática de exemplo:</strong>
+                                <pre class="gl-code"><code>E → T R
+R → '+' T R | ε
+T → id | num</code></pre><strong>Resultados:</strong>
+                                <pre class="gl-code"><code>FIRST(T) = { id, num }
+FIRST(R) = { '+', ε }
+FIRST(E) = { id, num }</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="seguinte conjunto dollar fim" id="conceito-follow">
+                        <summary><span class="gl-term-summary"><strong>FOLLOW</strong><span>Conjunto dos terminais que
+                                    podem aparecer imediatamente depois de um não terminal.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>FOLLOW(A) é o conjunto de terminais que podem aparecer imediatamente depois do não
+                                terminal A em alguma forma sentencial derivável do símbolo inicial. Para o símbolo
+                                inicial, o marcador <code>$</code> costuma representar o fim da entrada.</p>
+                            <p>FOLLOW nunca contém <code>ε</code>. Quando uma alternativa pode gerar a cadeia vazia,
+                                FOLLOW ajuda a decidir em quais células da tabela preditiva aquela produção deve ser
+                                utilizada.</p>
+                            <div class="gl-example"><strong>Para a gramática com símbolo inicial E:</strong>
+                                <pre class="gl-code"><code>E → T R
+R → '+' T R | ε
+T → id | num</code></pre><strong>Resultados:</strong>
+                                <pre class="gl-code"><code>FOLLOW(E) = { $ }
+FOLLOW(R) = { $ }
+FOLLOW(T) = { '+', $ }</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="parsing matrix tabela analise"
+                        id="conceito-tabela-preditiva-ll-1">
+                        <summary><span class="gl-term-summary"><strong>Tabela preditiva LL(1)</strong><span>Tabela que
+                                    relaciona um não terminal e o próximo token à produção a aplicar.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Uma tabela preditiva LL(1) relaciona um não terminal no topo da pilha e o próximo token
+                                da entrada à produção que deverá ser aplicada. Ela é construída a partir das produções e
+                                dos conjuntos FIRST e FOLLOW.</p>
+                            <p>Para uma produção A → α, os terminais em FIRST(α), exceto <code>ε</code>, indicam células
+                                onde a produção pode entrar. Se α pode derivar <code>ε</code>, também são usados os
+                                terminais de FOLLOW(A). Duas produções diferentes na mesma célula representam um
+                                conflito para o método LL(1).</p>
+                            <div class="gl-example"><strong>Algumas entradas para a gramática de exemplo:</strong>
+                                <pre class="gl-code"><code>M[E, id]  = E → T R
+M[E, num] = E → T R
+M[R, '+'] = R → '+' T R
+M[R, $]   = R → ε</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="simulacao acoes pilha aceitar"
+                        id="conceito-pilha-entrada-e-acao">
+                        <summary><span class="gl-term-summary"><strong>Pilha, entrada e ação</strong><span>Registro de
+                                    cada decisão do analisador preditivo.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Na análise preditiva por pilha, o parser mantém símbolos gramaticais que espera
+                                reconhecer. A <strong>pilha</strong> indica o próximo símbolo a expandir ou consumir; a
+                                <strong>entrada</strong> apresenta os tokens restantes; a <strong>ação</strong> registra
+                                a decisão.
+                            </p>
+                            <p>Se o topo da pilha for um não terminal, o parser consulta a tabela LL(1). Se for um
+                                terminal igual ao próximo token, ambos são consumidos. A análise termina com aceitação
+                                quando a entrada e a pilha chegam ao marcador final nas condições esperadas.</p>
+                            <div class="gl-example"><strong>Exemplo de ações:</strong>
+                                <pre class="gl-code"><code>Topo E, entrada id + num $
+Aplicar E → T R
+Aplicar T → id
+Consumir id
+Aplicar R → '+' T R
+Consumir +
+...</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="conflito selecao first follow producoes"
+                        id="conceito-conflito-ll1">
+                        <summary><span class="gl-term-summary"><strong>Conflito LL(1)</strong><span>Quando duas
+                                    produções competem pela mesma decisão preditiva.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Um conflito LL(1) aparece quando, para o mesmo não terminal e o mesmo token de
+                                antecipação, mais de uma produção seria uma escolha possível. Isso impede construir uma
+                                tabela preditiva com uma única regra por célula.</p>
+                            <p>Para investigar o conflito, analisamos FIRST das alternativas e, quando há possibilidade
+                                de <code>ε</code>, FOLLOW do não terminal. Fatoração e eliminação de recursão à esquerda
+                                podem ajudar em alguns casos, mas não tornam toda gramática automaticamente LL(1).</p>
+                            <div class="gl-example"><strong>Exemplo de escolha ambígua pelo primeiro token:</strong>
+                                <pre class="gl-code"><code>A → 'a' 'b'
+A → 'a' 'c'</code></pre><span>As duas alternativas começam com <code>a</code>; somente um token de antecipação não
+                                    basta para decidir entre elas.</span>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            <section aria-labelledby="heading-outras" class="gl-section gl-section--other" data-group="outras"
+                id="outras">
+                <div class="gl-section-head">
+                    <div>
+                        <p class="gl-small-label">Além dos laboratórios</p>
+                        <h2 id="heading-outras">Outras etapas do compilador</h2>
+                        <p>Verificações de significado, representações internas e produção de código.</p>
+                    </div><span class="gl-section-count">10 conceitos</span>
+                </div>
+                <div class="gl-term-grid">
+                    <details class="gl-term" data-keywords="semantica significado tipos"
+                        id="conceito-analise-sem-ntica">
+                        <summary><span class="gl-term-summary"><strong>Análise semântica</strong><span>Etapa que
+                                    verifica regras de significado não resolvidas apenas pela
+                                    gramática.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>A análise semântica verifica propriedades que a gramática, sozinha, não expressa
+                                adequadamente. É o momento de conferir se nomes usados foram declarados, se operações
+                                recebem valores compatíveis e se restrições específicas da linguagem são respeitadas.
+                            </p>
+                            <p>Essas verificações dependem do contexto da linguagem: uma expressão pode ter forma
+                                sintática válida, mas tentar usar uma variável que não existe ou somar valores
+                                incompatíveis. Compiladores podem realizar essas verificações com apoio de tabelas de
+                                símbolos e informações de tipo.</p>
+                            <div class="gl-example">
+                                <pre class="gl-code"><code>let total = preco * 2;</code></pre><span>A declaração tem uma
+                                    estrutura reconhecível, mas pode exigir que <code>preco</code> já esteja definido no
+                                    escopo e admita multiplicação.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="identificadores simbolos nomes"
+                        id="conceito-tabela-de-simbolos">
+                        <summary><span class="gl-term-summary"><strong>Tabela de símbolos</strong><span>Estrutura que
+                                    registra informações sobre identificadores de um programa.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>A tabela de símbolos é uma estrutura de dados que relaciona nomes do código a informações
+                                conhecidas sobre eles, como tipo, escopo, categoria (variável, função etc.) e, quando
+                                necessário, localização.</p>
+                            <p>Ela ajuda a resolver referências e detectar declarações duplicadas ou usos de nomes
+                                inexistentes. Não é uma fita de tokens: o token informa uma categoria lexical; a tabela
+                                de símbolos guarda informações acumuladas ao longo da análise do programa.</p>
+                            <div class="gl-example"><strong>Representação ilustrativa:</strong>
+                                <pre class="gl-code"><code>Nome   | Tipo   | Escopo
+total  | número | global
+preco  | número | global</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="scope variavel contexto" id="conceito-escopo">
+                        <summary><span class="gl-term-summary"><strong>Escopo</strong><span>Região do programa onde uma
+                                    declaração pode ser utilizada.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Escopo é a região do programa na qual uma declaração está visível. Algumas linguagens
+                                adotam escopo por blocos, outras possuem regras próprias para funções, módulos ou
+                                arquivos.</p>
+                            <p>A análise semântica verifica a qual declaração uma referência se associa. Dois
+                                identificadores com o mesmo nome podem designar entidades diferentes em escopos
+                                distintos; um nome declarado dentro de um bloco pode não estar disponível fora dele.</p>
+                            <div class="gl-example"><strong>Exemplo conceitual:</strong> uma variável declarada dentro
+                                de uma função pode ser acessível nessa função, mas não no restante do programa.</div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="type checking tipo conversao"
+                        id="conceito-verificacao-de-tipos">
+                        <summary><span class="gl-term-summary"><strong>Verificação de tipos</strong><span>Checagem de
+                                    compatibilidade entre valores e operações.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>A verificação de tipos determina se valores e operações respeitam as regras da linguagem.
+                                Por exemplo, uma multiplicação pode exigir operandos numéricos; uma chamada de função
+                                pode exigir argumentos compatíveis com os parâmetros declarados.</p>
+                            <p>Algumas linguagens permitem conversões implícitas ou inferência de tipos; outras exigem
+                                anotações explícitas. A verificação estática acontece antes da execução, mas certas
+                                verificações também podem ser necessárias em tempo de execução.</p>
+                            <div class="gl-example"><strong>Exemplo:</strong> ao analisar <code>preco * 2</code>, o
+                                compilador precisa saber se <code>preco</code> tem um tipo que pode participar dessa
+                                operação.</div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="ir intermediario tres enderecos"
+                        id="conceito-representacao-intermediaria-ir">
+                        <summary><span class="gl-term-summary"><strong>Representação intermediária
+                                    (IR)</strong><span>Forma interna do programa que facilita análises e transformações
+                                    posteriores.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Uma representação intermediária (IR) é uma forma interna de descrever um programa,
+                                frequentemente mais conveniente para análises e transformações do que o texto original.
+                                Pode ser uma sequência de instruções, um grafo de controle ou outra estrutura.</p>
+                            <p>A IR costuma separar detalhes da linguagem-fonte daqueles da arquitetura de destino. Isso
+                                facilita implementar otimizações e gerar código para plataformas diferentes sem repetir
+                                todas as etapas de análise.</p>
+                            <div class="gl-example"><strong>Exemplo conceitual de instruções intermediárias:</strong>
+                                <pre class="gl-code"><code>t1 = preco * 2
+total = t1</code></pre><span>O temporário <code>t1</code> representa o resultado antes da atribuição.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="optimization constante desempenho" id="conceito-otimizacao">
+                        <summary><span class="gl-term-summary"><strong>Otimização</strong><span>Transformações
+                                    destinadas a melhorar algum aspecto do código sem alterar seu comportamento
+                                    observável.</span></span><span aria-hidden="true" class="gl-term-toggle"></span>
+                        </summary>
+                        <div class="gl-term-body">
+                            <p>Otimização reúne transformações que procuram melhorar alguma característica do programa —
+                                como tempo de execução, tamanho do código ou uso de recursos — sem modificar seu
+                                comportamento observável, segundo as regras da linguagem.</p>
+                            <p>Exemplos incluem propagação de constantes, eliminação de código que não produz efeito
+                                observável e simplificação de expressões. Uma transformação só é válida se respeitar
+                                aspectos como ordem de avaliação, exceções e propriedades dos tipos envolvidos.</p>
+                            <div class="gl-example"><strong>Exemplo de avaliação constante:</strong>
+                                <pre class="gl-code"><code>Antes:   total = 2 * 3
+Depois:  total = 6</code></pre><span>A substituição depende de preservar o mesmo resultado sem efeitos
+                                    colaterais.</span>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="backend assembly maquina bytecode"
+                        id="conceito-geracao-de-codigo">
+                        <summary><span class="gl-term-summary"><strong>Geração de código</strong><span>Etapa que
+                                    transforma uma representação interna em código de destino.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>A geração de código transforma uma representação interna em instruções ou estruturas
+                                adequadas ao destino escolhido. Esse destino pode ser uma arquitetura de máquina, uma
+                                máquina virtual, bytecode ou até outra linguagem.</p>
+                            <p>O gerador precisa traduzir operações, organizar dados, respeitar convenções de chamada e
+                                utilizar os recursos disponíveis da plataforma. As decisões exatas dependem da
+                                arquitetura, por isso um mesmo programa pode produzir saídas diferentes em sistemas
+                                distintos.</p>
+                            <div class="gl-example"><strong>Exemplo conceitual:</strong> uma operação <code>a + b</code>
+                                pode se transformar em uma sequência que carrega valores, executa uma soma e guarda o
+                                resultado. As instruções concretas variam conforme o destino.</div>
+                        </div>
+                    </details>
+
+                    <details class="gl-term" data-keywords="codigo tres enderecos ir temporarios"
+                        id="conceito-codigo-de-tres-enderecos">
+                        <summary><span class="gl-term-summary"><strong>Código de três endereços</strong><span>IR em que
+                                    operações são representadas por instruções simples.</span></span><span
+                                aria-hidden="true" class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>O código de três endereços é uma forma de representação intermediária em que instruções
+                                costumam apresentar uma operação e poucos operandos, usando temporários para resultados
+                                parciais.</p>
+                            <p>Decompor uma expressão complexa em passos menores facilita várias análises e
+                                transformações. O formato concreto não é único e depende da implementação do compilador.
+                            </p>
+                            <div class="gl-example"><strong>Exemplo:</strong>
+                                <pre class="gl-code"><code>t1 = preco * 2
+t2 = t1 + imposto
+total = t2</code></pre>
+                            </div>
+                        </div>
+                    </details>
+                    <details class="gl-term" data-keywords="registradores memoria back end geracao codigo"
+                        id="conceito-alocacao-de-registradores">
+                        <summary><span class="gl-term-summary"><strong>Alocação de registradores</strong><span>Escolha
+                                    de onde guardar valores durante a execução.</span></span><span aria-hidden="true"
+                                class="gl-term-toggle"></span></summary>
+                        <div class="gl-term-body">
+                            <p>Ao produzir código para uma máquina, o compilador precisa decidir quais valores podem
+                                permanecer em registradores e quais precisam ser guardados em memória. Como a quantidade
+                                de registradores é limitada, nem todos os valores podem ficar neles ao mesmo tempo.</p>
+                            <p>A alocação de registradores é uma tarefa importante do back-end e costuma estar
+                                relacionada à otimização e à geração de código de máquina. Uma escolha inadequada pode
+                                exigir transferências adicionais entre memória e registradores.</p>
+                            <div class="gl-example"><strong>Exemplo:</strong> resultados temporários usados logo em
+                                seguida podem permanecer em registradores, evitando leituras desnecessárias da memória.
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script defer="" src="index.js"></script>
+</body>
+
+</html>

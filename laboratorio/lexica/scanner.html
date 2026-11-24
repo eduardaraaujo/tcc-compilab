@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+      <meta charset="utf-8" />
+      <meta content="width=device-width, initial-scale=1" name="viewport" />
+      <title>
+            Laboratório de Análise Léxica — CompiLab
+      </title>
+      <link href="https://fonts.googleapis.com" rel="preconnect" />
+      <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+            rel="stylesheet" />
+      <link href="../sintatica/lab.css" rel="stylesheet" />
+      <link href="scanner.css?v=compacto-20261122" rel="stylesheet" />
+      <link href="../../assets/refinement.css" rel="stylesheet" />
+</head>
+
+<body>
+      <header class="cl-site-header">
+            <div class="cl-site-header__inner">
+                  <a class="cl-brand" href="../../inicio/index.html">
+                        CompiLab
+                  </a>
+                  <nav aria-label="Navegação principal" class="cl-site-nav">
+                        <a href="../../inicio/index.html">
+                              Início
+                        </a>
+                        <a href="../../aprendizado/index.html">
+                              Aprendizado
+                        </a>
+                        <a aria-current="page" href="../index.html">
+                              Laboratório
+                        </a>
+                        <a href="../../glossario/index.html">
+                              Glossário &amp; Teoria
+                        </a>
+                  </nav>
+            </div>
+      </header>
+      <main class="cl-slab">
+            <div class="cl-slab-intro">
+                  <span class="cl-eyebrow">
+                        Laboratório / Análise Léxica
+                  </span>
+                  <h1>
+                        Explore como o scanner reconhece tokens
+                  </h1>
+                  <p>
+                        Edite os padrões, analise um código e explore os tokens reconhecidos.
+                  </p>
+            </div>
+            <div class="cl-workspace">
+                  <div class="cl-lex-left">
+                        <section aria-labelledby="lex-rules-title" class="cl-panel cl-pane-pad cl-rules-panel">
+                              <h2 class="cl-pane-title" id="lex-rules-title">
+                                    Definições léxicas
+                              </h2>
+                              <p class="cl-desc">
+                                    Escreva padrões com expressões regulares. O scanner usará essas regras.
+                              </p>
+                              <label class="cl-label cl-rule-label" for="lexRulesInput">
+                                    Editor de regras
+                              </label>
+                              <div class="cl-rules-editor" id="lexRulesEditor">
+                                    <pre class="cl-rules-highlight cl-rules-mirror"
+                                          aria-hidden="true"><code id="lex-rules-highlight"></code></pre>
+                                    <textarea aria-describedby="lex-rules-help"
+                                          aria-label="Definições léxicas editáveis" class="cl-rules-input"
+                                          id="lexRulesInput" rows="9" wrap="off" spellcheck="false">DIGITO             = [0-9]
+LETRA              = [a-zA-Z_]
+PALAVRA_RESERVADA  = 'let' | 'const' | 'var'
+ID                 = {LETRA}({LETRA}|{DIGITO})*
+NUM                = {DIGITO}+('.'{DIGITO}+)?
+OP_ATRIB           = '='
+OP_ARIT            = '==' | '!=' | '&lt;=' | '&gt;=' | '&amp;&amp;' | '+' | '-' | '*' | '/' | '&lt;' | '&gt;'
+PONTUACAO          = ';' | '(' | ')' | '{' | '}' | ','
+IGNORAR            = [\ \t\n\r]+</textarea>
+                              </div>
+                              <p class="cl-rule-help" id="lex-rules-help">
+                                    Uma regra por linha. Referências: <code>{NOME}</code>. O maior lexema prevalece.
+                              </p>
+                              <div class="cl-actions cl-rule-actions">
+                                    <button class="cl-btn cl-btn-primary" id="btnCheckRules" type="button">
+                                          Verificar definições
+                                    </button>
+                                    <button class="cl-btn cl-btn-secondary" id="btnDefaultRules" type="button">
+                                          Restaurar exemplo
+                                    </button>
+                              </div>
+                              <div aria-live="polite" class="cl-rule-check-status" id="lex-rules-status">
+                              </div>
+                              <div aria-live="polite" class="cl-rule-check-details" id="lex-rules-details">
+                              </div>
+                              <details class="cl-examples cl-rule-guide">
+                                    <summary>Como escrever regras</summary>
+                                    <p>Use <code>LETRA = [a-zA-Z_]</code> e <code>ID = {LETRA}({LETRA}|{DIGITO})*</code>
+                                          para formar identificadores. <code>IGNORAR</code> descarta espaços e quebras
+                                          de linha. Em empate de tamanho, vale a regra que aparece primeiro.</p>
+                              </details>
+                        </section>
+                        <section aria-labelledby="lex-input-title" class="cl-panel cl-pane-pad">
+                              <h2 class="cl-pane-title" id="lex-input-title">
+                                    Scanner
+                              </h2>
+                              <p class="cl-desc">
+                                    Teste seu código com as regras acima.
+                              </p>
+                              <label class="cl-label" for="sourceInput">
+                                    Código de entrada
+                              </label>
+                              <textarea class="cl-code-input" id="sourceInput" rows="4"
+                                    spellcheck="false">let total = preco * 2;</textarea>
+                              <div class="cl-actions">
+                                    <button class="cl-btn cl-btn-primary" id="btnExecuteScan" type="button">
+                                          Analisar código
+                                    </button>
+                                    <button class="cl-btn cl-btn-secondary" id="btnReset" type="button">
+                                          Limpar
+                                    </button>
+                              </div>
+                              <details class="cl-examples">
+                                    <summary>
+                                          Ver exemplos para testar
+                                    </summary>
+                                    <div class="cl-chips">
+                                          <button class="cl-chip" data-code="let total = preco * 2;" type="button">
+                                                Atribuição
+                                          </button>
+                                          <button class="cl-chip" data-code="const taxa = 0.15;" type="button">
+                                                Número decimal
+                                          </button>
+                                          <button class="cl-chip" data-code="ativo &amp;&amp; contador &lt;= 100"
+                                                type="button">
+                                                Operadores
+                                          </button>
+                                          <button class="cl-chip" data-code="let a = 2;\nlet b = a + 3;" type="button">
+                                                Mais de uma linha
+                                          </button>
+                                          <button class="cl-chip" data-code="let x = @;" type="button">
+                                                Caractere inválido
+                                          </button>
+                                    </div>
+                              </details>
+                        </section>
+                  </div>
+                  <section aria-labelledby="lex-results-title" class="cl-panel cl-lab-result">
+                        <h2 class="sr-only" id="lex-results-title">
+                              Visualizações da análise léxica
+                        </h2>
+                        <div aria-label="Visualizações da análise" class="cl-tabs" role="tablist">
+                              <button aria-controls="tabContent1" aria-selected="false" class="cl-tab"
+                                    data-view="tokens" id="tabBtn1" role="tab" type="button">
+                                    Tokens
+                              </button>
+                              <button aria-controls="tabContent2" aria-selected="false" class="cl-tab"
+                                    data-view="automato" id="tabBtn2" role="tab" type="button">
+                                    Autômato (DFA)
+                              </button>
+                              <button aria-controls="tabContent3" aria-selected="false" class="cl-tab"
+                                    data-view="transicoes" id="tabBtn3" role="tab" type="button">
+                                    Transições
+                              </button>
+                        </div>
+                        <div aria-labelledby="tabBtn1" class="cl-tab-panel" hidden="" id="tabContent1" role="tabpanel">
+                              <h2>
+                                    Tokens reconhecidos
+                              </h2>
+                              <p>
+                                    A fita e a tabela são geradas com as definições léxicas do editor à esquerda. Os
+                                    nomes das regras indicam as categorias de tokens.
+                              </p>
+                              <div aria-live="polite" class="cl-lab-message" id="lexical-status">
+                              </div>
+                              <div id="lexical-result">
+                                    <p class="cl-empty">
+                                          Clique em “Analisar código” para ver os tokens.
+                                    </p>
+                              </div>
+                        </div>
+                        <div aria-labelledby="tabBtn2" class="cl-tab-panel" hidden="" id="tabContent2" role="tabpanel">
+                              <h2>
+                                    Autômato de referência
+                              </h2>
+                              <p>
+                                    DFA de referência para identificadores e números. O diagrama é fixo e não representa
+                                    automaticamente as regras editadas à esquerda.
+                              </p>
+                              <div aria-label="Regra de referência" class="cl-rule-selector" role="group">
+                                    <button aria-pressed="true" class="cl-rule-button" data-rule="identifier"
+                                          type="button">
+                                          Identificador
+                                    </button>
+                                    <button aria-pressed="false" class="cl-rule-button" data-rule="number"
+                                          type="button">
+                                          Número
+                                    </button>
+                              </div>
+                              <p class="cl-rule-caption" id="lex-rule-description">
+                              </p>
+                              <div aria-label="Diagrama de estados" class="cl-dfa-wrap" id="lex-dfa">
+                              </div>
+                              <p class="cl-note">
+                                    Um estado com círculo duplo é um estado de aceitação. O reconhecimento termina ao
+                                    encontrar um caractere que não pode continuar o token; outro token pode começar em
+                                    seguida.
+                              </p>
+                        </div>
+                        <div aria-labelledby="tabBtn3" class="cl-tab-panel" hidden="" id="tabContent3" role="tabpanel">
+                              <h2>
+                                    Tabela de transições de referência
+                              </h2>
+                              <p>
+                                    Tabela do mesmo DFA de referência da aba Autômato. Ela não é recalculada a partir
+                                    das expressões regulares do editor.
+                              </p>
+                              <div class="cl-table-scroll" id="lex-transition-table">
+                              </div>
+                              <p class="cl-note">
+                                    — indica que não há transição. Para experimentar outras definições, altere as regras
+                                    à esquerda e consulte os tokens gerados.
+                              </p>
+                        </div>
+                  </section>
+            </div>
+            <div class="cl-slab-footer">
+                  <a href="../index.html">
+                        Voltar aos laboratórios
+                  </a>
+                  <span>
+                        ·
+                  </span>
+                  <a href="../../aprendizado/lexica/passo-1.html">
+                        Revisar análise léxica na trilha guiada
+                  </a>
+                  <span>
+                        ·
+                  </span>
+                  <a href="../../glossario/index.html">
+                        Consultar conceitos
+                  </a>
+            </div>
+      </main>
+      <script defer="" src="../../assets/lexer-core.js">
+      </script>
+      <script defer="" src="rules-editor.js?v=compacto-20261122">
+      </script>
+      <script defer="" src="scanner.js?v=lexemas-20261122">
+      </script>
+</body>
+
+</html>

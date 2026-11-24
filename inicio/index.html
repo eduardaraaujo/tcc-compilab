@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>
+                CompiLab - Plataforma Didática de Compiladores
+        </title>
+        <!-- Google Fonts: Inter -->
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+                rel="stylesheet" />
+        <!-- Tailwind CSS v3 CDN -->
+        <!-- BEGIN: Custom CSS -->
+        <!-- END: Custom CSS -->
+        <link href="index.css" rel="stylesheet" />
+        <link href="../assets/simple.css" rel="stylesheet" />
+        <link href="../assets/simple.css" rel="stylesheet" />
+        <link href="../assets/refinement.css" rel="stylesheet" />
+        <link href="../assets/hub-header.css" rel="stylesheet" />
+</head>
+
+<body class="min-h-screen bg-[#f3f6fb] text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-800">
+        <header class="cl-site-header">
+                <div class="cl-site-header__inner"><a class="cl-brand" href="../inicio/index.html">CompiLab</a>
+                        <nav aria-label="Navegação principal" class="cl-site-nav"><a aria-current="page"
+                                        href="../inicio/index.html">Início</a><a
+                                        href="../aprendizado/index.html">Aprendizado</a><a
+                                        href="../laboratorio/index.html">Laboratório</a><a
+                                        href="../glossario/index.html">Glossário &amp; Teoria</a></nav>
+                </div>
+        </header>
+        <!-- BEGIN: MainHeader -->
+        <!-- END: MainHeader -->
+        <!-- BEGIN: MainContent -->
+        <main class="max-w-[1240px] mx-auto px-6 py-6 flex flex-col gap-8">
+                <!-- BEGIN: HeroCard -->
+                <section class="relative bg-white rounded-2xl border border-slate-200/80 p-8 sm:p-10 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] overflow-hidden"
+                        data-purpose="hero-section">
+                        <!-- Decorative radial ambient blur -->
+                        <div
+                                class="absolute -right-20 -top-20 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl pointer-events-none">
+                        </div>
+                        <div class="relative z-10 max-w-3xl">
+                                <h1
+                                        class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                                        <span class="cl-home-title-emphasis">Compilab: </span>uma plataforma Web para o
+                                        ensino de Compiladores</h1>
+                                <p
+                                        class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl font-normal">
+                                        Explore a análise léxica e sintática com explicações guiadas, exemplos visuais e
+                                        experimentos. Acompanhe cada etapa, desde a identificação dos tokens à
+                                        construção de árvores de derivação.</p>
+                        </div>
+                </section>
+                <!-- END: HeroCard -->
+                <!-- BEGIN: CompilerStagesSection -->
+                <!-- END: CompilerStagesSection -->
+                <!-- BEGIN: LearningPathsSection -->
+                <section class="pb-10" data-purpose="learning-paths">
+                        <!-- Section Titles -->
+                        <div class="flex items-center gap-2.5 mb-4">
+                                <h2 class="text-lg font-bold text-slate-900 tracking-tight">
+                                        Formas de Aprendizado
+                                </h2>
+                                <p class="text-xs text-slate-500 mt-0.5">
+                                        Acesse diretamente a trilha guiada, o laboratório interativo ou a fundamentação
+                                        teórica.
+                                </p>
+                        </div>
+                        <!-- 3 Cards Layout -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <!-- Card 1: Trilha Guiada Completa (Active) -->
+                                <div class="bg-white rounded-2xl p-6 flex flex-col justify-between relative shadow-sm cl-home-card cl-home-card-track"
+                                        data-purpose="learning-card-track">
+                                        <!-- Active Ribbon / Badge -->
+
+                                        <div>
+                                                <!-- Icon -->
+                                                <div
+                                                        class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2f45c5] mb-5 cl-home-card-icon">
+                                                        <!-- Academic Cap Icon -->
+                                                        <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+                                                                <path
+                                                                        d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z">
+                                                                </path>
+                                                        </svg>
+                                                </div>
+                                                <!-- Info -->
+                                                <h3 class="text-base font-bold text-slate-900">Trilhas guiadas</h3>
+                                                <p class="text-xs font-medium text-[#2f45c5] mt-1 mb-2">
+                                                        Aprenda Análise Léxica e Sintática passo a passo
+                                                </p>
+                                                <p class="text-xs text-slate-500 leading-relaxed">
+                                                        Explore expressões regulares, tokens, autômatos finitos,
+                                                        gramáticas livres de contexto e árvores de derivação.
+                                                </p>
+                                        </div>
+                                        <!-- Action Button -->
+                                        <div class="mt-6">
+                                                <a class="cl-home-cta" href="../aprendizado/index.html">
+                                                        <span>Explorar trilhas de aprendizado</span>
+                                                        <span>
+                                                                →
+                                                        </span>
+                                                </a>
+                                        </div>
+                                </div>
+                                <!-- Card 2: Laboratório de Compilação -->
+                                <div class="bg-white rounded-2xl p-6 flex flex-col justify-between shadow-sm cl-home-card cl-home-card-lab"
+                                        data-purpose="learning-card-lab">
+                                        <div>
+                                                <!-- Icon -->
+                                                <div
+                                                        class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2f45c5] mb-5 cl-home-card-icon">
+                                                        <!-- Terminal Icon -->
+                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                                stroke-width="2" viewbox="0 0 24 24">
+                                                                <rect height="16" rx="2" width="18" x="3" y="4">
+                                                                </rect>
+                                                                <path d="M7 8l4 4-4 4M13 16h4">
+                                                                </path>
+                                                        </svg>
+                                                </div>
+                                                <!-- Info -->
+                                                <h3 class="text-base font-bold text-slate-900">Laboratórios interativos
+                                                </h3>
+                                                <p class="text-xs font-medium text-[#2f45c5] mt-1 mb-2">
+                                                        Experimente com as suas próprias gramáticas
+                                                </p>
+                                                <p class="text-xs text-slate-500 leading-relaxed mt-3">
+                                                        Configure regras léxicas, reconheça tokens e acompanhe a análise
+                                                        sintática LL(1) passo a passo.
+                                                </p>
+                                        </div>
+                                        <!-- Action Button -->
+                                        <div class="mt-6">
+                                                <a class="cl-home-cta" href="../laboratorio/index.html">
+                                                        <span>
+                                                                Acessar Laboratório
+                                                        </span>
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                                stroke-width="2" viewbox="0 0 24 24">
+                                                                <path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                </path>
+                                                        </svg>
+                                                </a>
+                                        </div>
+                                </div>
+                                <!-- Card 3: Glossário & Teoria -->
+                                <div class="bg-white rounded-2xl p-6 flex flex-col justify-between shadow-sm cl-home-card cl-home-card-glossary"
+                                        data-purpose="learning-card-glossary">
+                                        <div>
+                                                <!-- Icon -->
+                                                <div
+                                                        class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2f45c5] mb-5 cl-home-card-icon">
+                                                        <!-- Book Icon -->
+                                                        <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                                stroke-width="2" viewbox="0 0 24 24">
+                                                                <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                </path>
+                                                        </svg>
+                                                </div>
+                                                <!-- Info -->
+                                                <h3 class="text-base font-bold text-slate-900">
+                                                        Glossário &amp; Teoria
+                                                </h3>
+                                                <p class="text-xs font-medium text-[#2f45c5] mt-1 mb-2">
+                                                        Base de Conhecimento
+                                                </p>
+                                                <p class="text-xs text-slate-500 leading-relaxed">
+                                                        Consulte conceitos, definições e representações visuais
+                                                        relacionados à construção de compiladores.
+                                                </p>
+                                        </div>
+                                        <!-- Action Button -->
+                                        <div class="mt-6">
+                                                <a class="cl-home-cta" href="../glossario/index.html">
+                                                        <span>
+                                                                Consultar Teoria
+                                                        </span>
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                                stroke-width="2" viewbox="0 0 24 24">
+                                                                <path d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                </path>
+                                                        </svg>
+                                                </a>
+                                        </div>
+                                </div>
+                        </div>
+                </section>
+                <!-- END: LearningPathsSection -->
+        </main>
+        <!-- END: MainContent -->
+        <script defer="" src="index.js">
+        </script>
+</body>
+
+</html>

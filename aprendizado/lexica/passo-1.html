@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta content="web_standard" name="shell-type" />
+        <title>
+                CompilaLab — Análise Léxica
+        </title>
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+                rel="stylesheet" />
+        <link href="passo-1.css" rel="stylesheet" />
+        <link href="../../assets/simple.css" rel="stylesheet" />
+        <link href="../../assets/refinement.css" rel="stylesheet" />
+        <link href="../../assets/lesson-unified.css" rel="stylesheet" />
+        <link href="../../assets/lexica-adjustments.css" rel="stylesheet" />
+</head>
+
+<body class="cl-lex-lesson bg-surface font-body-md text-body-md text-on-surface antialiased">
+        <header class="cl-site-header">
+                <div class="cl-site-header__inner"><a class="cl-brand" href="../../inicio/index.html">CompiLab</a>
+                        <nav aria-label="Navegação principal" class="cl-site-nav"><a
+                                        href="../../inicio/index.html">Início</a><a aria-current="page"
+                                        href="../../aprendizado/index.html">Aprendizado</a><a
+                                        href="../../laboratorio/index.html">Laboratório</a><a
+                                        href="../../glossario/index.html">Glossário &amp; Teoria</a></nav>
+                </div>
+        </header>
+        <main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)] flex flex-col cl-flow-main">
+                <div class="w-full flex-1 max-w-6xl mx-auto px-6 py-6">
+                        <div class="flex flex-col w-full gap-space-lg">
+                                <!-- Top Navigation & Stepper Header -->
+                                <header class="cl-flow-header">
+                                        <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE LÉXICA</p>
+                                        <h1>Expressões Regulares (Regex)</h1>
+                                        <nav aria-label="Assuntos da trilha" class="cl-lesson-nav cl-flow-nav"><a
+                                                        aria-current="step" href="passo-1.html">Expressões
+                                                        regulares</a><a href="passo-2.html">Autômatos (DFA)</a><a
+                                                        href="passo-3.html">Classificação de tokens</a></nav>
+                                        <p class="cl-flow-description">Identifique o padrão que reconhece nomes válidos
+                                                de variáveis.</p>
+                                </header>
+                                <!-- Main Workspace: 2-Column Layout -->
+                                <section class="grid grid-cols-1 gap-gutter items-start cl-lexical-workspace">
+                                        <!-- LEFT COLUMN: Guided Interactive Activity -->
+                                        <div
+                                                class="flex flex-col gap-space-md bg-surface-container-lowest p-space-lg rounded-xl shadow-sm">
+                                                <!-- Activity Subhead -->
+                                                <div class="flex items-center justify-between">
+                                                        <div
+                                                                class="flex items-center gap-1.5 font-label-sm text-label-sm font-bold tracking-widest text-primary-container uppercase">
+                                                                <span class="material-symbols-outlined text-[16px]"
+                                                                        data-compilab-symbol="school"><svg
+                                                                                aria-hidden="true" class="compilab-icon"
+                                                                                focusable="false" viewbox="0 0 640 512"
+                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                <path
+                                                                                        d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9l0 28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5l0-24.6c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z">
+                                                                                </path>
+                                                                        </svg></span>
+                                                                <span>
+                                                                        Atividade Guiada
+                                                                </span>
+                                                        </div>
+                                                </div>
+                                                <!-- Problem Prompt -->
+                                                <div class="flex flex-col gap-1">
+                                                        <h2
+                                                                class="font-title-md text-title-md font-bold text-on-surface">
+                                                                Como descrever um Identificador no compilador?
+                                                        </h2>
+                                                        <p class="font-body-md text-body-md text-on-surface-variant">
+                                                                Neste exemplo, um identificador (como nomes de variáveis
+                                                                <code
+                                                                        class="px-1.5 py-0.5 rounded bg-surface-container font-mono text-body-sm text-primary font-semibold">
+          total
+         </code>
+                                                                ou
+                                                                <code
+                                                                        class="px-1.5 py-0.5 rounded bg-surface-container font-mono text-body-sm text-primary font-semibold">
+          preco
+         </code>
+                                                                ) deve começar com uma letra ou sublinhado (
+                                                                <code class="font-mono text-body-sm">
+          _
+         </code>
+                                                                ), seguido por letras, números ou sublinhados.
+                                                        </p>
+                                                </div>
+                                                <!-- Highlighted Question Box -->
+                                                <div
+                                                        class="p-4 rounded-xl bg-surface-container-low flex items-start gap-3">
+
+                                                        <div
+                                                                class="font-body-md text-body-md font-semibold text-on-surface">
+                                                                Qual expressão regular formal reconhece nomes de
+                                                                variáveis válidos segundo essa especificação léxica?
+                                                        </div>
+                                                </div>
+                                                <!-- Interactive Options Group -->
+                                                <div class="flex flex-col gap-2.5" id="options-group">
+                                                        <!-- Option A (Correct by default state) -->
+                                                        <button class="w-full text-left p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-start gap-3"
+                                                                id="opt-a" onclick="selectOption('a')" type="button">
+                                                                <span
+                                                                        class="w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0 mt-0.5">
+                                                                        A
+                                                                </span>
+                                                                <div class="flex flex-col min-w-0">
+                                                                        <code
+                                                                                class="font-mono font-bold text-body-md text-slate-900">
+           [a-zA-Z_][a-zA-Z0-9_]*
+          </code>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm mt-0.5 font-medium">
+                                                                                Letra ou _ inicial, seguida de zero ou
+                                                                                mais caracteres alfanuméricos.
+                                                                        </span>
+                                                                </div>
+                                                        </button>
+                                                        <!-- Option B -->
+                                                        <button class="w-full text-left p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-start gap-3"
+                                                                id="opt-b" onclick="selectOption('b')" type="button">
+                                                                <span
+                                                                        class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0 mt-0.5">
+                                                                        B
+                                                                </span>
+                                                                <div class="flex flex-col min-w-0">
+                                                                        <code
+                                                                                class="font-mono font-bold text-body-md text-on-surface">
+           [0-9]+[a-zA-Z]*
+          </code>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                                                                                Dígitos seguidos de letras opcionais
+                                                                                (permite nomes iniciando em número).
+                                                                        </span>
+                                                                </div>
+                                                        </button>
+                                                        <!-- Option C -->
+                                                        <button class="w-full text-left p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-start gap-3"
+                                                                id="opt-c" onclick="selectOption('c')" type="button">
+                                                                <span
+                                                                        class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0 mt-0.5">
+                                                                        C
+                                                                </span>
+                                                                <div class="flex flex-col min-w-0">
+                                                                        <code
+                                                                                class="font-mono font-bold text-body-md text-on-surface">
+           [a-z]+
+          </code>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                                                                                Apenas letras minúsculas sequenciais,
+                                                                                rejeitando maiúsculas e dígitos.
+                                                                        </span>
+                                                                </div>
+                                                        </button>
+                                                        <!-- Option D -->
+                                                        <button class="w-full text-left p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-start gap-3"
+                                                                id="opt-d" onclick="selectOption('d')" type="button">
+                                                                <span
+                                                                        class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0 mt-0.5">
+                                                                        D
+                                                                </span>
+                                                                <div class="flex flex-col min-w-0">
+                                                                        <code
+                                                                                class="font-mono font-bold text-body-md text-on-surface">
+           .*
+          </code>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                                                                                Qualquer sequência de caracteres
+                                                                                arbitrária sem restrições sintáticas.
+                                                                        </span>
+                                                                </div>
+                                                        </button>
+                                                </div>
+                                                <!-- Pedagogical Feedback Card -->
+                                                <div class="p-4 rounded-xl bg-emerald-50/90 border border-emerald-200 shadow-sm flex items-start gap-3 hidden"
+                                                        id="feedback-box">
+                                                        <div
+                                                                class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                                                                <span class="material-symbols-outlined text-[20px]"
+                                                                        data-compilab-symbol="check_circle"
+                                                                        style="font-variation-settings: 'FILL' 1;"><svg
+                                                                                aria-hidden="true" class="compilab-icon"
+                                                                                focusable="false" viewbox="0 0 512 512"
+                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                <path
+                                                                                        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z">
+                                                                                </path>
+                                                                        </svg></span>
+                                                        </div>
+                                                        <div class="flex flex-col">
+                                                                <span
+                                                                        class="font-label-md text-label-md font-bold text-emerald-900">Por
+                                                                        que essa expressão funciona?</span>
+                                                                <p
+                                                                        class="font-body-md text-body-md text-emerald-800 mt-1 leading-relaxed">
+                                                                        O prefixo
+                                                                        <code
+                                                                                class="font-mono font-bold text-emerald-950 bg-emerald-100/80 px-1 py-0.5 rounded text-body-sm">
+           [a-zA-Z_]
+          </code>
+                                                                        exige que o caractere inicial seja alfabético ou
+                                                                        sublinhado, e a repetição Kleene
+                                                                        <code
+                                                                                class="font-mono font-bold text-emerald-950 bg-emerald-100/80 px-1 py-0.5 rounded text-body-sm">
+           [a-zA-Z0-9_]*
+          </code>
+                                                                        aceita continuações numéricas, impedindo que
+                                                                        construções inválidas como
+                                                                        <code
+                                                                                class="font-mono text-body-sm bg-emerald-100/80 px-1 py-0.5 rounded text-emerald-950">
+           2total
+          </code>
+                                                                        passem pelo Lexer.
+                                                                </p>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <!-- RIGHT COLUMN: Code Pattern Matcher & Spec Table -->
+                                        <aside class="cl-lexical-reference">
+                                                <div class="cl-reference-title"><span class="cl-activity-label">Exemplo
+                                                                de referência</span>
+                                                        <p>Compare a regra com o exemplo e teste um nome de variável.
+                                                        </p>
+                                                </div>
+                                                <div class="flex flex-col gap-space-md">
+                                                        <!-- Code Inspection Panel -->
+                                                        <div
+                                                                class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-3">
+                                                                <div class="flex items-center justify-between">
+                                                                        <div
+                                                                                class="flex items-center gap-1.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary">
+                                                                                <span class="material-symbols-outlined text-[16px]"
+                                                                                        data-compilab-symbol="terminal"><svg
+                                                                                                aria-hidden="true"
+                                                                                                class="compilab-icon"
+                                                                                                focusable="false"
+                                                                                                viewbox="0 0 576 512"
+                                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                                <path
+                                                                                                        d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416l288 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z">
+                                                                                                </path>
+                                                                                        </svg></span>
+                                                                                <span>
+                                                                                        Código de exemplo
+                                                                                </span>
+                                                                        </div>
+                                                                        <span
+                                                                                class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                                                                                Linha sob análise: 01
+                                                                        </span>
+                                                                </div>
+                                                                <!-- Terminal / Dark Code Block -->
+                                                                <div
+                                                                        class="w-full bg-inverse-surface text-inverse-on-surface p-4 rounded-xl font-mono text-body-md overflow-x-auto flex flex-col gap-2">
+                                                                        <div
+                                                                                class="flex items-center gap-2 text-outline text-body-sm pb-2">
+                                                                                <span
+                                                                                        class="w-2.5 h-2.5 rounded-full bg-error inline-block">
+                                                                                </span>
+                                                                                <span
+                                                                                        class="w-2.5 h-2.5 rounded-full bg-secondary-fixed inline-block">
+                                                                                </span>
+                                                                                <span
+                                                                                        class="w-2.5 h-2.5 rounded-full bg-primary-fixed inline-block">
+                                                                                </span>
+
+                                                                        </div>
+                                                                        <div
+                                                                                class="flex items-center gap-2 select-none">
+                                                                                <span
+                                                                                        class="text-outline select-none pr-3">
+                                                                                        01
+                                                                                </span>
+                                                                                <span
+                                                                                        class="text-secondary-container font-semibold">
+                                                                                        let
+                                                                                </span>
+                                                                                <span class="px-1.5 py-0.5 rounded bg-primary-container text-on-primary font-bold shadow-sm ring-1 ring-primary-fixed-dim"
+                                                                                        title="Token: Identificador">
+                                                                                        total
+                                                                                </span>
+                                                                                <span class="text-inverse-primary">
+                                                                                        =
+                                                                                </span>
+                                                                                <span class="px-1.5 py-0.5 rounded bg-primary-container text-on-primary font-bold shadow-sm ring-1 ring-primary-fixed-dim"
+                                                                                        title="Token: Identificador">
+                                                                                        preco
+                                                                                </span>
+                                                                                <span class="text-inverse-primary">
+                                                                                        *
+                                                                                </span>
+                                                                                <span
+                                                                                        class="text-on-secondary-container">
+                                                                                        2
+                                                                                </span>
+                                                                                <span class="text-outline">
+                                                                                        ;
+                                                                                </span>
+                                                                        </div>
+                                                                </div>
+                                                                <div
+                                                                        class="flex items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+                                                                        <span
+                                                                                class="w-3 h-3 rounded bg-primary-container shrink-0">
+                                                                        </span>
+                                                                        <span>
+                                                                                Destaques azuis indicam correspondência
+                                                                                com a Regex de
+                                                                                <strong class="text-primary-container">
+                                                                                        Identificadores
+                                                                                </strong>
+                                                                                .
+                                                                        </span>
+                                                                </div>
+                                                        </div>
+                                                        <!-- Lexical Specification Table -->
+                                                        <div
+                                                                class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-3">
+                                                                <h3
+                                                                        class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary">
+                                                                        Especificação Léxica da Linguagem
+                                                                </h3>
+                                                                <div
+                                                                        class="w-full overflow-hidden rounded-lg bg-surface-container-low">
+                                                                        <div
+                                                                                class="grid grid-cols-12 bg-surface-container-high px-3 py-2 font-label-sm text-label-sm text-secondary font-bold uppercase">
+                                                                                <div class="col-span-4">
+                                                                                        Categoria
+                                                                                </div>
+                                                                                <div class="col-span-5">
+                                                                                        Expressão Regular
+                                                                                </div>
+                                                                                <div class="col-span-3 text-right">
+                                                                                        No Exemplo
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="divide-y-0 flex flex-col">
+                                                                                <div
+                                                                                        class="grid grid-cols-12 px-3 py-2 text-body-sm items-center hover:bg-surface-container transition-colors">
+                                                                                        <div
+                                                                                                class="col-span-4 font-semibold text-on-surface">
+                                                                                                Palavra Reservada
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-5 font-mono text-primary font-bold">
+                                                                                                let
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-3 font-mono text-right text-on-surface-variant">
+                                                                                                "let"
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="grid grid-cols-12 px-3 py-2 text-body-sm items-center bg-surface-container font-semibold">
+                                                                                        <div
+                                                                                                class="col-span-4 text-primary-container flex items-center gap-1">
+                                                                                                <span class="material-symbols-outlined text-[14px]"
+                                                                                                        data-compilab-symbol="arrow_right"><svg
+                                                                                                                aria-hidden="true"
+                                                                                                                class="compilab-icon"
+                                                                                                                focusable="false"
+                                                                                                                viewbox="0 0 448 512"
+                                                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                                                <path
+                                                                                                                        d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z">
+                                                                                                                </path>
+                                                                                                        </svg></span>
+                                                                                                <span>
+                                                                                                        Identificador
+                                                                                                </span>
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-5 font-mono text-primary-container font-bold text-[12px] truncate">
+                                                                                                [a-zA-Z_][a-zA-Z0-9_]*
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-3 font-mono text-right text-primary-container">
+                                                                                                total, preco
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="grid grid-cols-12 px-3 py-2 text-body-sm items-center hover:bg-surface-container transition-colors">
+                                                                                        <div
+                                                                                                class="col-span-4 font-semibold text-on-surface">
+                                                                                                Operadores
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-5 font-mono text-primary font-bold">
+                                                                                                [=+*/-]
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-3 font-mono text-right text-on-surface-variant">
+                                                                                                =, *
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="grid grid-cols-12 px-3 py-2 text-body-sm items-center hover:bg-surface-container transition-colors">
+                                                                                        <div
+                                                                                                class="col-span-4 font-semibold text-on-surface">
+                                                                                                Constante Numérica
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-5 font-mono text-primary font-bold">
+                                                                                                [0-9]+
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-3 font-mono text-right text-on-surface-variant">
+                                                                                                2
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="grid grid-cols-12 px-3 py-2 text-body-sm items-center hover:bg-surface-container transition-colors">
+                                                                                        <div
+                                                                                                class="col-span-4 font-semibold text-on-surface">
+                                                                                                Pontuação
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-5 font-mono text-primary font-bold">
+                                                                                                ;
+                                                                                        </div>
+                                                                                        <div
+                                                                                                class="col-span-3 font-mono text-right text-on-surface-variant">
+                                                                                                ;
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                        <!-- Live Interactive Regex Tester -->
+                                                        <div
+                                                                class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-2.5">
+                                                                <label class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary flex items-center justify-between"
+                                                                        for="tester-input">
+                                                                        <span>
+                                                                                Testador Interativo de Identificador
+                                                                        </span>
+                                                                        <span class="text-outline font-normal">
+                                                                                Regex: [a-zA-Z_][a-zA-Z0-9_]*
+                                                                        </span>
+                                                                </label>
+                                                                <div class="flex items-center gap-2">
+                                                                        <div class="relative flex-1">
+                                                                                <input aria-describedby="tester-status"
+                                                                                        autocomplete="off"
+                                                                                        class="w-full h-11 px-3.5 bg-surface-container-lowest text-on-surface font-mono text-body-md rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container cl-identifier-input"
+                                                                                        id="tester-input"
+                                                                                        oninput="validateIdentifier(this.value)"
+                                                                                        placeholder="Digite um identificador..."
+                                                                                        type="text"
+                                                                                        value="preco_final" />
+                                                                        </div>
+                                                                        <div class="px-3.5 h-11 rounded-lg bg-surface-container text-primary-container flex items-center gap-1.5 font-label-md text-label-md shrink-0"
+                                                                                id="tester-status">
+                                                                                <span class="material-symbols-outlined text-[18px]"
+                                                                                        data-compilab-symbol="verified"><svg
+                                                                                                aria-hidden="true"
+                                                                                                class="compilab-icon"
+                                                                                                focusable="false"
+                                                                                                viewbox="0 0 512 512"
+                                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                                <path
+                                                                                                        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z">
+                                                                                                </path>
+                                                                                        </svg></span>
+                                                                                <span id="tester-text">
+                                                                                        Reconhecido
+                                                                                </span>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </aside>
+                                </section>
+                                <!-- Bottom Theoretical Support Card -->
+                                <details class="cl-support-section">
+                                        <summary>Ler explicação e exemplos de expressões regulares</summary>
+                                        <aside class="w-full bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-sm relative transition-all"
+                                                id="theory-card">
+                                                <div class="flex items-start justify-between gap-space-md">
+                                                        <div class="flex items-start gap-3">
+                                                                <div
+                                                                        class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary-container shrink-0 mt-0.5">
+                                                                        <span class="material-symbols-outlined text-[20px]"
+                                                                                data-compilab-symbol="info"
+                                                                                style="font-variation-settings: 'FILL' 1;"><svg
+                                                                                        aria-hidden="true"
+                                                                                        class="compilab-icon"
+                                                                                        focusable="false"
+                                                                                        viewbox="0 0 512 512"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z">
+                                                                                        </path>
+                                                                                </svg></span>
+                                                                </div>
+                                                                <div class="flex flex-col gap-1">
+                                                                        <h4
+                                                                                class="font-title-md text-title-md font-bold text-on-surface">
+                                                                                O que é uma Expressão Regular na Análise
+                                                                                Léxica?
+                                                                        </h4>
+                                                                        <p
+                                                                                class="font-body-md text-body-md text-on-surface-variant max-w-4xl">
+                                                                                Antes de varrer o código-fonte caractere
+                                                                                por caractere, o compilador precisa
+                                                                                saber como cada categoria de token é
+                                                                                formalmente escrita. Expressões
+                                                                                regulares são regras formais de texto
+                                                                                usadas pelo Scanner/Lexer para definir o
+                                                                                formato de identificadores, números e
+                                                                                palavras-chave antes de sua conversão em
+                                                                                autômatos determinísticos.
+                                                                        </p>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                <!-- Inner Practical Example Box -->
+                                                <div
+                                                        class="ml-11 p-3.5 rounded-lg bg-surface-container-lowest flex items-center gap-3">
+                                                        <span
+                                                                class="font-label-md text-label-md font-bold uppercase text-primary shrink-0">
+                                                                Exemplo Prático:
+                                                        </span>
+                                                        <p class="font-body-sm text-body-sm text-on-surface">
+                                                                A regra
+                                                                <code
+                                                                        class="font-mono font-bold text-primary px-1 py-0.5 rounded bg-surface-container">
+         [0-9]+
+        </code>
+                                                                significa "um ou mais dígitos seguidos", reconhecendo o
+                                                                token de constante numérica
+                                                                <code class="font-mono font-bold text-primary">
+         2
+        </code>
+                                                                no nosso código
+                                                                <code
+                                                                        class="font-mono bg-surface-container px-1 py-0.5 rounded">
+         let total = preco * 2 ;
+        </code>
+                                                                .
+                                                        </p>
+                                                </div>
+                                        </aside>
+                                </details>
+                                <!-- Navigation Action Footer -->
+                                <p class="cl-required-message" hidden="" id="lex-step-required" role="alert">Responda à
+                                        atividade escolhendo a expressão correta antes de continuar.</p>
+                                <footer
+                                        class="w-full pt-space-xs flex flex-col sm:flex-row items-center justify-between gap-space-md cl-flow-footer cl-lex-step-actions">
+                                        <a class="px-5 py-2.5 rounded-xl bg-surface-container-lowest text-secondary font-label-md text-label-md font-semibold hover:bg-surface-container-low shadow-sm flex items-center gap-2 transition-colors cl-lex-step-link"
+                                                href="../index.html">
+                                                <span class="material-symbols-outlined text-[18px]"
+                                                        data-compilab-symbol="arrow_back"><svg aria-hidden="true"
+                                                                class="compilab-icon" focusable="false"
+                                                                viewbox="0 0 448 512"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path
+                                                                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z">
+                                                                </path>
+                                                        </svg></span>
+                                                <span>
+                                                        Voltar para Trilha
+                                                </span>
+                                        </a>
+                                        <div class="flex items-center gap-space-md">
+                                                <a aria-describedby="lex-step-required"
+                                                        class="px-6 py-2.5 rounded-xl bg-primary-container text-on-primary font-label-md text-label-md font-semibold shadow-md hover:bg-primary transition-all flex items-center gap-2 cl-lex-step-link cl-lex-step-link-primary"
+                                                        href="passo-2.html" id="lex-step-next">
+                                                        <span>
+                                                                Avançar para Passo 2 (DFA)
+                                                        </span>
+                                                        <span class="material-symbols-outlined text-[18px]"
+                                                                data-compilab-symbol="arrow_forward"><svg
+                                                                        aria-hidden="true" class="compilab-icon"
+                                                                        focusable="false" viewbox="0 0 448 512"
+                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z">
+                                                                        </path>
+                                                                </svg></span>
+                                                </a>
+                                        </div>
+                                </footer>
+                        </div>
+                </div>
+        </main>
+        <script defer="" src="passo-1.js">
+        </script>
+        <script defer="True" src="../../assets/icons.js"></script>
+</body>
+
+</html>

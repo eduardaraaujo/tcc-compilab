@@ -1,0 +1,135 @@
+/* Páginas de aprofundamento LL(1) */
+.cl-ll1-page .cl-syn-grid>div {
+    min-width: 0
+}
+
+.cl-ll1-page .cl-syn-grid>div>.cl-syn-card {
+    height: 100%
+}
+
+.cl-ll1-page .cl-syn-editor {
+    font-size: 12px
+}
+
+.cl-ll1-table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid #dfe6f1;
+    border-radius: 10px;
+    margin-top: 14px
+}
+
+.cl-ll1-table {
+    margin: 0 !important;
+    min-width: 520px;
+    width: 100%;
+    border-collapse: collapse
+}
+
+.cl-ll1-table th,
+.cl-ll1-table td {
+    padding: 10px 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #e3e9f1;
+    text-align: left;
+    line-height: 1.55
+}
+
+.cl-ll1-table thead {
+    background: #eef2fd
+}
+
+.cl-ll1-table th {
+    color: #20365e;
+    font-weight: 800
+}
+
+.cl-ll1-table tbody tr:nth-child(even) {
+    background: #f8faff
+}
+
+.cl-ll1-table tbody tr:last-child td,
+.cl-ll1-table tbody tr:last-child th {
+    border-bottom: none
+}
+
+.cl-ll1-table code,
+.cl-ll1-inline-large {
+    font: 650 12px/1.6 'JetBrains Mono', monospace;
+    color: #263a71;
+    white-space: nowrap
+}
+
+.cl-ll1-empty {
+    color: #a5b0c0
+}
+
+.cl-ll1-parse-table {
+    min-width: 840px;
+    font-size: 11px
+}
+
+.cl-ll1-parse-table th:first-child {
+    position: sticky;
+    left: 0;
+    background: #eef2fd;
+    min-width: 102px
+}
+
+.cl-ll1-parse-table td {
+    min-width: 86px;
+    white-space: nowrap
+}
+
+.cl-ll1-controls {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    flex-wrap: wrap;
+    margin-top: 15px
+}
+
+.cl-ll1-trace-row[hidden] {
+    display: none !important
+}
+
+.cl-ll1-inline-large {
+    display: inline-block;
+    font-size: 14px;
+    background: #fff;
+    border: 1px solid #dfe5f1;
+    border-radius: 8px;
+    padding: 7px 10px
+}
+
+@media(max-width:700px) {
+    .cl-ll1-page .cl-syn-grid {
+        grid-template-columns: 1fr
+    }
+
+    .cl-ll1-page .cl-syn-grid>div>.cl-syn-card {
+        height: auto
+    }
+}
+
+/* A simulação demonstrativa é opcional; destaque discreto para as ações restantes. */
+.cl-ll1-optional-tip,
+.cl-ll1-footer-tip {
+    font: 600 12px/1.65 'Plus Jakarta Sans', sans-serif;
+    color: #36527d;
+    background: #f2f6ff;
+    border: 1px solid #dce6fa;
+    border-left: 3px solid #3747d6;
+    border-radius: 9px;
+    padding: 10px 13px;
+    margin-top: 13px
+}
+
+.cl-ll1-optional-tip[hidden],
+.cl-ll1-footer-tip[hidden] {
+    display: none !important
+}
+
+.cl-ll1-footer-tip {
+    margin-bottom: 12px
+}
