@@ -17,9 +17,60 @@ function selectOption(choice) {
   feedback.className = regexAnswerCorrect
     ? 'cl-lesson-feedback cl-feedback-good'
     : 'cl-lesson-feedback cl-feedback-try';
-  feedback.innerHTML = regexAnswerCorrect
-    ? '<strong>Correto!</strong><p>A primeira parte, <code>[a-zA-Z_]</code>, exige letra ou sublinhado no início. A segunda, <code>[a-zA-Z0-9_]*</code>, permite letras, números e sublinhados depois. O asterisco significa “zero ou mais”.</p>'
-    : '<strong>Revise a regra do identificador.</strong><p>O primeiro caractere não pode ser um dígito. Depois dele podem aparecer letras, números e sublinhados. Compare a descrição das alternativas e experimente <code>_total2</code> e <code>2total</code> no testador ao lado.</p>';
+
+
+  const mensagens = {
+    a: `
+    <strong>Correto!</strong>
+    <p>
+      A primeira parte, <code>[a-zA-Z_]</code>, exige
+      uma letra ou sublinhado no início. A segunda,
+      <code>[a-zA-Z0-9_]*</code>, permite letras,
+      números e sublinhados nas posições seguintes.
+      O asterisco representa zero ou mais repetições.
+    </p>
+  `,
+
+    b: `
+    <strong>Atenção ao primeiro caractere!</strong>
+    <p>
+      A expressão <code>[0-9]+[a-zA-Z]*</code>
+      exige que o identificador comece com pelo menos
+      um número. Entretanto, nossa regra não permite
+      identificadores iniciados por dígitos.
+      Por exemplo, <code>2total</code> seria aceito
+      por essa expressão, mas é inválido.
+    </p>
+  `,
+
+    c: `
+    <strong>Essa expressão é muito restritiva.</strong>
+    <p>
+      A expressão <code>[a-z]+</code> reconhece
+      somente sequências de letras minúsculas.
+      Ela rejeitaria identificadores válidos como
+      <code>total2</code>, <code>Preco</code>
+      e <code>_valor</code>.
+      Precisamos aceitar também maiúsculas,
+      sublinhados e números após o primeiro caractere.
+    </p>
+  `,
+
+    d: `
+    <strong>Essa expressão é muito abrangente.</strong>
+    <p>
+      A expressão <code>.*</code> permite qualquer
+      sequência de caracteres, inclusive uma sequência
+      vazia. Assim, aceitaria entradas como
+      <code>2total</code> e <code>@valor</code>,
+      que não respeitam a regra dos identificadores.
+      Uma expressão regular precisa limitar
+      quais caracteres são permitidos.
+    </p>
+  `
+  };
+
+  feedback.innerHTML = mensagens[choice];
   document.getElementById('lex-step-required').hidden = true;
 }
 

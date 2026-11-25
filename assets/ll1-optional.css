@@ -133,3 +133,174 @@
 .cl-ll1-footer-tip {
     margin-bottom: 12px
 }
+
+.cl-ff-reference-card {
+    display: grid;
+    gap: 16px;
+}
+
+.cl-ff-reference-block {
+    border: 1px solid #dfe6f1;
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: #fcfdff;
+}
+
+.cl-ff-reference-block h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.2px;
+    color: #183153;
+}
+
+.cl-ff-reference-block p {
+    margin: 0;
+}
+
+.cl-ff-reference-block p + p {
+    margin-top: 10px;
+}
+
+.cl-ff-rule-list {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 12px;
+}
+
+.cl-ff-rule-list li {
+    line-height: 1.7;
+}
+
+.cl-ff-rule-continuation {
+    display: block;
+    margin-top: 10px;
+}
+
+.cl-ff-inline-note {
+    color: #8a352e;
+    font-weight: 600;
+}
+
+.cl-ll1-reference-panel {
+    border: 1px solid #dfe6f1;
+    border-radius: 12px;
+    background: #fbfcff;
+    padding: 16px 16px 14px;
+    margin-top: 14px;
+}
+
+.cl-ll1-reference-header h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    letter-spacing: -.2px;
+    color: #183153;
+}
+
+.cl-ll1-reference-header p {
+    margin: 0;
+}
+
+.cl-ll1-compact-table {
+    min-width: 680px;
+    font-size: 12px;
+}
+
+.cl-ll1-compact-table td,
+.cl-ll1-compact-table th {
+    white-space: nowrap;
+}
+
+.cl-ll1-compact-table td[data-entry] {
+    background: #f7faff;
+}
+
+.cl-ll1-compact-table td.is-active {
+    background: #e4f7ec !important;
+    color: #065f46;
+    box-shadow: inset 0 0 0 2px #059669;
+    font-weight: 800;
+}
+
+@media (max-width: 700px) {
+    .cl-ff-reference-card,
+    .cl-ff-reference-block {
+        gap: 14px;
+    }
+
+    .cl-ff-reference-block {
+        padding: 14px;
+    }
+
+    .cl-ll1-reference-panel {
+        padding: 14px;
+    }
+}
+
+
+.cl-ff-tab-card {
+    min-width: 0;
+}
+
+.cl-ff-tab-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    margin: 18px 0 16px;
+    border-bottom: 1px solid #dfe6f1;
+    padding-bottom: 8px;
+}
+
+.cl-ff-tab {
+    min-width: 0;
+    padding: 10px 7px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #53627e;
+    font: 750 12px/1.4 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+}
+
+.cl-ff-tab:hover {
+    background: #f0f3fb;
+}
+
+.cl-ff-tab[aria-selected="true"] {
+    color: #293cba;
+    background: #eaf0ff;
+}
+
+.cl-ff-tab:focus-visible {
+    outline: 2px solid #3747d6;
+    outline-offset: 2px;
+}
+
+.cl-ff-tab-panel[hidden] {
+    display: none !important;
+}
+
+.cl-ff-tab-panel h2 {
+    margin-top: 0;
+}
+
+.cl-ff-tab-panel .cl-ff-reference-block + .cl-ff-reference-block {
+    margin-top: 14px;
+}
+
+.cl-ff-tab-panel .cl-syn-editor {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+@media (max-width: 460px) {
+    .cl-ff-tab-list {
+        gap: 2px;
+    }
+
+    .cl-ff-tab {
+        font-size: 11px;
+        padding: 9px 4px;
+    }
+}

@@ -37,6 +37,36 @@
                 permite declarações em sequência.</p>
         </header>
         <div class="cl-syn-grid">
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
+                <h2>Código e gramática de referência</h2>
+                <p>O analisador léxico já separou o código em tokens. Agora o analisador sintático precisa reconhecer
+                    como eles se combinam.</p>
+                <div class="cl-syn-panel cl-syn-example-panel">
+                    <span class="cl-syn-panel__title">Código de referência</span>
+                    <pre class="cl-syn-editor">let total = preco * 2;</pre>
+                    <span class="cl-syn-panel__title">Tokens reconhecidos</span>
+                    <pre class="cl-syn-editor">let id = id * num ;</pre>
+                    <p class="cl-syn-caption">Este é o exemplo usado nas atividades guiadas. A gramática também permite
+                        outros operadores e mais de uma declaração; esses casos poderão ser experimentados no
+                        laboratório.</p>
+                </div>
+                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
+                        exemplo</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <p class="cl-syn-caption"><code>S</code> é o símbolo inicial; <code>D</code> reconhece uma declaração e
+                    <code>L → D L | ε</code> permite outras declarações ou encerra a lista. <code>E</code>,
+                    <code>T</code> e <code>F</code> descrevem expressões. <code>id</code> e <code>num</code> são
+                    categorias de tokens.
+                </p>
+            </aside>
             <section class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label"><svg aria-hidden="true"
                         viewbox="0 0 24 24">
                         <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
@@ -73,39 +103,8 @@
                                 apenas a expressão, não a declaração inteira.</span></span></button>
                 </div>
                 <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
-                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
-                    continuar.</p>
+                
             </section>
-            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
-                <h2>Código e gramática de referência</h2>
-                <p>O analisador léxico já separou o código em tokens. Agora o analisador sintático precisa reconhecer
-                    como eles se combinam.</p>
-                <div class="cl-syn-panel cl-syn-example-panel">
-                    <span class="cl-syn-panel__title">Código de referência</span>
-                    <pre class="cl-syn-editor">let total = preco * 2;</pre>
-                    <span class="cl-syn-panel__title">Tokens reconhecidos</span>
-                    <pre class="cl-syn-editor">let id = id * num ;</pre>
-                    <p class="cl-syn-caption">Este é o exemplo usado nas atividades guiadas. A gramática também permite
-                        outros operadores e mais de uma declaração; esses casos poderão ser experimentados no
-                        laboratório.</p>
-                </div>
-                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
-                        exemplo</span>
-                    <pre class="cl-syn-editor">S  → D L
-L  → D L | ε
-D  → 'let' id '=' E ';'
-E  → T E'
-E' → '+' T E' | '-' T E' | ε
-T  → F T'
-T' → '*' F T' | '/' F T' | ε
-F  → '(' E ')' | '-' F | id | num</pre>
-                </div>
-                <p class="cl-syn-caption"><code>S</code> é o símbolo inicial; <code>D</code> reconhece uma declaração e
-                    <code>L → D L | ε</code> permite outras declarações ou encerra a lista. <code>E</code>,
-                    <code>T</code> e <code>F</code> descrevem expressões. <code>id</code> e <code>num</code> são
-                    categorias de tokens.
-                </p>
-            </aside>
         </div>
 
         <details class="cl-support-section">
@@ -115,7 +114,10 @@ F  → '(' E ')' | '-' F | id | num</pre>
                 são estruturas expandidas pelas produções da gramática.
             </p>
         </details>
-        <footer class="cl-syn-footer"><a class="cl-syn-link" href="../index.html">← Voltar para Aprendizado</a><a
+        
+            <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            <footer class="cl-syn-footer"><a class="cl-syn-link" href="../index.html">← Voltar para Aprendizado</a><a
                 class="cl-syn-link primary" data-next-lesson="" href="passo-2.html">Avançar para derivação →</a>
         </footer>
     </main>

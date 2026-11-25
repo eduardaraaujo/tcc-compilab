@@ -1278,3 +1278,35 @@ body.cl-syntax-body .cl-site-header {
 .cl-syntax-page.cl-ambig-page .cl-syn-reading-check .cl-syn-choices {
   max-width: none !important;
 }
+/* Trechos de código nas perguntas e leituras das trilhas. */
+.cl-syntax-page .cl-syn-question-text code,
+.cl-syntax-page .cl-syn-prompt code {
+  font: 400 12px/1.6 'JetBrains Mono', ui-monospace, monospace;
+  color: #3747d6;
+  background: #fff;
+  border-radius: 5px;
+  padding: 2px 6px;
+}
+
+.cl-syntax-page .cl-syn-card p code:not([class]),
+.cl-syntax-page .cl-syn-card li code:not([class]),
+.cl-syntax-page .cl-syn-note code:not([class]),
+.cl-syntax-page .cl-syn-caption code:not([class]),
+.cl-syntax-page .cl-syn-wide-explanation code:not([class]),
+.cl-syntax-page .cl-syn-option:not(.is-correct):not(.is-wrong) code:not([class]) {
+  font: 400 12px/1.6 'JetBrains Mono', ui-monospace, monospace;
+  color: #344777;
+  background: #e0e7f2;
+  border-radius: 5px;
+  padding: 2px 6px;
+}
+
+.cl-syntax-page .cl-syn-question-text code,
+.cl-syntax-page .cl-syn-prompt code {
+  color: #3747d6;
+  background: #fff;
+}
+
+.cl-syntax-page > .cl-syn-alert {
+  margin: 20px 0 12px;
+}

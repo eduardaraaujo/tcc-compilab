@@ -1595,3 +1595,53 @@ body .compilab-current-nav:hover {
   flex-shrink: 0;
   fill: currentColor
 }
+/* Alternativas com letras, no mesmo padrão das demais atividades guiadas. */
+.cl-lesson-dfa .cl-lesson-choice[data-lesson-choice] {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 14px !important;
+  min-height: 72px;
+}
+
+.cl-lesson-dfa .cl-lesson-choice-letter {
+  display: grid !important;
+  place-items: center;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: #e7ebf8 !important;
+  color: #3747d6 !important;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cl-lesson-dfa .cl-lesson-option-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  line-height: 1.5;
+}
+
+.cl-lesson-dfa .cl-lesson-option-copy strong {
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.cl-lesson-dfa .cl-lesson-option-copy > span {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.cl-lesson-dfa .cl-lesson-choice.cl-choice-correct .cl-lesson-choice-letter {
+  background: #059669 !important;
+  color: white !important;
+}
+
+.cl-lesson-dfa .cl-lesson-choice.cl-choice-wrong .cl-lesson-choice-letter {
+  background: #bd5046 !important;
+  color: white !important;
+}

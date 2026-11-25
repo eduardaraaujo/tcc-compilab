@@ -596,3 +596,64 @@ body.cl-lex-lesson .cl-lex-step-link svg.compilab-icon {
     width: 100% !important;
   }
 }
+/* Resposta por lexema: verde para classificação correta, vermelho para incorreta. */
+.cl-reviewed-token[data-classification="correct"] {
+  background: #e7f8ee !important;
+  color: #065f46 !important;
+  border-color: #81cba8 !important;
+}
+
+.cl-reviewed-token[data-classification="wrong"] {
+  background: #fff0ed !important;
+  color: #9b3029 !important;
+  border-color: #e2a59f !important;
+}
+
+.cl-flow-main .code-token.cl-token-code[data-classification="correct"] {
+  background: #15563d !important;
+  border-color: #72d9ab !important;
+  color: #e1ffef !important;
+}
+
+.cl-flow-main .code-token.cl-token-code[data-classification="wrong"] {
+  background: #682922 !important;
+  border-color: #f6a79e !important;
+  color: #fff0ee !important;
+}
+
+.cl-flow-main .code-token.cl-token-code.cl-token-active {
+  outline: 2px solid #c4d4ff !important;
+  outline-offset: 2px;
+}
+
+.cl-reviewed-token {
+  cursor: pointer;
+}
+
+.cl-reviewed-token:focus-visible {
+  outline: 2px solid #3747d6;
+  outline-offset: 2px;
+}
+
+.cl-flow-main .cl-required-message {
+  margin: 20px 0 10px;
+}
+
+/* Código curto em perguntas e explicações das atividades léxicas. */
+.cl-lex-lesson .cl-flow-main .cl-dfa-question code,
+.cl-lex-lesson .cl-flow-main #active-prompt-box code {
+  font: 400 12px/1.6 'JetBrains Mono', ui-monospace, monospace !important;
+  color: #3747d6 !important;
+  background: #fff !important;
+  border-radius: 5px;
+  padding: 2px 6px;
+}
+
+.cl-lex-lesson .cl-flow-main p code:not([class]),
+.cl-lex-lesson .cl-flow-main li code:not([class]) {
+  font: 400 12px/1.6 'JetBrains Mono', ui-monospace, monospace;
+  color: #344777;
+  background: #e0e7f2;
+  border-radius: 5px;
+  padding: 2px 6px;
+}

@@ -8,12 +8,37 @@
   const reset = document.getElementById('cl-ll1-reset');
   const rows = [...document.querySelectorAll('.cl-ll1-trace-row')];
   const status = document.getElementById('cl-ll1-status');
-  const reminder = document.getElementById('cl-ll1-more');
-  const footerReminder = document.getElementById('cl-ll1-footer-tip');
+  const compactStatus = document.getElementById('cl-ll1-compact-status');
+  const compactCells = [...document.querySelectorAll('#cl-ll1-compact-table [data-entry]')];
 
   if (!next || !reset || !rows.length || !status) return;
 
   let visibleCount = 1;
+
+  function updateCompactTable() {
+    compactCells.forEach(cell => cell.classList.remove('is-active'));
+
+    const currentRow = rows[visibleCount - 1];
+    if (!currentRow) return;
+
+    const nt = currentRow.dataset.tableNt;
+    const lookahead = currentRow.dataset.lookahead;
+    if (!nt || !lookahead) {
+      if (compactStatus) {
+        compactStatus.textContent = 'Nesta etapa, o parser apenas consome um terminal ou encerra a análise; nenhuma nova célula da tabela é consultada.';
+      }
+      return;
+    }
+
+    const entry = `${nt}|${lookahead}`;
+    const activeCell = document.querySelector(`#cl-ll1-compact-table [data-entry="${entry}"]`);
+    if (activeCell) {
+      activeCell.classList.add('is-active');
+      if (compactStatus) {
+        compactStatus.textContent = `Consulta atual: M[${nt}, ${lookahead}] = ${activeCell.textContent.trim()}.`;
+      }
+    }
+  }
 
   function render(scrollToRow = false) {
     const done = visibleCount === rows.length;
@@ -26,23 +51,16 @@
     next.disabled = done;
     next.textContent = done ? 'Entrada aceita' : 'Mostrar próxima ação';
     next.classList.toggle('is-accepted', done);
-    next.setAttribute('aria-label', done
-      ? 'Entrada aceita. Simulação concluída.'
-      : 'Mostrar próxima ação da pilha');
+    next.setAttribute(
+      'aria-label',
+      done ? 'Entrada aceita. Simulação concluída.' : 'Mostrar próxima ação da pilha'
+    );
 
     status.textContent = done
       ? 'A simulação terminou: a entrada e a pilha chegaram ao marcador $.'
       : `Ação ${visibleCount} de ${rows.length}. ${remaining} ${remaining === 1 ? 'ação restante' : 'ações restantes'}.`;
 
-    // if (reminder) {
-    //   reminder.hidden = done;
-    //   reminder.textContent = `Ainda ${remaining === 1 ? 'há uma ação' : `há ${remaining} ações`} para explorar (opcional). Você pode seguir para o laboratório após acertar a pergunta.`;
-    // }
-
-    // if (footerReminder) {
-    //   footerReminder.hidden = done;
-    //   footerReminder.textContent = `Há ${remaining} ${remaining === 1 ? 'ação' : 'ações'} por revelar nesta simulação. Depois de acertar a pergunta, você pode seguir sem concluí-las.`;
-    // }
+    updateCompactTable();
 
     if (scrollToRow) {
       rows[visibleCount - 1]?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });

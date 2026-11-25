@@ -44,6 +44,21 @@
                 análise descendente.</p>
         </header>
         <div class="cl-syn-grid" id="cl-direct-stage">
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
+                <h2>Gramática com recursão direta</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática original completa — símbolo
+                        inicial E</span>
+                    <pre class="cl-syn-editor">E → E '+' T | T
+T → T '*' F | F
+F → '(' E ')' | id | num</pre>
+                </div>
+                <p>Se escolhermos a primeira alternativa, <code>E</code> volta a aparecer como primeiro símbolo:
+                    <code>E ⇒ E + T ⇒ E + T + T ...</code>. A expansão pode prosseguir sem consumir a entrada.
+                </p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Na recursão <strong>direta</strong>, E
+                        começa por E. Na recursão <strong>indireta</strong>, o retorno acontece através de outro não
+                        terminal, como A → B… e B → A….</span></div>
+            </aside>
             <section class="cl-syn-card cl-syn-lesson-activity" id="cl-first-exercise"><span class="cl-syn-label"><svg
                         aria-hidden="true" viewbox="0 0 24 24">
                         <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
@@ -83,26 +98,20 @@
                                 uma soma e não permite apenas um termo.</span></span></button>
                 </div>
                 <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
-                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
-                    continuar.</p>
+                
             </section>
-            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
-                <h2>Gramática com recursão direta</h2>
-                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática original completa — símbolo
-                        inicial E</span>
-                    <pre class="cl-syn-editor">E → E '+' T | T
-T → T '*' F | F
-F → '(' E ')' | id | num</pre>
-                </div>
-                <p>Se escolhermos a primeira alternativa, <code>E</code> volta a aparecer como primeiro símbolo:
-                    <code>E ⇒ E + T ⇒ E + T + T ...</code>. A expansão pode prosseguir sem consumir a entrada.
-                </p>
-                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Na recursão <strong>direta</strong>, E
-                        começa por E. Na recursão <strong>indireta</strong>, o retorno acontece através de outro não
-                        terminal, como A → B… e B → A….</span></div>
-            </aside>
         </div>
         <section class="cl-syn-grid cl-syn-second-exercise" id="cl-indirect-stage">
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
+                <h2>Gramática com recursão indireta</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática ilustrativa completa — símbolo
+                        inicial A</span>
+                    <pre class="cl-syn-editor">A → B 'a' | 'x'
+B → A 'b' | 'y'</pre>
+                </div>
+                <p>Como <code>B → A 'b'</code>, uma expansão de <code>A</code> pode voltar a <code>A</code> antes de
+                    consumir algum terminal.</p>
+            </aside>
             <div class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label">ATIVIDADE GUIADA — RECURSÃO
                     INDIRETA</span>
                 <h2>E quando a recursão passa por outro símbolo?</h2>
@@ -136,16 +145,6 @@ F → '(' E ')' | id | num</pre>
                                 alternativas que geram outras cadeias.</span></span></button></div>
                 <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-indirect-feedback" role="status"></p>
             </div>
-            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
-                <h2>Gramática com recursão indireta</h2>
-                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática ilustrativa completa — símbolo
-                        inicial A</span>
-                    <pre class="cl-syn-editor">A → B 'a' | 'x'
-B → A 'b' | 'y'</pre>
-                </div>
-                <p>Como <code>B → A 'b'</code>, uma expansão de <code>A</code> pode voltar a <code>A</code> antes de
-                    consumir algum terminal.</p>
-            </aside>
         </section>
         <section class="cl-syn-reveal cl-syn-worked-example" hidden="">
             <div class="cl-syn-card"><span class="cl-syn-label">RESOLUÇÃO COMENTADA</span>
@@ -170,7 +169,10 @@ B  → A 'b' | 'y'</pre>
                     independente da gramática principal de expressões.</p>
             </div>
         </section>
-        <footer class="cl-syn-footer"><a class="cl-syn-link" href="leitura-top-down.html">← Voltar à leitura</a><a
+        
+            <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            <footer class="cl-syn-footer"><a class="cl-syn-link" href="leitura-top-down.html">← Voltar à leitura</a><a
                 class="cl-syn-link primary" data-next-lesson="" href="fatoracao-esquerda.html">Fatoração à esquerda
                 →</a></footer>
     </main>

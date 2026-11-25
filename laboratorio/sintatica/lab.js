@@ -5,14 +5,8 @@
    const $ = s => document.querySelector(s);
    const lexer = window.CompiLabLexer;
    const input = $('#syntax-input');
-   // Os mesmos três botões permanecem alcançáveis ao rolar a árvore, tabela ou fita.
-   // Movidos para fora do painel para não sofrerem recorte por overflow:hidden.
    const stepDock = $('.cl-step-buttons');
-   const dockCount = document.createElement('span');
-   dockCount.className = 'cl-step-dock-count'; dockCount.setAttribute('aria-live', 'off');
-   stepDock.prepend(dockCount);
-   stepDock.classList.add('cl-step-dock');
-   document.body.append(stepDock);
+   const dockCount = $('#step-dock-count');
    stepDock.hidden = true;
    const rules = {
       S: [['D', 'L']],
@@ -100,9 +94,9 @@
       for (const nt of nts) { const tr = el('tr'); const ordered = [...(sets[nt] || [])].sort((a, b) => { if (a === EPS) return 1; if (b === EPS) return -1; if (a === '$') return 1; if (b === '$') return -1; return a.localeCompare(b); }); const setText = '{ ' + ordered.join(', ') + ' }'; tr.append(el('th', nt), el('td', setText), el('td', notes[nt] || '—')); body.append(tr); } table.append(body); host.append(table);
    }
    function renderFirstFollow() { renderSetTable('#first-table', 'FIRST de cada não terminal', grammar.first); renderSetTable('#follow-table', 'FOLLOW de cada não terminal', grammar.follow); }
-   const views = ['tokens', 'arvore', 'first', 'follow', 'tabela'];
+   const views = ['arvore', 'first', 'follow', 'tabela'];
    const tabs = [...document.querySelectorAll('.cl-tab[data-view]')];
-   function chooseTab(name) { if (!views.includes(name)) name = 'tokens'; for (const t of tabs) { const active = t.dataset.view === name; t.setAttribute('aria-selected', String(active)); t.tabIndex = active ? 0 : -1; } for (const v of views) $('#panel-' + v).hidden = v !== name; history.replaceState(null, '', '#' + name); }
+   function chooseTab(name) { if (!views.includes(name)) name = 'arvore'; for (const t of tabs) { const active = t.dataset.view === name; t.setAttribute('aria-selected', String(active)); t.tabIndex = active ? 0 : -1; } for (const v of views) $('#panel-' + v).hidden = v !== name; history.replaceState(null, '', '#' + name); }
    tabs.forEach((b, i) => { b.addEventListener('click', () => chooseTab(b.dataset.view)); b.addEventListener('keydown', e => { if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return; e.preventDefault(); const next = e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i + tabs.length - 1) % tabs.length; tabs[next].focus(); chooseTab(tabs[next].dataset.view); }); });
    function syntaxTokens(text) {
       const all = lexer.tokenize(text); const valid = new Set([...columns].filter(t => t !== '$'));
@@ -255,7 +249,7 @@
       drawTree();
    }
    function emptyAll() {
-      lastSession = null; currentStep = 0; $('#syntax-player').hidden = true; stepDock.hidden = true; document.body.classList.remove('cl-has-step-dock');
+      lastSession = null; currentStep = 0; $('#syntax-player').hidden = true; stepDock.hidden = true;
       $('#token-message').replaceChildren(); $('#tree-message').replaceChildren();
       $('#syntax-tokens').replaceChildren(el('p', 'Digite um código e clique em “Analisar código”.', 'cl-empty'));
       $('#syntax-trace').replaceChildren(el('p', 'Execute uma análise para visualizar as ações.', 'cl-empty'));
@@ -272,12 +266,12 @@
          $('#syntax-trace').replaceChildren(el('p', 'Corrija a entrada para consultar as ações.', 'cl-empty')); return;
       }
       const result = predictive(tokens);
-      lastSession = { ...result, tokens }; drawTrace(result.trace); $('#syntax-player').hidden = false; stepDock.hidden = false; document.body.classList.add('cl-has-step-dock'); setStep(0);
+      lastSession = { ...result, tokens }; drawTrace(result.trace); $('#syntax-player').hidden = false; stepDock.hidden = false; setStep(0);
    }
-   $('#run-syntax').addEventListener('click', () => { run(); chooseTab('tokens'); });
-   $('#reset-syntax').addEventListener('click', () => { input.value = ''; emptyAll(); chooseTab('tokens'); input.focus(); });
-   document.querySelectorAll('[data-expression]').forEach(b => b.addEventListener('click', () => { input.value = b.dataset.expression.replace(/\\n/g, '\n'); run(); chooseTab('tokens'); }));
-   input.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); run(); chooseTab('tokens'); } });
+   $('#run-syntax').addEventListener('click', () => { run(); chooseTab('arvore'); });
+   $('#reset-syntax').addEventListener('click', () => { input.value = ''; emptyAll(); chooseTab('arvore'); input.focus(); });
+   document.querySelectorAll('[data-expression]').forEach(b => b.addEventListener('click', () => { input.value = b.dataset.expression.replace(/\\n/g, '\n'); run(); chooseTab('arvore'); }));
+   input.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); run(); chooseTab('arvore'); } });
    input.addEventListener('input', () => { emptyAll(); $('#syntax-tokens').replaceChildren(el('p', 'Entrada alterada. Execute novamente para atualizar os resultados.', 'cl-empty')); });
    $('#tree-scope').addEventListener('change', drawTree);
    $('#step-prev').addEventListener('click', () => setStep(currentStep - 1));

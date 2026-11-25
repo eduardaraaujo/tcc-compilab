@@ -1,4 +1,34 @@
 (() => {
+  const referenceTabs = [...document.querySelectorAll('[data-reference-tab]')];
+  const referencePanels = [...document.querySelectorAll('.cl-ff-tab-panel')];
+
+  function selectReferenceTab(name) {
+    referenceTabs.forEach(tab => {
+      const active = tab.dataset.referenceTab === name;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+    });
+    referencePanels.forEach(panel => {
+      panel.hidden = panel.id !== `cl-ff-panel-${name}`;
+    });
+  }
+
+  referenceTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectReferenceTab(tab.dataset.referenceTab));
+    tab.addEventListener('keydown', event => {
+      const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+      if (!keys.includes(event.key)) return;
+      event.preventDefault();
+      let target = index;
+      if (event.key === 'ArrowLeft') target = (index - 1 + referenceTabs.length) % referenceTabs.length;
+      if (event.key === 'ArrowRight') target = (index + 1) % referenceTabs.length;
+      if (event.key === 'Home') target = 0;
+      if (event.key === 'End') target = referenceTabs.length - 1;
+      selectReferenceTab(referenceTabs[target].dataset.referenceTab);
+      referenceTabs[target].focus();
+    });
+  });
+
   const first = document.getElementById('cl-ff-first');
   const follow = document.getElementById('cl-ff-follow');
   if (!first || !follow) return;

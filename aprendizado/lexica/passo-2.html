@@ -39,8 +39,7 @@
                                 <header class="cl-flow-header">
                                         <p class="cl-flow-kicker">TRILHA GUIADA — ANÁLISE LÉXICA</p>
                                         <h1>Autômatos Finitos (DFA)</h1>
-                                        <p class="cl-required-message" hidden="" id="lex-step-required" role="alert">
-                                                Escolha a transição correta do autômato antes de continuar.</p>
+                                        
                                         <nav aria-label="Assuntos da trilha" class="cl-lesson-nav cl-flow-nav"><a
                                                         href="passo-1.html">Expressões regulares</a><a
                                                         aria-current="step" href="passo-2.html">Autômatos (DFA)</a><a
@@ -52,15 +51,17 @@
                                 </header>
                                 <!-- Main 2-Column Balanced Architecture -->
                                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-                                        <!-- Left Column: Guided Interactive Activity -->
+                                        
                                         <section class="lg:col-span-6 flex flex-col gap-space-md">
                                                 <!-- Activity Card -->
                                                 <div
                                                         class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
                                                         <!-- Card Header & Badge -->
                                                         <div class="flex items-center justify-between">
+                                                                <!-- <div
+                                                                        class="inline-flex items-center gap-1.5 text-primary font-label-sm text-label-sm font-bold uppercase tracking-wider"> -->
                                                                 <div
-                                                                        class="inline-flex items-center gap-1.5 text-primary font-label-sm text-label-sm font-bold uppercase tracking-wider">
+                                                                        class="flex items-center gap-1.5 font-label-sm text-label-sm font-bold tracking-widest text-primary-container uppercase">
                                                                         <span class="material-symbols-outlined text-[16px]"
                                                                                 data-compilab-symbol="school"><svg
                                                                                         aria-hidden="true"
@@ -76,7 +77,8 @@
                                                                 </div>
                                                         </div>
                                                         <!-- Prompt & Context -->
-                                                        <div class="flex flex-col gap-space-xs">
+                                                        <!-- <div class="flex flex-col gap-space-xs"> -->
+                                                        <div class="flex flex-col gap-1">
                                                                 <h2
                                                                         class="font-title-md text-title-md font-bold text-on-surface">
                                                                         Como o compilador reconhece um Identificador
@@ -124,67 +126,33 @@
                                                         </div>
 
 
+
                                                         <!-- Multiple Choice Options -->
                                                         <div class="flex flex-col gap-2.5">
                                                                 <!-- Option A: Selected / Correct -->
-                                                                <label class="group relative flex items-start gap-space-sm p-space-md rounded-xl bg-emerald-50/90 border-2 border-emerald-500 cursor-pointer transition-all shadow-sm cl-lesson-choice"
-                                                                        data-correct="true" data-lesson-choice="A">
-                                                                        <input class="mt-1 text-indigo-600 focus:ring-indigo-400 accent-indigo-600 w-4 h-4"
-                                                                                name="dfa_step" type="radio" />
-                                                                        <div class="flex flex-col">
-                                                                                <span
-                                                                                        class="font-title-md text-title-md flex items-center gap-1.5 font-bold">
-                                                                                        q1 (Estado de Aceitação)
-
-                                                                                </span>
-                                                                                <span
-                                                                                        class="font-body-md text-body-md mt-0.5 leading-relaxed">
-                                                                                        Transita pelo arco
-                                                                                        <code
-                                                                                                class="font-mono text-emerald-900 bg-emerald-100/80 px-1.5 py-0.5 rounded font-semibold">
-             [a-zA-Z_]
-            </code>
-                                                                                        e reconhece que um identificador
-                                                                                        válido foi iniciado com sucesso.
-                                                                                </span>
-                                                                        </div>
-                                                                </label>
+                                                                <button type="button" class="cl-lesson-choice w-full text-left p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-start gap-3" data-lesson-choice="A" data-correct="true" aria-pressed="false">
+    <span class="cl-lesson-choice-letter w-6 h-6 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0 mt-0.5">A</span>
+    <span class="cl-lesson-option-copy flex flex-col min-w-0">
+        <strong class="font-body-md text-body-md text-on-surface">q1 (Estado de Aceitação)</strong>
+        <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Transita pelo arco [a-zA-Z_] e reconhece o início de um identificador.</span>
+    </span>
+</button>
                                                                 <!-- Option B: Incorrect -->
-                                                                <label class="group relative flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer transition-all cl-lesson-choice"
-                                                                        data-correct="false" data-lesson-choice="B">
-                                                                        <input class="mt-1 text-outline focus:ring-primary-fixed"
-                                                                                name="dfa_step" type="radio" />
-                                                                        <div class="flex flex-col">
-                                                                                <span
-                                                                                        class="font-title-md text-title-md text-on-surface">
-                                                                                        q_erro (Estado de Rejeição)
-                                                                                </span>
-                                                                                <span
-                                                                                        class="font-body-md text-body-md text-on-surface-variant mt-0.5">
-                                                                                        Descarta imediatamente a palavra
-                                                                                        por considerar o caractere
-                                                                                        inválido.
-                                                                                </span>
-                                                                        </div>
-                                                                </label>
+                                                                <button type="button" class="cl-lesson-choice w-full text-left p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-start gap-3" data-lesson-choice="B" data-correct="false" aria-pressed="false">
+    <span class="cl-lesson-choice-letter w-6 h-6 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0 mt-0.5">B</span>
+    <span class="cl-lesson-option-copy flex flex-col min-w-0">
+        <strong class="font-body-md text-body-md text-on-surface">q_erro (Estado de Rejeição)</strong>
+        <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Rejeita a palavra por considerar o primeiro caractere inválido.</span>
+    </span>
+</button>
                                                                 <!-- Option C: Incorrect -->
-                                                                <label class="group relative flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low cursor-pointer transition-all cl-lesson-choice"
-                                                                        data-correct="false" data-lesson-choice="C">
-                                                                        <input class="mt-1 text-outline focus:ring-primary-fixed"
-                                                                                name="dfa_step" type="radio" />
-                                                                        <div class="flex flex-col">
-                                                                                <span
-                                                                                        class="font-title-md text-title-md text-on-surface">
-                                                                                        Permanece em q0
-                                                                                </span>
-                                                                                <span
-                                                                                        class="font-body-md text-body-md text-on-surface-variant mt-0.5">
-                                                                                        Não avança o ponteiro de leitura
-                                                                                        e repete a inspeção sobre o
-                                                                                        mesmo índice.
-                                                                                </span>
-                                                                        </div>
-                                                                </label>
+                                                                <button type="button" class="cl-lesson-choice w-full text-left p-3.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-start gap-3" data-lesson-choice="C" data-correct="false" aria-pressed="false">
+    <span class="cl-lesson-choice-letter w-6 h-6 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold flex items-center justify-center shrink-0 mt-0.5">C</span>
+    <span class="cl-lesson-option-copy flex flex-col min-w-0">
+        <strong class="font-body-md text-body-md text-on-surface">Permanece em q0</strong>
+        <span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Não consome a letra e permanece no estado inicial.</span>
+    </span>
+</button>
                                                                 <div aria-live="polite" class="cl-lesson-feedback"
                                                                         hidden="hidden" id="lesson-choice-feedback"
                                                                         role="status"></div>
@@ -612,10 +580,10 @@
                                                                 </svg></span>
                                                 </div>
                                                 <div class="flex-1 flex flex-col gap-1">
-                                                        <h4
-                                                                class="font-headline-sm text-headline-sm text-on-surface font-bold">
+                                                        <h2
+                                                                class="font-title-md text-title-md font-bold text-on-surface">
                                                                 Por que compiladores usam Autômatos Finitos?
-                                                        </h4>
+                                                        </h2>
                                                         <p
                                                                 class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
                                                                 Na análise léxica de compiladores, as expressões
@@ -644,7 +612,10 @@
                                         </section>
                                 </details>
                                 <!-- Navigation Footer Bar -->
-                                <div
+                                
+            <p class="cl-required-message" hidden="" id="lex-step-required" role="alert">
+                                                Escolha a transição correta do autômato antes de continuar.</p>
+            <div
                                         class="w-full pt-space-md pb-space-lg flex flex-col-reverse sm:flex-row items-center justify-between gap-space-md border-t border-outline-variant/40 cl-flow-footer cl-lex-step-actions">
                                         <a class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-outline-variant/40 bg-surface-container-lowest text-on-surface hover:bg-surface-container font-medium flex items-center justify-center gap-2 shadow-sm transition-all cl-lex-step-link"
                                                 href="passo-1.html">

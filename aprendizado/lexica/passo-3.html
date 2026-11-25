@@ -48,7 +48,7 @@
                 </header>
                 <!-- Main Workspace Grid (2 Columns) -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                        <!-- LEFT COLUMN: Interactive Questioning & Pedagogical Feedback -->
+                        
                         <section class="lg:col-span-6 flex flex-col gap-6" data-purpose="quiz-panel">
                                 <!-- Activity Card -->
                                 <div
@@ -202,7 +202,7 @@
                                         </div>
                                 </div>
                         </section>
-                        <!-- RIGHT COLUMN: Original Code & Recognized Tokens Ribbon -->
+                        
                         <section class="lg:col-span-6 flex flex-col gap-6" data-purpose="code-representation-panel">
                                 <div
                                         class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-sm flex flex-col gap-5">
@@ -264,7 +264,7 @@
                                         <div class="flex flex-col gap-2 pt-2">
                                                 <p
                                                         class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                                                        Tokens já classificados:
+                                                        Classificações realizadas (clique para revisar):
                                                 </p>
                                                 <div class="flex flex-wrap gap-2"
                                                         data-purpose="classified-tokens-ribbon"
@@ -274,67 +274,8 @@
                                 </div>
                         </section>
                 </div>
-                <!-- BEGIN: ConceptualSupportSection -->
-                <details class="cl-support-section">
-                        <summary>Ler explicação sobre análise léxica</summary>
-                        <section class="mt-2 transition-all duration-300" data-purpose="concept-support-card"
-                                id="concept-support-section">
-                                <div
-                                        class="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-5 sm:p-6 text-slate-800 flex flex-col gap-3">
-                                        <div class="flex items-start gap-3">
-                                                <div
-                                                        class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
-                                                        i
-                                                </div>
-                                                <div class="flex-1">
-                                                        <h4 class="text-base font-bold text-slate-900">
-                                                                O que é análise léxica?
-                                                        </h4>
-                                                        <p class="text-sm text-slate-600 mt-1 leading-relaxed">
-                                                                Ela lê o código e o divide em tokens: as menores partes
-                                                                com significado. Cada token recebe uma categoria.
-                                                        </p>
-                                                </div>
-                                        </div>
-                                        <!-- Practical Analogous Example Inside Support -->
-                                        <div
-                                                class="ml-9 bg-white border border-indigo-150 rounded-xl p-3.5 text-xs sm:text-sm text-slate-700 shadow-xs">
-                                                <p class="font-bold text-slate-900 mb-0.5">
-                                                        Exemplo semelhante
-                                                </p>
-                                                <p class="text-slate-600">
-                                                        Em
-                                                        <span class="font-mono font-semibold text-slate-800">
-                                                                “let idade = 18;”
-                                                        </span>
-                                                        ,
-                                                        <span class="font-mono text-purple-700 font-medium">
-                                                                let
-                                                        </span>
-                                                        é palavra reservada,
-                                                        <span class="font-mono text-sky-700 font-medium">
-                                                                idade
-                                                        </span>
-                                                        é identificador,
-                                                        <span class="font-mono text-amber-700 font-medium">
-                                                                =
-                                                        </span>
-                                                        é operador,
-                                                        <span class="font-mono text-teal-700 font-medium">
-                                                                18
-                                                        </span>
-                                                        é número e
-                                                        <span class="font-mono text-slate-600 font-medium">
-                                                                ;
-                                                        </span>
-                                                        é pontuação.
-                                                </p>
-                                        </div>
-                                </div>
-                        </section>
-                </details>
-                <!-- END: ConceptualSupportSection -->
                 <!-- BEGIN: NavigationFooter -->
+                <p class="cl-required-message" hidden id="lex-step-required" role="alert" aria-live="polite">Classifique corretamente todos os lexemas antes de continuar.</p>
                 <footer class="pt-4 pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 cl-flow-footer cl-lex-step-actions"
                         data-purpose="step-actions">
                         <div>

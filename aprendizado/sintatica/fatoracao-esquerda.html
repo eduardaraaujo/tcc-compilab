@@ -42,6 +42,19 @@
                 decidir mais tarde.</p>
         </header>
         <div class="cl-syn-grid">
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
+                <h2>Duas alternativas começam igual</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática ilustrativa completa — símbolo
+                        inicial R</span>
+                    <pre class="cl-syn-editor">R → id '=' num | id '(' ')'</pre>
+                </div>
+                <p>O primeiro token de ambas as alternativas é <code>id</code>. A escolha só fica clara quando aparece o
+                    token seguinte: <code>=</code> ou <code>(</code>.</p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Fatorar não é eliminar alternativas: é
+                        <strong>adiar a decisão</strong> até depois de reconhecer o prefixo comum.</span></div>
+                <p class="cl-syn-caption">Este exemplo tem somente o não terminal R. A gramática principal S/E/T/F será
+                    retomada em FIRST/FOLLOW e na tabela LL(1).</p>
+            </aside>
             <section class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label"><svg aria-hidden="true"
                         viewbox="0 0 24 24">
                         <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
@@ -80,22 +93,8 @@
                                 class="cl-syn-option-desc">Remove o identificador obrigatório.</span></span></button>
                 </div>
                 <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
-                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
-                    continuar.</p>
+                
             </section>
-            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">EXEMPLO DE REFERÊNCIA</span>
-                <h2>Duas alternativas começam igual</h2>
-                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática ilustrativa completa — símbolo
-                        inicial R</span>
-                    <pre class="cl-syn-editor">R → id '=' num | id '(' ')'</pre>
-                </div>
-                <p>O primeiro token de ambas as alternativas é <code>id</code>. A escolha só fica clara quando aparece o
-                    token seguinte: <code>=</code> ou <code>(</code>.</p>
-                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Fatorar não é eliminar alternativas: é
-                        <strong>adiar a decisão</strong> até depois de reconhecer o prefixo comum.</span></div>
-                <p class="cl-syn-caption">Este exemplo tem somente o não terminal R. A gramática principal S/E/T/F será
-                    retomada em FIRST/FOLLOW e na tabela LL(1).</p>
-            </aside>
         </div>
         <section class="cl-syn-reveal cl-syn-worked-example" data-show-on-correct="" hidden="">
             <div class="cl-syn-card"><span class="cl-syn-label">TRANSFORMAÇÃO COMENTADA</span>
@@ -108,7 +107,10 @@ R' → '=' num | '(' ')'</pre>
                     mas a condição LL(1) ainda depende da ausência de conflitos nas escolhas.</p>
             </div>
         </section>
-        <footer class="cl-syn-footer"><a class="cl-syn-link" href="recursividade-esquerda.html">← Voltar à
+        
+            <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            <footer class="cl-syn-footer"><a class="cl-syn-link" href="recursividade-esquerda.html">← Voltar à
                 recursão</a><a class="cl-syn-link primary" data-next-lesson="" href="passo-4.html">Como funciona a
                 tabela preditiva →</a></footer>
     </main>

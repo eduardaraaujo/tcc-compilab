@@ -89,18 +89,17 @@
                         <p id="step-explanation">Avance para começar.</p>
                         <p class="cl-step-reason" hidden="" id="step-reason"></p>
                     </div>
-                    <div class="cl-step-buttons"><button class="cl-btn cl-btn-secondary" id="step-reset" type="button">↺
-                            Reiniciar</button><button class="cl-btn cl-btn-secondary" id="step-prev" type="button">←
-                            Anterior</button><button class="cl-btn cl-btn-primary" id="step-next" type="button">Próximo
-                            →</button></div>
+                    
                     <p class="cl-step-help">Pilha e entrada mostram o estado após a ação. Troque de aba sem perder a
                         etapa.</p>
                 </div>
+                <div class="cl-step-buttons cl-step-toolbar"><span class="cl-step-toolbar-counter" id="step-dock-count" aria-live="off">0/0</span><button class="cl-btn cl-btn-secondary" id="step-reset" type="button">↺
+                            Reiniciar</button><button class="cl-btn cl-btn-secondary" id="step-prev" type="button">←
+                            Anterior</button><button class="cl-btn cl-btn-primary" id="step-next" type="button">Próximo
+                            →</button></div>
                 <div aria-label="Visualizações da análise" class="cl-tabs" role="tablist"><button
-                        aria-controls="panel-tokens" aria-selected="true" class="cl-tab" data-view="tokens"
-                        id="tab-tokens" role="tab" tabindex="0" type="button">Tokens</button><button
                         aria-controls="panel-arvore" aria-selected="false" class="cl-tab" data-view="arvore"
-                        id="tab-arvore" role="tab" tabindex="-1" type="button">Árvore de derivação</button><button
+                        id="tab-arvore" role="tab" tabindex="0" type="button">Árvore de derivação</button><button
                         aria-controls="panel-first" aria-selected="false" class="cl-tab" data-view="first"
                         id="tab-first" role="tab" tabindex="-1" type="button">FIRST</button><button
                         aria-controls="panel-follow" aria-selected="false" class="cl-tab" data-view="follow"
@@ -129,7 +128,7 @@
                         <code>)</code>. O símbolo <code>$</code> indica o fim da entrada.
                     </div>
                 </div>
-                <div aria-labelledby="tab-tokens" class="cl-tab-panel" id="panel-tokens" role="tabpanel">
+                <div aria-labelledby="tab-tokens" class="cl-tab-panel" id="panel-tokens" role="tabpanel" hidden>
                     <h2>Fita de tokens</h2>
                     <p>A fita destaca o próximo token e marca os já consumidos na análise. Tokens válidos ainda podem
                         formar uma estrutura inválida.</p>
@@ -138,7 +137,7 @@
                         <div class="cl-empty">Execute uma análise para visualizar os tokens.</div>
                     </div>
                 </div>
-                <div aria-labelledby="tab-arvore" class="cl-tab-panel" hidden="" id="panel-arvore" role="tabpanel">
+                <div aria-labelledby="tab-arvore" class="cl-tab-panel" id="panel-arvore" role="tabpanel">
                     <h2>Árvore de derivação</h2>
                     <p>Veja a árvore surgir conforme o parser aplica produções. Cada nó corresponde a um símbolo da
                         derivação; esta não é uma AST.</p>

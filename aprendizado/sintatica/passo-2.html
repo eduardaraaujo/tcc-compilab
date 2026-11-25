@@ -36,6 +36,27 @@
                 não-terminal mais à esquerda a partir do símbolo inicial.</p>
         </header>
         <div class="cl-syn-grid">
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
+                <h2>O que o parser já reconheceu?</h2>
+                <p>Vamos derivar a expressão <strong>preco * 2</strong>, partindo da subárvore <strong>E</strong> da
+                    declaração.
+                    Na gramática completa, o reconhecimento começa por <code>S → D L</code>; aqui focamos somente na
+                    expressão para acompanhar cada substituição.</p>
+                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
+                        exemplo</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>O parser já reconheceu
+                        <strong>preco</strong> como <code>id</code>. Agora precisa escolher uma regra compatível com
+                        <strong>*</strong> para continuar.</span></div>
+            </aside>
             <section class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label"><svg aria-hidden="true"
                         viewbox="0 0 24 24">
                         <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
@@ -71,30 +92,8 @@
                                 número, mas não consome *.</span></span></button>
                 </div>
                 <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
-                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
-                    continuar.</p>
+                
             </section>
-            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
-                <h2>O que o parser já reconheceu?</h2>
-                <p>Vamos derivar a expressão <strong>preco * 2</strong>, partindo da subárvore <strong>E</strong> da
-                    declaração.
-                    Na gramática completa, o reconhecimento começa por <code>S → D L</code>; aqui focamos somente na
-                    expressão para acompanhar cada substituição.</p>
-                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
-                        exemplo</span>
-                    <pre class="cl-syn-editor">S  → D L
-L  → D L | ε
-D  → 'let' id '=' E ';'
-E  → T E'
-E' → '+' T E' | '-' T E' | ε
-T  → F T'
-T' → '*' F T' | '/' F T' | ε
-F  → '(' E ')' | '-' F | id | num</pre>
-                </div>
-                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>O parser já reconheceu
-                        <strong>preco</strong> como <code>id</code>. Agora precisa escolher uma regra compatível com
-                        <strong>*</strong> para continuar.</span></div>
-            </aside>
         </div>
         <section class="cl-syn-reveal cl-syn-worked-example" data-progressive="derivation" data-show-on-correct=""
             hidden="">
@@ -127,7 +126,10 @@ F  → '(' E ')' | '-' F | id | num</pre>
                 <code>preco * 2</code>. O próximo passo mostra as produções na forma de uma árvore de derivação.
             </div>
         </section>
-        <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-1.html">← Voltar para gramáticas</a><a
+        
+            <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-1.html">← Voltar para gramáticas</a><a
                 class="cl-syn-link primary" data-next-lesson="" href="passo-3.html">Avançar para árvore →</a></footer>
     </main>
     <script defer="" src="lesson.js"></script>

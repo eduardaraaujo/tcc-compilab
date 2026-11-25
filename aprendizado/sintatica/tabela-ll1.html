@@ -44,6 +44,25 @@
                 tabela LL(1).</p>
         </header>
         <div class="cl-syn-grid">
+            <aside class="cl-syn-card"><span class="cl-syn-label">REFERÊNCIA PARA A DECISÃO</span>
+                <h2>Como escolher uma produção?</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática completa — símbolo inicial
+                        S</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <p>Para a questão, use <code>FIRST(T') = { *, /, ε }</code> e <code>FOLLOW(T') = { +, -, ), ; }</code>.
+                    Observe que <code>+</code> está em FOLLOW(T'), então usamos a produção que gera <code>ε</code>.</p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Uma produção ocupa as colunas de seus
+                        símbolos em FIRST. Se ela puder gerar ε, também ocupa as colunas de FOLLOW do não
+                        terminal.</span></div>
+            </aside>
             <div>
                 <section aria-label="Atividade guiada do aprofundamento" class="cl-syn-card"><span class="cl-syn-label">
                         <svg aria-hidden="true" viewbox="0 0 24 24">
@@ -79,29 +98,9 @@
                                     produção seria aplicável.</span></span></button>
                     </div>
                     <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
-                    <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Responda ao exercício para
-                        continuar.</p>
+                    
                 </section>
             </div>
-            <aside class="cl-syn-card"><span class="cl-syn-label">REFERÊNCIA PARA A DECISÃO</span>
-                <h2>Como escolher uma produção?</h2>
-                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Gramática completa — símbolo inicial
-                        S</span>
-                    <pre class="cl-syn-editor">S  → D L
-L  → D L | ε
-D  → 'let' id '=' E ';'
-E  → T E'
-E' → '+' T E' | '-' T E' | ε
-T  → F T'
-T' → '*' F T' | '/' F T' | ε
-F  → '(' E ')' | '-' F | id | num</pre>
-                </div>
-                <p>Para a questão, use <code>FIRST(T') = { *, /, ε }</code> e <code>FOLLOW(T') = { +, -, ), ; }</code>.
-                    Observe que <code>+</code> está em FOLLOW(T'), então usamos a produção que gera <code>ε</code>.</p>
-                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Uma produção ocupa as colunas de seus
-                        símbolos em FIRST. Se ela puder gerar ε, também ocupa as colunas de FOLLOW do não
-                        terminal.</span></div>
-            </aside>
         </div>
         <section class="cl-syn-reveal cl-syn-worked-example" data-show-on-correct="true" hidden="">
             <div class="cl-syn-card"><span class="cl-syn-label">RESOLUÇÃO COMENTADA</span>
@@ -255,7 +254,10 @@ F  → '(' E ')' | '-' F | id | num</pre>
                     travessão significa que não há produção aplicável ao par (não terminal, próximo token).</p>
             </div>
         </section>
-        <footer class="cl-syn-footer"><a class="cl-syn-link" href="first-follow.html">← Voltar para FIRST/FOLLOW</a><a
+        
+            <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Responda ao exercício para
+                        continuar.</p>
+            <footer class="cl-syn-footer"><a class="cl-syn-link" href="first-follow.html">← Voltar para FIRST/FOLLOW</a><a
                 class="cl-syn-link primary" data-next-lesson="" href="pilha-entrada-acao.html">Simular com a pilha →</a>
         </footer>
     </main>

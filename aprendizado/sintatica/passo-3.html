@@ -36,6 +36,28 @@
                 top-down.</p>
         </header>
         <div class="cl-syn-grid">
+            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
+                <h2>O ponto em que estamos</h2>
+                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Código de entrada</span>
+                    <pre class="cl-syn-editor">let total = preco * 2;</pre>
+                </div>
+                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
+                        exemplo</span>
+                    <pre class="cl-syn-editor">S  → D L
+L  → D L | ε
+D  → 'let' id '=' E ';'
+E  → T E'
+E' → '+' T E' | '-' T E' | ε
+T  → F T'
+T' → '*' F T' | '/' F T' | ε
+F  → '(' E ')' | '-' F | id | num</pre>
+                </div>
+                <p>O parser já reconheceu <code>id * num</code>, correspondente a <code>preco * 2</code>. O próximo
+                    token é <code>;</code>; depois de encerrar a expressão, a declaração termina e <code>L</code> poderá
+                    produzir <code>ε</code>, se não houver outra declaração.</p>
+                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Agora é preciso decidir como terminar a
+                        expansão de <code>T'</code> sem incluir o ponto e vírgula na expressão.</span></div>
+            </aside>
             <section class="cl-syn-card cl-syn-lesson-activity"><span class="cl-syn-label"><svg aria-hidden="true"
                         viewbox="0 0 24 24">
                         <path d="m3 8 9-5 9 5-9 5-9-5Z"></path>
@@ -72,31 +94,8 @@
                                 um identificador.</span></span></button>
                 </div>
                 <p aria-live="polite" class="cl-syn-feedback" hidden="" id="cl-syn-feedback" role="status"></p>
-                <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
-                    continuar.</p>
+                
             </section>
-            <aside class="cl-syn-card cl-syn-reference"><span class="cl-syn-label">REFERÊNCIA DO EXEMPLO</span>
-                <h2>O ponto em que estamos</h2>
-                <div class="cl-syn-panel"><span class="cl-syn-panel__title">Código de entrada</span>
-                    <pre class="cl-syn-editor">let total = preco * 2;</pre>
-                </div>
-                <div class="cl-syn-panel cl-syn-grammar-panel"><span class="cl-syn-panel__title">Gramática completa do
-                        exemplo</span>
-                    <pre class="cl-syn-editor">S  → D L
-L  → D L | ε
-D  → 'let' id '=' E ';'
-E  → T E'
-E' → '+' T E' | '-' T E' | ε
-T  → F T'
-T' → '*' F T' | '/' F T' | ε
-F  → '(' E ')' | '-' F | id | num</pre>
-                </div>
-                <p>O parser já reconheceu <code>id * num</code>, correspondente a <code>preco * 2</code>. O próximo
-                    token é <code>;</code>; depois de encerrar a expressão, a declaração termina e <code>L</code> poderá
-                    produzir <code>ε</code>, se não houver outra declaração.</p>
-                <div class="cl-syn-note"><span class="symbol">ⓘ</span><span>Agora é preciso decidir como terminar a
-                        expansão de <code>T'</code> sem incluir o ponto e vírgula na expressão.</span></div>
-            </aside>
         </div>
         <section class="cl-syn-reveal cl-syn-worked-example" data-progressive="tree" data-show-on-correct="" hidden="">
             <div class="cl-syn-card"><span class="cl-syn-label">ÁRVORE DE DERIVAÇÃO — RESULTADO</span>
@@ -172,7 +171,10 @@ F  → '(' E ')' | '-' F | id | num</pre>
                 mostrando quais produções permitem chegar aos tokens. Não representa atributos nem ações semânticas.
             </div>
         </section>
-        <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-2.html">← Voltar para derivação</a><a
+        
+            <p class="cl-syn-alert" hidden="" id="cl-syn-alert" role="alert">Escolha a alternativa correta antes de
+                    continuar.</p>
+            <footer class="cl-syn-footer"><a class="cl-syn-link" href="passo-2.html">← Voltar para derivação</a><a
                 class="cl-syn-link primary" data-next-lesson="" href="conclusao.html">Revisar conceitos →</a></footer>
     </main>
     <script defer="" src="lesson.js"></script>

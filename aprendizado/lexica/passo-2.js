@@ -25,17 +25,10 @@
       answeredCorrectly = choice.dataset.correct === 'true';
       choice.classList.add(answeredCorrectly ? 'cl-choice-correct' : 'cl-choice-wrong');
       choice.setAttribute('aria-pressed', 'true');
-      const radio = choice.querySelector('input[type="radio"]');
-      if (radio) radio.checked = true;
       feedback.hidden = false;
       feedback.className = 'cl-lesson-feedback ' + (answeredCorrectly ? 'cl-feedback-good' : 'cl-feedback-try');
       feedback.textContent = messages[id] ?? 'Observe qual caractere é consumido e para onde aponta a transição.';
       if (warning) warning.hidden = true;
-    });
-    choice.addEventListener('keydown', e => {
-      if ((e.key === 'Enter' || e.key === ' ') && choice.tagName === 'LABEL') {
-        e.preventDefault(); choice.click();
-      }
     });
   });
   nextLinks.forEach(next => next.addEventListener('click', e => {

@@ -11,7 +11,9 @@
   ];
   const byId = Object.fromEntries(tokens.map(token => [token.id, token]));
   const required = tokens.map(token => token.id);
-  const solved = new Set();
+  const classifications = new Map();
+  const isCorrect = id => classifications.get(id) === byId[id].category;
+  const correctCount = () => tokens.filter(token => isCorrect(token.id)).length;
   const choices = [...document.querySelectorAll('.cat-btn')];
   const codeButtons = [...document.querySelectorAll('.code-token')];
   const promptToken = document.getElementById('active-prompt-token');
@@ -26,6 +28,7 @@
   const successDesc = document.getElementById('success-desc');
   const ribbon = document.getElementById('classified-tokens-ribbon');
   const next = document.getElementById('continue-step-btn');
+  const progressionNotice = document.getElementById('lex-step-required');
   if (!promptToken || !title || !choices.length || !next) return;
   let active = 'let';
 
@@ -40,67 +43,73 @@
   }
   function drawRibbon() {
     ribbon.replaceChildren();
-    tokens.filter(token => solved.has(token.id)).forEach(token => {
-      const badge = document.createElement('span');
+    tokens.filter(token => classifications.has(token.id)).forEach(token => {
+      const correct = isCorrect(token.id);
+      const badge = document.createElement('button');
+      badge.type = 'button';
       badge.className = 'cl-reviewed-token';
-      badge.dataset.category = token.category;
-      badge.textContent = `${token.symbol} ${token.id} · ${token.name}`;
+      badge.dataset.classification = correct ? 'correct' : 'wrong';
+      badge.textContent = `${correct ? '✓' : '✕'} ${token.id} · ${token.name}`;
+      badge.setAttribute('aria-label', `Reclassificar ${token.id}: ${correct ? 'correto' : 'incorreto'}`);
+      badge.addEventListener('click', () => selectToken(token.id));
       ribbon.appendChild(badge);
     });
   }
   function drawCode() {
     codeButtons.forEach(button => {
       const id = button.dataset.tokenId;
+      const classified = classifications.has(id);
       button.className = 'code-token cl-token-code cursor-pointer px-2.5 py-1 rounded-md font-mono transition-all';
       button.classList.toggle('cl-token-active', id === active);
-      button.classList.toggle('cl-token-solved', solved.has(id));
-      if (solved.has(id)) button.dataset.tokenCategory = byId[id].category;
-      else delete button.dataset.tokenCategory;
+      button.classList.toggle('cl-token-solved', classified && isCorrect(id));
+      button.classList.toggle('cl-token-incorrect', classified && !isCorrect(id));
+      if (classified) button.dataset.classification = isCorrect(id) ? 'correct' : 'wrong';
+      else delete button.dataset.classification;
       button.setAttribute('aria-pressed', String(id === active));
-      button.setAttribute('aria-label', `Selecionar lexema ${id}${solved.has(id) ? ', classificado' : ''}`);
+      button.setAttribute('aria-label', `Selecionar lexema ${id}${classified ? (isCorrect(id) ? ', correto' : ', incorreto') + ', pode reclassificar' : ''}`);
     });
   }
   function selectToken(id) {
     if (!byId[id]) return;
-    active = id; promptToken.textContent = id;
-    subtitle.textContent = solved.has(id)
-      ? 'Este lexema já foi classificado. Escolha outro para continuar.'
+    active = id;
+    promptToken.textContent = id;
+    const category = classifications.get(id);
+    subtitle.textContent = category
+      ? 'Este lexema já foi classificado. Você pode escolher outra categoria para reclassificá-lo.'
       : 'Escolha a categoria correspondente ao lexema destacado.';
-    choices.forEach(b => {
-      b.classList.remove('cl-category-good', 'cl-category-wrong');
-      b.setAttribute('aria-pressed', 'false');
+    choices.forEach(button => {
+      const selected = button.dataset.category === category;
+      button.classList.toggle('cl-category-good', selected && isCorrect(id));
+      button.classList.toggle('cl-category-wrong', selected && !isCorrect(id));
+      button.setAttribute('aria-pressed', String(selected));
     });
-    hint.classList.add('hidden'); success.classList.add('hidden');
-    if (solved.has(id)) {
-      // A classificação permanece evidente quando se revisita um lexema.
-      const chosenOption = choices.find(button => button.dataset.category === byId[id].category);
-      if (chosenOption) {
-        chosenOption.classList.add('cl-category-good');
-        chosenOption.setAttribute('aria-pressed', 'true');
-      }
-      showSuccess(byId[id].meaning);
+    hint.classList.add('hidden');
+    success.classList.add('hidden');
+    if (category) {
+      if (isCorrect(id)) showSuccess(byId[id].meaning);
+      else showHint('Classificação incorreta', `“${id}” ainda não foi classificado corretamente.`,
+        'Escolha outra categoria para tentar novamente.');
     }
     drawCode();
   }
   choices.forEach(button => {
     button.addEventListener('click', () => {
-      const token = byId[active]; const chosen = button.dataset.category;
-      // Tokens classificados são somente consultáveis; não podem ser reclassificados.
-      if (solved.has(active)) return;
-      choices.forEach(b => {
-        b.classList.remove('cl-category-good', 'cl-category-wrong');
-        b.setAttribute('aria-pressed', 'false');
+      const token = byId[active];
+      const chosen = button.dataset.category;
+      classifications.set(active, chosen);
+      if (progressionNotice) progressionNotice.hidden = true;
+      choices.forEach(option => {
+        const selected = option === button;
+        option.classList.toggle('cl-category-good', selected && isCorrect(active));
+        option.classList.toggle('cl-category-wrong', selected && !isCorrect(active));
+        option.setAttribute('aria-pressed', String(selected));
       });
-      if (chosen === token.category) {
-        solved.add(active); button.classList.add('cl-category-good');
-        button.setAttribute('aria-pressed', 'true');
-        showSuccess(token.meaning); drawRibbon(); drawCode();
-        subtitle.textContent = solved.size === tokens.length
-          ? 'Todos os lexemas foram classificados. Você pode continuar.'
-          : 'Selecione outro lexema para continuar a classificação.';
+      if (isCorrect(active)) {
+        showSuccess(token.meaning);
+        subtitle.textContent = correctCount() === tokens.length
+          ? 'Todos os lexemas estão corretos. Você pode continuar.'
+          : 'Correto! Selecione outro lexema ou revise esta classificação.';
       } else {
-        button.classList.add('cl-category-wrong');
-        button.setAttribute('aria-pressed', 'true');
         const clues = {
           keyword: 'Palavras reservadas são termos definidos pela linguagem, como “let”.',
           ident: 'Identificadores são nomes usados para variáveis, como “total” e “preco”.',
@@ -110,16 +119,25 @@
         };
         showHint('Observe a função do lexema', `“${active}” não pertence à categoria selecionada.`,
           `Pista: ${clues[token.category]}`);
+        subtitle.textContent = 'Você pode escolher outra categoria para corrigir a classificação.';
       }
+      drawRibbon();
+      drawCode();
     });
   });
   codeButtons.forEach(button => button.addEventListener('click', () => selectToken(button.dataset.tokenId)));
   next.addEventListener('click', () => {
-    const missing = required.filter(id => !solved.has(id));
-    if (!missing.length) { window.location.href = 'resultado-passo-3.html'; return; }
-    const pending = missing[0]; selectToken(pending);
-    showHint('Antes de continuar', `Falta classificar “${pending}”.`,
-      'Todos os sete tokens precisam ser classificados. Observe o lexema destacado e escolha sua categoria.');
+    const missing = required.filter(id => !isCorrect(id));
+    if (!missing.length) {
+      window.location.href = 'resultado-passo-3.html';
+      return;
+    }
+    selectToken(missing[0]);
+    if (progressionNotice) {
+      progressionNotice.textContent = `Revise a classificação de “${missing[0]}” antes de avançar. Todos os sete lexemas devem estar corretos.`;
+      progressionNotice.hidden = false;
+      progressionNotice.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   });
   hint?.setAttribute('aria-live', 'polite');
   success?.setAttribute('aria-live', 'polite');
